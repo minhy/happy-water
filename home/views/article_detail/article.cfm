@@ -3,9 +3,9 @@
 	<cflocation url="#getContextRoot()#"/>
 </cfif>
 <cfquery name="qGetAbout">
-	SELECT article.article_content, article.article_title, article.article_id, article.article_img FROM article 
-	WHERE article.article_category_id = <cfqueryparam sqltype="varchar" value="#id_category#" />
-	AND article.article_isactive = 1
+	SELECT article_content, article_title, article_id, article_img FROM article 
+	WHERE tag = <cfqueryparam sqltype="varchar" value="#id_category#" />
+	AND article_isactive = 1
 </cfquery>
 
 <cfoutput>

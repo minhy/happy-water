@@ -9,18 +9,9 @@
 	  <meta name="author" content="">
 		<link href="#getContextRoot()#/home/css/bootstrap.min.css" rel="stylesheet">
 		<link href="#getContextRoot()#/home/css/style.css" rel="stylesheet">
-		<link rel="stylesheet" type="text/css" href="#getContextRoot()#/home/css/demo_table.css">
-	    <link href="#getContextRoot()#/home/css/jquery-ui.css" rel="stylesheet">
-
-
 		<script type="text/javascript" src="#getContextRoot()#/home/js/jquery.min.js"></script>
-
-		<script src="#getContextRoot()#/home/js/jquery-ui.js"></script>
-	    
 		<script type="text/javascript" src="#getContextRoot()#/home/js/bootstrap.min.js"></script>
-	    <script type="text/javascript" charset="utf-8" src="#getContextRoot()#/home/js/jquery.dataTables.js"></script>
 		<script type="text/javascript" src="#getContextRoot()#/home/js/scripts.js"></script>
-		<script language="javascript" src="#getContextRoot()#/home/ckeditor/ckeditor.js" type="text/javascript"></script>
 	</head>
 <body>    
 	#view( "common/header" )#
