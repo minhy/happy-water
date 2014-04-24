@@ -18,7 +18,7 @@
 						<div>
 								<img src="#qGetProductByID.image#" width="100%" height="300"/>
 						</div>
-						#qGetProductByID.text#
+						<p class="details">#qGetProductByID.text#</p>
 					</div>
 					<div class="col-md-4">
 						<div class="header-title">
@@ -42,7 +42,7 @@
 								<div>
 									<a href="#buildUrl('product.detail')#/?productID=#qGetNewProduct.productID#">
 										<img class="productImg" src="#qGetNewProduct.image#" width="32" height="32">
-									<p class="details">#qGetNewProduct.productName#</p>
+										#qGetNewProduct.productName#
 									</a><br>
 									<span>$#qGetProductByID.price#</span>
 								</div>
