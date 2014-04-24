@@ -29,7 +29,7 @@
               <cfset SESSION.Admin      = true>
               <cfset SESSION.userID     = #check_login.userID[1]#>
               <cfset SESSION.name       = #check_login.firstName[1]#>
-               <cflocation url="#getContextRoot()#/index.cfm/admin" addtoken="false">
+               <cflocation url="#getContextRoot()#/index.cfm/admin:main" addtoken="false">
         
 			<!--
 			Set admin SESSION here
