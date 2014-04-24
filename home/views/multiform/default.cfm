@@ -131,7 +131,6 @@ function multiform( name,level,question_tf,nq,tfparent) {
 
 	<cfoutput>
 	<section id="multiform" class="section">
-		<cfheader title=""/>
 		<form action="" method="post">
 			<div class="row clearfix">
 			<cfloop query="qGetQuestionByLevel" >
