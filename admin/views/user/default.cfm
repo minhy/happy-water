@@ -79,7 +79,6 @@
 </cfoutput>
 
 <script type="text/javascript">
-	// Action function define
 	function action(id,action){	
 		<cfoutput>
 			var baseUrl = "#getContextRoot()#/index.cfm/admin:user/"; 
@@ -88,7 +87,6 @@
 		window.location = baseUrl + detailUrl;
 	}
 
-	// Real time searching
 	$(document).ready(function(){
 		var $rows = $('#table_user .trr');
 		$('#search').keyup(function() {
