@@ -1,13 +1,17 @@
 <cfoutput>
 <!--- Get the general revenue statistic --->
-<cfquery name="qGetYearRevenue" result="result">
-    SELECT year(orderdate) as year, SUM(total) as total
-    FROM happy_water.`order`
-    GROUP BY year
+<cfquery name="qGetRevenue" result="result">
+    SELECT monthname(orderDate) as amonth,
+         year(orderDate) as ayear,
+         SUM(total) as total
+    FROM `happy_water`.`order`
+    WHERE orderdate BETWEEN DATE_SUB(CURDATE(), INTERVAL 12 MONTH) AND CURDATE()
+    GROUP BY amonth, ayear
+    ORDER BY orderDate
 </cfquery>
 
 <!--- Get the top 5 users have highest sum of value in order  --->
-<cfquery name="getUsers" datasource="happy_water">
+<cfquery name="getUsers">
     SELECT u.userId, u.firstname, u.lastname, u.address, u.dateofbirth, u.email, SUM(o.total) as total
     FROM happy_water.`user` u INNER JOIN happy_water.`order` o ON u.userId=o.userId
     GROUP BY u.userId
@@ -18,13 +22,13 @@
 <cfset Ox = "">
 <cfset Oy = "">
 <cfset index = 0>
-<cfloop query="qGetYearRevenue">
+<cfloop query="qGetRevenue">
     <cfset index = index + 1>
-    <cfset Ox = Ox & #qGetYearRevenue.year#>
-    <cfset Oy = Oy & #qGetYearRevenue.total#>
+    <cfset Ox = Ox & #qGetRevenue.amonth# & ', ' & #qGetRevenue.ayear#>
+    <cfset Oy = Oy & #qGetRevenue.total#>
     <cfif #index# NEQ #result.RECORDCOUNT#>
-        <cfset Ox = Ox & ",">
-        <cfset Oy = Oy & ",">
+        <cfset Ox = Ox & ";">
+        <cfset Oy = Oy & ";">
     </cfif>
 </cfloop>
 
@@ -36,8 +40,8 @@
 <!--- Script draw chart --->
 <script language="javascript">
 $(function () {
-    var index = $("#xAxis").val().split(",");
-    var values = $("#yAxis").val().split(",");
+    var index = $("#xAxis").val().split(";");
+    var values = $("#yAxis").val().split(";");
     for (i in values ) {
         values[i] = parseInt(values[i], 10);
     }
@@ -90,11 +94,11 @@ $(function () {
                 <!--- Tab contend --->
                 <div class="tab-content">
                     <!--- Tab Revenue --->
-                    <div class="tab-pane active" id="panel-625444">
+                    <div class="tab-pane" id="panel-625444">
                         <div id="revenue" style="width:100%; height:400px;"></div>
                     </div>
                     <!--- Tab Top Users --->
-                    <div class="tab-pane" id="panel-932305">
+                    <div class="tab-pane active" id="panel-932305">
                         <div class="container wrap main">
                             <table id="table_top_user" class="display">
                                 <thead>
@@ -127,6 +131,6 @@ $(function () {
                 </div>  <!--- End tab content --->
             </div>  <!--- End tab table --->
         </div>
-    </div>	
+    </div>  
 </body>
 </cfoutput>
