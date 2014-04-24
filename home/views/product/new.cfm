@@ -1,12 +1,3 @@
-<script type="text/javascript">
-
-		 $(document).ready( function () {
-            var ptags=document.getElementsByTagName("p")
-			for(var i=0;i<ptags.length;i++)
-	    	if(ptags[i].innerHTML!="")
-	       		ptags[i].setAttribute("class", "bginfo")
-        });
-</script>
 <cfoutput>
 	<cfparam name="URL.page" default="1">
 	<cfset URL.idpage = (URL.page -1)*9 />
@@ -32,7 +23,7 @@
 			<div class="col-md-4">
 				<a href="#buildUrl('product.detail')#/?productID=#qGetByNew.productID#" class="category-startpage">
 				<img class="categories" src="#qGetByNew.image#" width="300" height="300">
-				#qGetByNew.description#
+				<p class="bginfo">#qGetByNew.description#</p>
 				<div class="category-name">#qGetByNew.productName#</div>
 				</a>
 			</div>

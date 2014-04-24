@@ -1,12 +1,3 @@
-<script type="text/javascript">
-
-		 $(document).ready( function () {
-            var ptags=document.getElementsByTagName("p")
-			for(var i=0;i<ptags.length;i++)
-	    	if(ptags[i].innerHTML!="")
-	       		ptags[i].setAttribute("class", "bginfo")
-        });
-</script>
 <cfoutput>
 	<cfparam name="URL.categoryID" default="0">
 	<cfparam name="URL.page" default="1">
@@ -33,7 +24,7 @@
 			<div class="col-md-4">
 				<a href="#buildUrl('product.detail')#/?productID=#qGetByCategory.productID#" class="category-startpage">
 				<img class="categories" src="#qGetByCategory.image#" width="300" height="300">
-				#qGetByCategory.description#
+				<p class="bginfo">#qGetByCategory.description#</p>
 				<div class="category-name">#qGetByCategory.productName#</div>
 				</a>
 			</div>

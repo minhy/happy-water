@@ -145,9 +145,12 @@
 			<cfset Validation.isInvalid = true/>
 		</cfif>
 		<cfif Validation.Valid>
+			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
+			<cfset text = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
 			<cftransaction isolation="serializable" action="begin">
 					<cftry>
 						<cfquery name="insert_product">
+
 							INSERT INTO Product
 							(
 								productName,
@@ -165,14 +168,14 @@
 							VALUES
 							(
 								<cfqueryparam sqltype="varchar" value="#FORM.productName#"/>,
-								<cfqueryparam sqltype="clob" value="#FORM.description#"/>,
+								<cfqueryparam sqltype="clob" value="#desc#"/>,
 								<cfqueryparam sqltype="float" value="#FORM.price#"/>,
 								<cfqueryparam sqltype="integer" value="#FORM.discount#"/>,
 								<cfqueryparam sqltype="tinyint" value="#FORM.status#"/>,
 								<cfqueryparam sqltype="tinyint" value="#FORM.IsActive#"/>,
 								<cfqueryparam sqltype="integer" value="#FORM.categoryID#"/>,
 								<cfqueryparam sqltype="integer" value="#FORM.brandID#"/>,
-								<cfqueryparam sqltype="clob" value="#FORM.text#"/>,
+								<cfqueryparam sqltype="clob" value="#text#"/>,
 								<cfqueryparam sqltype="varchar" value="#getContextRoot()#/images/product/#Reupload.clientfile#"/>,
 								<cfqueryparam sqltype="date" value="#FORM.productDate#">
 							)
@@ -251,22 +254,22 @@
 		</cfif>
 
 		<cfif Validation.Valid>
+			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
+			<cfset text = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
 			<cftransaction isolation="serializable" action="begin">
 				<cftry>
-					
 					<cfquery name="update_product">
-
 						UPDATE Product
 						SET 
 							productName = <cfqueryparam sqltype="varchar" value="#FORM.productName#"/>,
-							description = <cfqueryparam sqltype="clob" value="#FORM.description#"/>,
+							description = <cfqueryparam sqltype="clob" value="#desc#"/>,
 							price = <cfqueryparam sqltype="float" value="#FORM.price#"/>,
 							discount = <cfqueryparam sqltype="integer" value="#FORM.discount#"/>,
 							status = <cfqueryparam sqltype="tinyint" value="#FORM.status#"/>,
 							IsActive = <cfqueryparam sqltype="tinyint" value="#FORM.IsActive#"/>,
 							categoryID = <cfqueryparam sqltype="integer" value="#FORM.categoryID#"/>,
 							brandID = <cfqueryparam sqltype="integer" value="#FORM.brandID#"/>,
-							text = <cfqueryparam sqltype="clob" value="#FORM.text#"/>,
+							text = <cfqueryparam sqltype="clob" value="#text#"/>,
 							productDate = <cfqueryparam sqltype="date" value="#FORM.productDate#"/>
 							<cfif FORM.image is not "">
 								,image = <cfqueryparam sqltype="varchar" value="#getContextRoot()#/images/product/#Reupload.clientfile#"/>
@@ -398,7 +401,7 @@
 							 <select name="categoryID" class="form-control btn btn-option" >
 							 	<option value="0">--- Select a Category ---</option>
 						    	<cfloop query="#lstCategory#">
-										<option value="#lstCategory.categoryID#" <cfif lstCategory.categoryID EQ FORM.categoryID> selected</cfif>>#lstCategory.categoryName#</option>
+										<option value="#lstCategory.categoryID#" <cfif lstCategory.categoryID EQ FORM.categoryID> selected</cfif>#lstCategory.categoryName#</option>
 								</cfloop>
 							 </select>
 						 </div>

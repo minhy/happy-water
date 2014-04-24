@@ -20,9 +20,7 @@
 			<div class="col-md-4">
 				<a href="#buildUrl('product.detail')#/?productID=#qGetAll.productID#" class="category-startpage">
 				<img class="categories" src="#qGetAll.image#" width="300" height="300">
-				<p class="bginfo">
-					#qGetAll.description#
-				</p>
+				<p class="bginfo">#qGetAll.description#</p>
 				<div class="category-name">#qGetAll.productName#</div>
 				</a>
 			</div>

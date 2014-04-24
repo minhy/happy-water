@@ -1,12 +1,3 @@
-<script type="text/javascript">
-
-		 $(document).ready( function () {
-            var ptags=document.getElementsByTagName("p")
-			for(var i=0;i<ptags.length;i++)
-	    	if(ptags[i].innerHTML!="")
-	       		ptags[i].setAttribute("class", "details")
-        });
-</script>
 <cfoutput>
 	<cfparam name="URL.productID" default="0">
 				
@@ -49,9 +40,9 @@
 						<cfloop query="qGetNewProduct">
 							<div>
 								<div>
-									<a href="#getContextRoot()#/index.cfm/product/detail/?productID=#qGetNewProduct.productID#">
+									<a href="#buildUrl('product.detail')#/?productID=#qGetNewProduct.productID#">
 										<img class="productImg" src="#qGetNewProduct.image#" width="32" height="32">
-										#qGetNewProduct.productName#
+									<p class="details">#qGetNewProduct.productName#</p>
 									</a><br>
 									<span>$#qGetProductByID.price#</span>
 								</div>
