@@ -17,7 +17,6 @@
 	ORDER BY article.article_id ASC 
 </cfquery>
 <cfoutput>
-<cfpage title="Happy Water">
 	<script type="text/javascript">
         function checkPrev(){
         	var search= window.location.search;
