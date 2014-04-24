@@ -71,6 +71,7 @@
 			<cfset Validation.isInvalid = true/>
 		</cfif>
 		<cfif Validation.Valid>
+			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
 			<cftransaction isolation="serializable" action="begin">
 					<cftry>
 						<cfquery name="insert_brand">
@@ -84,7 +85,7 @@
 							VALUES
 							(
 								<cfqueryparam sqltype="varchar" value="#FORM.brandName#"/>,
-								<cfqueryparam sqltype="clob" value="#FORM.description#"/>,
+								<cfqueryparam sqltype="clob" value="#desc#"/>,
 								<cfqueryparam sqltype="tinyint" value="#FORM.status#"/>,
 								<cfqueryparam sqltype="tinyint" value="#FORM.IsActive#"/>
 							)
@@ -124,6 +125,7 @@
 		</cfif>
 
 		<cfif Validation.Valid>
+			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
 			<cftransaction isolation="serializable" action="begin">
 				<cftry>
 					
@@ -132,7 +134,7 @@
 						UPDATE brand
 						SET 
 							brandName = <cfqueryparam sqltype="varchar" value="#FORM.brandName#"/>,
-							description = <cfqueryparam sqltype="clob" value="#FORM.description#"/>,
+							description = <cfqueryparam sqltype="clob" value="#desc#"/>,
 							status = <cfqueryparam sqltype="tinyint" value="#FORM.status#"/>,
 							IsActive = <cfqueryparam sqltype="tinyint" value="#FORM.IsActive#"/>
 						WHERE brandID = <cfqueryparam sqltype="integer" value="#FORM.brandID#"/>
@@ -151,6 +153,7 @@
 
 <cfoutput>
 <br>
+<legend><h1>Brand Management - Updater</h1></legend>
 <div  style="width:600px; margin:auto;">
 	<div class="row clearfix">
 		<div class="col-md-12 column">

@@ -313,6 +313,7 @@
 
 <cfoutput>
 <br>
+<legend><h1>Product Management - Updater</h1></legend>
 <div  style="width:600px; margin:auto;">
 	<div class="row clearfix">
 		<div class="col-md-12 column">

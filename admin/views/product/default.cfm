@@ -53,6 +53,7 @@
     </script>
 <cfoutput>
     <br>
+    <legend><h1>Product Management</h1></legend>
     <div class="alert alert-info">
         <button type="button" class="btn btn-default" onclick="chuyentrang(1,'#qShowAll.productID#', '#buildUrl('product.editor')#');"><span class="glyphicon glyphicon-plus"></span> Add new product</button>
     </div>
