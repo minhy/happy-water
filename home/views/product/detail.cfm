@@ -10,7 +10,7 @@
 				<cfquery name="qGetNewProduct" datasource="happy_water">
 					select *
 					from product
-					order by productID desc
+					order by productDate desc
 					limit 4
 				</cfquery>
 				<div class="row clearfix">
