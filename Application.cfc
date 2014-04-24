@@ -18,26 +18,5 @@ component extends="lib.framework" {
 	 variables.framework.defaultSection = 'main';
 	 variables.framework.defaultItem = 'default';
 	 variables.framework.reloadApplicationOnEveryRequest = true;
-
-
-	 // session config modify by Thien//
-
-	 this.sessionManagement = true; 
-	// cfml or jee based sessions
-	//this.sessionType = "cfml"; 
-	// untouched session lifespan
-	this.sessionTimeout = createTimeSpan( 0, 2, 0, 0 ); 
-	this.sessionStorage = "memory";
-	
-	 public function onSessionStart() {
-		
-	 		Session.isadmin       = false;
-	 		Session.isLoggedIn    = false;
-	 		Session.UserID        = 0;
-	 		Session.name          = "";
-		
-	 }
-
-		// session config modify by Thien//
 	
 }

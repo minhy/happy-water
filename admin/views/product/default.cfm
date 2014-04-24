@@ -24,8 +24,6 @@
     SELECT *
     FROM product
     </cfquery>    
-
-    
     
 
     <script type="text/javascript">
@@ -33,7 +31,6 @@
             $('#table_id').dataTable({
                 "sPaginationType": "full_numbers"
             });
-            
         } );
 
         function chuyentrang(status, id, url){
@@ -55,6 +52,11 @@
 
     </script>
 <cfoutput>
+    <br>
+    <div class="alert alert-info">
+        <button type="button" class="btn btn-default" onclick="chuyentrang(1,'#qShowAll.productID#', '#buildUrl('product.editor')#');"><span class="glyphicon glyphicon-plus"></span> Add new product</button>
+    </div>
+    <br>
     <table id="table_id" class="display">
         <thead>
             <tr>
@@ -107,10 +109,10 @@
                         #brandName.brandName#
                     </td>
                     <td class="col-md-3 column">
-                        <div class="btn-group btn-group-xs">
-                            <button type="button" class="btn btn-default" onclick="chuyentrang(1,'#qShowAll.productID#', '#buildUrl('product.admin_products_editor')#');"><span class="glyphicon glyphicon-plus"></span> Add</button>
-                            <button type="button" class="btn btn-default" onclick="chuyentrang(2,'#qShowAll.productID#', '#buildUrl('product.admin_products_editor')#');"><span class="glyphicon glyphicon-edit"></span>  Edit</button>
-                            <button class="btn btn-danger" type="button" onclick="chuyentrang(3,'#qShowAll.productID#', '#buildUrl('product.default')#');");"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+                        <div class="btn-group btn-group-sm">
+                           
+                            <button type="button" class="btn btn-default" onclick="chuyentrang(2,'#qShowAll.productID#', '#buildUrl('product.editor')#');"><span class="glyphicon glyphicon-edit"></span>  Edit</button>
+                            <button class="btn btn-danger" type="button" onclick="chuyentrang(3,'#qShowAll.productID#', '#buildUrl('product.default')#');"><span class="glyphicon glyphicon-remove"></span> Delete</button>
                         </div>
                     </td>
                 </tr>   
