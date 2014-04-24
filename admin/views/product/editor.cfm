@@ -87,7 +87,7 @@
 		<cfif isDefined("FORM.image")>
 			<cfif FORM.image is not "">
 				<cffile action = "upload" 
-						nameconflict = "overwrite" 
+						nameconflict = "unique" 
 						result="Reupload"
 				        fileField = "image" 
 				        destination = "#getContextRoot()#/images/product/">
@@ -194,7 +194,7 @@
 			<cfif FORM.image is not "">
 				<cffile action = "upload" 
 							result="Reupload"
-							nameconflict = "overwrite" 
+							nameconflict = "unique" 
 					        fileField = "image" 
 					        destination = "#getContextRoot()#/images/product/">
 			</cfif>
@@ -303,17 +303,19 @@
 			$("#image").change(function() {
 				    		 readURL(this);
 			            });
+
 		});
 
 </script>
 
 <cfoutput>
-<div  style="width:500px; margin:auto;">
+<br>
+<div  style="width:600px; margin:auto;">
 	<div class="row clearfix">
 		<div class="col-md-12 column">
 			<cfif NOT Validation.Valid>
-			<div class="warning">
-				<h3>Could not save news product</h3>
+			<div class="alert alert-dange">
+				<h3>Oops! Could not save new product</h3>
 			</div>
 			</cfif>
 			<form  method="post"  enctype="multipart/form-data">
@@ -438,8 +440,9 @@
 					<img id="currentImage" src="#getContextRoot()##FORM.image#" alt="hinh" width="144" height="144">
 				</div>
 				<div class="div_center">
-					<button type="submit" class="btn btn-default btn_center">Submit</button>
-					<!--- <button type="button" id="back" class="btn btn-default btn_center">Back</button> --->
+					<div class="alert alert-info">
+						<button type="submit" class="btn btn-default btn_center">Submit</button>
+					</div>
 				</div>
 			</form>
 		</div>
