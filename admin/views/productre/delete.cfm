@@ -8,4 +8,4 @@
 	</cfquery>
 </cftransaction>
 
-<cflocation url="#buildUrl('productre_admin')#" />
+<cflocation url="#buildUrl('productre')#" />

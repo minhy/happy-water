@@ -3,7 +3,7 @@
 <cfparam name="FORM.id"	type="integer" default="0"/>
 <cfparam name="URL.id"	type="integer" default="0">
 <cfparam name="userid"	type="integer" default="1">
-<cfparam name="news_id" type="varchar" default="ne">
+<cfparam name="URL.tag"	type="varchar" default="">
 	<cfset Validation.isInvalid = false/>
 	<cfset InvalidClass = " invalid"/>
 
@@ -18,6 +18,9 @@
 	<cfset FormAction = "insert"/>
 </cfif>
 
+<cfquery name="qGetCategory">
+	select * from category where parentID=<cfqueryparam sqltype="integer" value="1">
+</cfquery>
 
 <cfswitch expression="#FormAction#">
 	<cfcase value="show">
@@ -26,6 +29,7 @@
 		<cfparam name="Form.description"		default=""/>
 		<cfparam name="Form.photo"		default=""/>
 		<cfparam name="Form.active"		default="Yes"/>
+		<cfparam name="Form.tag"		default=""/>
 	</cfcase>
 	<cfcase value="insert">
 		<cfif NOT IsDefined('FORM.title') OR Len(Trim(FORM.title)) EQ 0>
@@ -80,7 +84,7 @@
 						 article_description,
 						 userid,
 						 article_isactive,
-						 article_category_id,
+						 tag,
 						 article_createdate,
 						 article_editdate
 						 )
@@ -91,7 +95,7 @@
 						 <cfqueryparam sqltype="varchar" value="#FORM.description#"/>,
 						 <cfqueryparam sqltype="integer" value="#userid#"/>,
 						  <cfqueryparam sqltype="integer" value="#FORM.active#"/>,
-						   <cfqueryparam sqltype="varchar" value="#news_id#"/>,
+						   <cfqueryparam sqltype="varchar" value="#FORM.tag#"/>,
 						 <cfqueryparam sqltype="date" value="#now()#"/>,
 						 <cfqueryparam sqltype="date" value="#now()#"/>)
 					</cfquery>
@@ -103,7 +107,7 @@
 				</cfcatch>
 				</cftry>
 			</cftransaction>
-		 <cflocation url="article_admin" />
+		<cflocation url="#buildUrl('article')#" />
 	</cfif>
 	</cfcase>
 	<cfcase value="edit">
@@ -154,6 +158,7 @@
 				article_content=<cfqueryparam sqltype="varchar" value="#FORM.content#"/>,
 				article_description=<cfqueryparam sqltype="varchar" value="#FORM.description#"/>,
 				article_editdate =<cfqueryparam sqltype="date" value="#now()#"/>,
+				tag=<cfqueryparam sqltype="varchar" value="#FORM.tag#"/>,
 				article_isactive=<cfqueryparam sqltype="integer" value="#FORM.active#"/>
 
 				<cfif FORM.photo is not ""> 
@@ -168,7 +173,7 @@
 				</cfcatch>
 			</cftry>
 		</cftransaction>>
-		 <cflocation url="article_admin" />
+		<cflocation url="#buildUrl('article')#" />
 		 </cfif>
 	</cfcase>
 </cfswitch>
@@ -179,12 +184,14 @@
 	<cfparam name="Validation.photo.text" 	default="&nbsp;"/>
 	<cfparam name="Validation.description.text"     default="&nbsp;"/>
 	<cfparam name="Validation.active.text"     default="&nbsp;"/>
+	<cfparam name="Validation.tag.text"     default="&nbsp;"/>
 
 	<cfparam name="Validation.title.class" 		default=""/>
 	<cfparam name="Validation.content.class"		default=""/>
 	<cfparam name="Validation.photo.class" 		default=""/>
 	<cfparam name="Validation.description.class"		default=""/>
 	<cfparam name="Validation.active.class" 		default=""/>
+	<cfparam name="Validation.tag.class" 		default=""/>
 	<cfparam name="Validation.isInvalid" 	default="false"/>
 
 
@@ -193,6 +200,26 @@
 				<form action="" method="post" enctype="multipart/form-data">
 					<input type="hidden" name="id" value="#FORM.id#"/>
 					<table>
+						<tr>
+							<td>Tag:</td>
+
+							<td class="form#Validation.tag.class#" >
+								<select name="tag" id ="tag">
+									  	<cfloop query="qGetCategory">
+									  		<cfif #qGetCategory.tag# eq #URL.tag#>
+												<cfset selected="selected"/>
+											<cfelse>
+												<cfset selected=""/>
+											</cfif>
+										  	<option 		  	
+										  	value="#qGetCategory.tag#" #selected# >#qGetCategory.categoryName#
+											</option>
+										</cfloop>
+								</select>
+
+								<p>#Validation.tag.text#</p>
+							</td>
+						</tr>
 						<tr>
 							<td>Title:</td>
 							<td class="form#Validation.title.class#" >

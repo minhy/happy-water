@@ -15,13 +15,13 @@
 		    
 		} );
 		</script>
-		
 <cfoutput>
 <cfparam name="news_id" type="varchar" default="ne">
 <cfparam name="user_id" type="integer" default="1">
 <cfquery name="qGetArticle">
-	select * from article where article_category_id= <cfqueryparam sqltype="varchar" value="#news_id#"/>
-	and userid= <cfqueryparam sqltype="integer" value="#user_id#"/>
+	select article.*,categoryName from article,category
+	where article.tag=category.tag
+	order by tag
 </cfquery>
 
 <cfset stt=1>
@@ -38,6 +38,9 @@
 							Title
 						</th>
 						<th>
+							Tag
+						</th>
+						<th>
 							Action
 						</th>
 					</tr>
@@ -51,10 +54,13 @@
 							<td>
 								#qGetArticle.article_title#
 							</td>
+								<td>
+								#qGetArticle.categoryName#
+							</td>
 							<td>
-								<a href="article_admin.articleform">[add]</a>
-								<a href="article_admin.articleform?id=#qGetArticle.article_id#">[edit]</a>
-								<a href="article_admin.delete?id=#qGetArticle.article_id#" onclick ="return checkDelete()">[delete]</a>
+								<a href="#buildUrl('article.articleform')#">[add]</a>
+								<a href="#buildUrl('article.articleform')#?id=#qGetArticle.article_id#&tag=#qGetArticle.tag#">[edit]</a>
+								<a href="#buildUrl('article.delete')#?id=#qGetArticle.article_id#" onclick ="return checkDelete()">[delete]</a>
 							</td>
 						</tr>
 						<cfset stt=stt+1>

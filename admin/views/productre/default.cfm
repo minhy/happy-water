@@ -22,7 +22,7 @@
 </cfquery>
 <cfset stt=1>
 
-<h3 class="header-title">Product Group Management <a href="#buildUrl('productre_admin.productreform')#">[add]</a>
+<h3 class="header-title">Product Group Management <a href="#buildUrl('productre.productreform')#">[add]</a>
 </h3>
 
 <form action="" method="post">
@@ -61,7 +61,7 @@
 				</td>
 				<td>
 					
-					<a href="#buildUrl('productre_admin.delete')#?productID=#qGetProductRe.productID#&groupReID=#qGetProductRe.groupRe_id#" onclick ="return checkDelete()">[delete]</a>
+					<a href="#buildUrl('productre.delete')#?productID=#qGetProductRe.productID#&groupReID=#qGetProductRe.groupRe_id#" onclick ="return checkDelete()">[delete]</a>
 				</td>
 			</tr>
 			<cfset stt=stt+1>

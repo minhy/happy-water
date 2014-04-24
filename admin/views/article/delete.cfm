@@ -5,4 +5,4 @@
 	</cfquery>
 </cftransaction>
 
-<cflocation url="article_admin" />
+<cflocation url="#buildUrl('article')#" />
