@@ -266,5 +266,3 @@ $(function () {
     </div>  
 </body>
 </cfoutput>
-<cfdump eval=qTop>
-<cfdump eval=qBest>
