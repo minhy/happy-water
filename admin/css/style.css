@@ -1,0 +1,60 @@
+body {
+  background: #CCC;
+}
+#header {
+  background: #0088cc;
+  height: 70px;
+}
+#main {
+  margin: 20px 0 20px 0;
+}
+#footer {
+  background: #0088cc;
+  height: 40px;
+  padding: 10px 15px 10px 10px;
+}
+.main {
+  padding: 10px;
+  background: #FFF;
+  min-height: 500px;
+}
+a {
+  color: #0088cc;
+}
+a:hover {
+  color: #0088cc;
+  text-decoration: underline;
+}
+h3 {
+  color: #0088cc;
+  font-size: 25px;
+}
+.collapse {
+  background: #CCC;
+}
+
+/*---Lộc---*/
+
+.div_center{
+  margin: 0;
+    background-color: transparent;
+    text-align: center;
+}
+.invalid{
+  background-color: orange;
+  position: inherit;
+  padding: 0px;
+  border-radius: 10px;
+}
+.btn-option{
+  border: 10px;
+}
+
+.form-mixed {
+  width: 50% ! important;
+  align: center ! important;
+}
+
+.display{
+  text-align: center;
+}
