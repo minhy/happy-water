@@ -14,38 +14,11 @@
 		limit #URL.idpage#,9
 	</cfquery>  
 
-	<script type="text/javascript">
-        function checkPrev(){
-        	var search= window.location.search;
-        	var result= search.substr(6,1);
-            if(result<=1)
-            {
-            	return false;
-            }           
-            else{
-            	return true;
-            }
-             
-        }
-        function checkNext(totalPage){
-        	var search= window.location.search;
-        	var result= search.substr(6,1);
-            if(result>=totalPage)
-            {
-            	return false;
-            }           
-            else{
-            	return true;
-            }
-             
-        }
-     </script>
-
 	<cfset sumpage = qSumColumn.dem/9+1>
 	<div class="row clearfix">
 		<cfloop query="qGetAll">
 			<div class="col-md-4">
-				<a href="#buildUrl('product.product_detail')#/?productID=#qGetAll.productID#" class="category-startpage">
+				<a href="#buildUrl('product.detail')#/?productID=#qGetAll.productID#" class="category-startpage">
 				<img class="categories" src="#qGetAll.image#" width="300" height="300">
 				<p class="bginfo">#qGetAll.description#</p>
 				<div class="category-name">#qGetAll.productName#</div>
