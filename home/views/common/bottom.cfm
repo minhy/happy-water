@@ -1,3 +1,9 @@
+<cfquery name="qGetMenuBottom">
+	SELECT * 
+	FROM menu 
+	WHERE menu_tag = "bottom"
+	AND menu_isactive = 1
+</cfquery>
 <cfoutput>
 <section id="bottom">
 	<div class="row clearfix">
@@ -15,31 +21,16 @@
 		</div>
 		<div class="col-md-4 column line-right">
 			<div class="row clearfix">
-				<div class="col-md-6 column">
-					<ul class="nav">
-						<li>
-							<a href="##">Our Story</a>
-						</li>
-						<li>
-							<a href="##">Meet Us</a>
-						</li>
-						<li>
-							<a href="##">Contact Us</a>
-						</li>
+				<div class="col-md-12 column">
+					<ul class="nav nav-pills">
+						<cfloop query="qGetMenuBottom">
+							<li>
+								<a href = "#getContextRoot()#/#qGetMenuBottom.menu_link#">#qGetMenuBottom.menu_name#</a>
+							</li>
+						</cfloop>
+
 					</ul>
-				</div>
-				<div class="col-md-6 column">
-					<ul class="nav">
-						<li>
-							<a href="##">Blog</a>
-						</li>
-						<li>
-							<a href="##">Press</a>
-						</li>
-						<li>
-							<a href="##">Site Map</a>
-						</li>
-					</ul>
+
 				</div>
 			</div>
 		</div>

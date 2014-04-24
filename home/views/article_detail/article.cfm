@@ -1,10 +1,10 @@
-<cfset id_category = #URL.categoryID# >
-<cfif id_category EQ "ne">
+<cfset tag = #URL.tag# >
+<cfif tag EQ "ne">
 	<cflocation url="#getContextRoot()#"/>
 </cfif>
 <cfquery name="qGetAbout">
 	SELECT article_content, article_title, article_id, article_img FROM article 
-	WHERE tag = <cfqueryparam sqltype="varchar" value="#id_category#" />
+	WHERE tag = <cfqueryparam sqltype="varchar" value="#tag#" />
 	AND article_isactive = 1
 </cfquery>
 

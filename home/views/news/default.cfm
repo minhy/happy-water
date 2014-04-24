@@ -1,43 +1,14 @@
-<script type="text/javascript">
-    function checkPrev(){
-    	var search= window.location.search;
-    	var result= search.substr(6,1);
-        if(result<=1)
-        {
-        	return false;
-        }           
-        else{
-        	return true;
-        }
-         
-    }
-    function checkNext(totalPage){
-    	var search= window.location.search;
-    	var result= search.substr(6,1);
-        if(result>=totalPage)
-        {
-        	return false;
-        }           
-        else{
-        	return true;
-        }
-         
-    }
- </script>
-<cfoutput>
 <cfparam name="URL.page" default="1">
 <cfset cr_page = "news" />
 <cfset limit  = 3 />
 <cfset URL.idpage = (URL.page -1)*#limit# />
-
 <cfquery name="qGetArticle">
 	SELECT *
-	FROM article
+	FROM article 
 	WHERE article_isactive = 1
-	AND tag = "ne"
+	AND tag ="ne"
 	ORDER BY article_id ASC LIMIT #URL.idpage#,#limit#
 </cfquery>
-
 <cfquery name="qGetArticle1">
 	SELECT Count(article_id) as dem
 	FROM article
@@ -45,7 +16,33 @@
 	AND tag ="ne"
 	ORDER BY article_id ASC 
 </cfquery>
-
+<cfoutput>
+	<script type="text/javascript">
+        function checkPrev(){
+        	var search= window.location.search;
+        	var result= search.substr(6,1);
+            if(result<=1)
+            {
+            	return false;
+            }           
+            else{
+            	return true;
+            }
+             
+        }
+        function checkNext(totalPage){
+        	var search= window.location.search;
+        	var result= search.substr(6,1);
+            if(result>=totalPage)
+            {
+            	return false;
+            }           
+            else{
+            	return true;
+            }
+             
+        }
+ </script>
 <div class="header-title">
 	<h1>News</h1>
 </div>

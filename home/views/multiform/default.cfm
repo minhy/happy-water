@@ -117,7 +117,7 @@ function multiform( name,level,question_tf,nq,tfparent) {
 <cfset question_tf=URL.tf/>
 <cfset tfparent = URL.tfparent/>
 <cfset i=1/>
-<cfset user_id=3/>
+<cfset user_id=5/>
 
 <cfquery name="qGetUserRe" result="tmpRe">
 	select groupre_id from user where userID=<cfqueryparam sqltype="integer" value="#user_id#">
