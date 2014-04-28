@@ -157,7 +157,7 @@ $(function () {
             plotShadow: false
         },
         title: {
-            text: 'Top Group-Product Sell in week'
+            text: 'Top Group-Product in week'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
