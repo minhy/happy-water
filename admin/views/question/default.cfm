@@ -42,15 +42,23 @@
 			<tbody>
 				<cfloop query="qGetQuestion">
 					<tr>
-						<td>
+						<td style="width:7%; text-align: center">
 							#stt#
 						</td>
-						<td>
+						<td style="width:75%; text-align: center">
 							#qGetQuestion.question_name#
 						</td>
 						<td>
-							<a href="#buildUrl('question.questionform')#?id=#qGetQuestion.question_id#">[edit]</a>
-							<a href="#buildUrl('question.delete')#?id=#qGetQuestion.question_id#" onclick ="return checkDelete()">[delete]</a>
+							<a href="#buildUrl('question.questionform')#?id=#qGetQuestion.question_id#">
+								<div class="btn-group btn-group-xs">
+			  						<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-remove"></span> Edit</button>
+			  					</div>
+							</a>
+							<a href="#buildUrl('question.delete')#?id=#qGetQuestion.question_id#" onclick ="return checkDelete()">
+								<div class="btn-group btn-group-xs">
+			  						<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+			  					</div>
+							</a>
 						</td>
 					</tr>
 					<cfset stt=stt+1>
@@ -61,7 +69,7 @@
 		<div class="col-md-3">
 			<div class="btn-group">
 				<a href="#buildUrl('question.questionform')#">
-  				<button type="button" class="btn btn-default">Add Question</button>
+  				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add Question</button>
   				</a>
 			</div>
 		</div>
