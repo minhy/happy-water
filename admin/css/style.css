@@ -1,6 +1,10 @@
 body {
   background: #CCC;
 }
+th {
+  text-align: center;
+  font-size: 12px;
+}
 #header {
   background: #0088cc;
   height: 70px;
