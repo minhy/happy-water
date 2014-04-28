@@ -210,7 +210,7 @@ $(document).ready(function() {
 		<table id="table_user" class="display">
 			<thead style="background-color: black;">
 				<tr>
-					<th>User ID</th>
+					<th>ID</th>
 					<th>First Name</th>
 					<th>Last Name</th>
 					<th>DOB</th>
