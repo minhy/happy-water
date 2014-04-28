@@ -6,14 +6,14 @@
 	SELECT *
 	FROM article 
 	WHERE article_isactive = 1
-	AND tag ="ne"
+	AND tag ="news"
 	ORDER BY article_id ASC LIMIT #URL.idpage#,#limit#
 </cfquery>
 <cfquery name="qGetArticle1">
 	SELECT Count(article_id) as dem
 	FROM article
 	WHERE article_isactive = 1
-	AND tag ="ne"
+	AND tag ="news"
 	ORDER BY article_id ASC 
 </cfquery>
 <cfoutput>

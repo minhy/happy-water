@@ -1,5 +1,5 @@
 <cfset tag = #URL.tag# >
-<cfif tag EQ "ne">
+<cfif tag EQ "news">
 	<cflocation url="#getContextRoot()#"/>
 </cfif>
 <cfquery name="qGetAbout">
