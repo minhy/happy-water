@@ -5,8 +5,10 @@ component extends="lib.framework" {
     this.sessionTimeout = CreateTimeSpan(0,0,30,30);
     
     function onSessionStart() {
-        session.uniqueID = CreateUUID();
-        session.shoppingcart = arrayNew(1);
+        session.uniqueID      = CreateUUID();
+        session.shoppingcart  = arrayNew(1);
+        Session.isAdmin       = false;
+	 	Session.isLoggedIn    = false;
     }
 
 	this.defaultdatasource = "happy_water";
@@ -27,5 +29,6 @@ component extends="lib.framework" {
 	 variables.framework.defaultSection = 'main';
 	 variables.framework.defaultItem = 'default';
 	 variables.framework.reloadApplicationOnEveryRequest = true;
+	  
 	
 }
