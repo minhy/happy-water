@@ -1,7 +1,7 @@
 <footer id="footer">
 	<div class="row clearfix">
 		<div class="col-md-12 column">
-			© 2014 - HAPPY WATER - ALL RIGHTS RESERVED
+			HAPPY WATER - ALL RIGHTS RESERVED
 		</div>
 	</div>
 	<form name="fShopCart" method="POST" action="#getContextRoot()#/index.cfm/product/chectOut">

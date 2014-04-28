@@ -42,15 +42,23 @@
 		<tbody>
 			<cfloop query="qGetMenu">
 				<tr>
-					<td>
+					<td style="width:7%; text-align: center">
 						#stt#
 					</td>
-					<td>
+					<td style="width:75%; text-align: center">
 						#qGetMenu.menu_name#
 					</td>
 					<td>
-						<a href="#buildUrl('menu.menuform')#?id=#qGetMenu.menu_id#">[edit]</a>
-						<a href="#buildUrl('menu.delete')#?id=#qGetMenu.menu_id#" onclick ="return checkDelete()">[delete]</a>
+						<a href="#buildUrl('menu.menuform')#?id=#qGetMenu.menu_id#">
+							<div class="btn-group btn-group-xs">
+		  						<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+		  					</div>
+						</a>
+						<a href="#buildUrl('menu.delete')#?id=#qGetMenu.menu_id#" onclick ="return checkDelete()">
+							<div class="btn-group btn-group-xs">
+		  						<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+		  					</div>
+						</a>
 					</td>
 				</tr>
 				<cfset stt=stt+1>
@@ -61,7 +69,7 @@
 	<div class="col-md-3">
 		<div class="btn-group">
 			<a href="#buildUrl('menu.menuform')#">
-				<button type="button" class="btn btn-default">Add Menu</button>
+				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add Menu</button>
 				</a>
 		</div>
 	</div>	

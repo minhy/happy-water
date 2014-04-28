@@ -58,6 +58,10 @@ function chuyentrang(status, id, url){
 </cfquery>
 <cfoutput>
 <body>
+<legend><h1>Category Management</h1></legend>
+<div class="alert alert-info">
+    <button type="button" class="btn btn-default" onclick="chuyentrang(1,'#qCategory.categoryID#', '#buildUrl('category.form')#');"><span class="glyphicon glyphicon-plus"></span> Add new Category</button>
+</div>
  <table id="table_id" class="display">
  		<thead>
             <tr>
@@ -89,17 +93,17 @@ function chuyentrang(status, id, url){
                     <cfset b="no">
                 </cfif>
                 <tr id="#qCategory.categoryID#">
-                    <td>#qCategory.categoryID#</td>
+                    <td class="col-md-1 column">#qCategory.categoryID#</td>
                     <td>#qCategory.categoryName#</td>
-                    <td>#qParent.categoryName#
+                    <td class="col-md-2 column">#qParent.categoryName#
                     </td>
                     <td><img src="#getContextRoot()##qCategory.image#" width="50" height="50"/></td>                   
-                    <td>#a#</td>
-                    <td>#b#</td>
-                    <td>#qCategory.tag#</td>
-                    <td class="col-md-3 column">
+                    <td class="col-md-1 column">#a#</td>
+                    <td class="col-md-1 column">#b#</td>
+                    <td class="col-md-2 column">#qCategory.tag#</td>
+                    <td class="col-md-2 column">
                         <div class="btn-group btn-group-xs">
-                            <button type="button" class="btn btn-default" onclick="chuyentrang(1,'#qCategory.categoryID#', '#buildUrl('category.form')#');"><span class="glyphicon glyphicon-plus"></span> Add</button>
+                            <!--- <button type="button" class="btn btn-default" onclick="chuyentrang(1,'#qCategory.categoryID#', '#buildUrl('category.form')#');"><span class="glyphicon glyphicon-plus"></span> Add</button> --->
                             <button type="button" class="btn btn-default" onclick="chuyentrang(2,'#qCategory.categoryID#', '#buildUrl('category.form')#');"><span class="glyphicon glyphicon-edit"></span>  Edit</button>
                             <button class="btn btn-danger" type="button" onclick="chuyentrang(3,'#qCategory.categoryID#', '#buildUrl('category.default')#');"
                             ><span class="glyphicon glyphicon-remove"></span> Delete</button>

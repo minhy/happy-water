@@ -37,6 +37,15 @@
     order by quantity desc
     limit 5
 </cfquery>
+<cfquery name="qBestDay" result="bestday">
+    select product.productName, sum(orderdetail.quantity) as quantity, `order`.orderDate
+    from product left join orderdetail on product.productID = orderdetail.productID
+    left join `order` on `order`.orderID = orderdetail.orderID
+    WHERE orderdetail.quantity is not null and orderDate BETWEEN DATE_SUB(CURDATE(), INTERVAL 1 DAY) AND CURDATE()
+    group BY product.productID
+    order by quantity desc
+    limit 5
+</cfquery>
 
 <!--- Prepair dataset for chart --->
 <cfset Ox = "">
@@ -118,7 +127,7 @@ $(function () {
             yAxis: {
                 min: 0,
                 title: {
-                    text: 'Quantity(unit)'
+                    text: 'Quantity (Unit)'
                 }
             },
             tooltip: {
@@ -148,16 +157,66 @@ $(function () {
         });
     });
 
-
+$(function () {
+        $('##con2').highcharts({
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'BestSeller in Day'
+            },
+            // subtitle: {
+            //     text: 'Source: WorldClimate.com'
+            // },
+            xAxis: {
+                categories: 
+                [
+                    <cfloop query="qBestDay">
+                        '#qBestDay.productName#',
+                    </cfloop>
+                ]
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: 'Quantity (Unit)'
+                }
+            },
+            tooltip: {
+                headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                    '<td style="padding:0"><b>{point.y:.1f} unit</b></td></tr>',
+                footerFormat: '</table>',
+                shared: true,
+                useHTML: true
+            },
+            plotOptions: {
+                column: {
+                    pointPadding: 0.2,
+                    borderWidth: 0
+                }
+            },
+            series: [{
+                name: 'Sale',
+                data: 
+                [
+                    <cfloop query="qBestDay">
+                        #qBestDay.quantity#,
+                    </cfloop>
+                ]
+    
+            }]
+        });
+    });
     $(function () {
-    $('##con2').highcharts({
+    $('##con3').highcharts({
         chart: {
             plotBackgroundColor: null,
             plotBorderWidth: null,
             plotShadow: false
         },
         title: {
-            text: 'Top Group-Product Sell in week'
+            text: 'Top Group-Product in week'
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -250,15 +309,21 @@ $(function () {
                         <a href="##panel-123123" data-toggle="tab">BestSeller</a>
                     </li>
                     <li>
-                        <a href="##panel-123456" data-toggle="tab">Top Group-Product</a>
+                        <a href="##panel-123456" data-toggle="tab">BestSeller in Week</a>
+                    </li>
+                    <li>
+                        <a href="##panel-123789" data-toggle="tab">Top Group-Product</a>
                     </li>
                 </ul>
                 <div class="tab-content">
                     <div class="tab-pane active" id="panel-123123">
-                        <div id="con1" style="width:900px; height:400px; margin: 0 auto"></div>
+                        <div id="con2" style="width:900px; height:400px; margin: 0 auto"></div>
                     </div>
                     <div class="tab-pane" id="panel-123456">
-                        <div id="con2" style="min-width: 700px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                        <div id="con1" style="width:900px; height:400px; margin: 0 auto"></div>
+                    </div>
+                    <div class="tab-pane" id="panel-123789">
+                        <div id="con3" style="min-width: 700px; height: 400px; max-width: 600px; margin: 0 auto"></div>
                     </div>
                 </div>
             </div>
