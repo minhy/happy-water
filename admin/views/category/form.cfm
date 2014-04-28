@@ -260,7 +260,7 @@
                     </div>
                     <div class="form-group">
                          <textarea type="text" required="yes" class="form-control" id="description" name="description">#FORM.description#</textarea>
-                         <script type="text/javascript">CKEDITOR.replace( 'description'); </script>
+                         
                     </div>
 
                     <!---Parent --->
