@@ -1,4 +1,9 @@
-<cfset userID = 11>
+<cftry>
+	<cfset userID=SESSION.userID/>
+	<cfcatch>
+		<cfset userID=""/>
+	</cfcatch>
+</cftry>
 <cfoutput>
 	<cfparam name="URL.page" default="1">
 	<cfset URL.idpage = (URL.page -1)*9 />
@@ -21,7 +26,7 @@
 	</cfquery>  
 
 
-	<cfset sumpage = ceiling(qSumRecord.dem/9+1)>
+	<cfset sumpage = ceiling(qSumRecord.dem/9)>
 	<div class="row clearfix">
 		<cfloop query="qRecomment">
 			<div class="col-md-4">
