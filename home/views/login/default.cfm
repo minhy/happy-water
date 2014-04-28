@@ -26,8 +26,9 @@
 		<cfelseif #check_login.level[1]# EQ 1 OR #check_login.level[1]# EQ 2>
         
               <cfset SESSION.isLoggedIn = true>
-              <cfset SESSION.Admin      = true>
+              <cfset SESSION.isAdmin      = true>
               <cfset SESSION.userID     = #check_login.userID[1]#>
+              <cfset SESSION.Level      = #check_login.level[1]#>
               <cfset SESSION.name       = #check_login.firstName[1]#>
                <cflocation url="#getContextRoot()#/index.cfm/admin:main" addtoken="false">
         
@@ -40,8 +41,9 @@
 		<cfelse>
         
               <cfset SESSION.isLoggedIn = true>
-              <cfset SESSION.Admin      = false>
+              <cfset SESSION.isAdmin    = false>
               <cfset SESSION.userID     = #check_login.userID[1]#>
+              <cfset SESSION.Level      = #check_login.level[1]#>
               <cfset SESSION.name       = #check_login.firstName[1]#>
               <cflocation url="#getContextRoot()#/index.cfm" addtoken="false"> 
         <!--- </cflock> --->
@@ -56,34 +58,13 @@
 </cfif>
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Login</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <cfoutput>
 
-<link href="#getContextRoot()#/home/css/style1.css" rel="stylesheet">
+<link href="#getContextRoot()#/home/css/form.css" rel="stylesheet">
 <link rel="stylesheet" href="#getContextRoot()#/home/css/jquery-ui.css">
 
 </cfoutput>
 
-
-
-</head>
-<body>
-<div class="container">
-  <div class="row-fluid">
-    <div class="span12">
-    
-    </div>
-  </div>
-  <div class="row-fluid">
-  <div class="span6 offset6">
-    <div id="maincontent" class="span8"> 
-      
       <form id="registration-form" class="form-horizontal" action ="" method ="post" enctype="multipart/form-data" > <!-- style ="background-color:#eeeeee" -->
        <cfoutput>
         
@@ -130,14 +111,4 @@
       </fieldset>
   </cfoutput>
       </form>
-    </div>
-    <!-- .span --> 
-  </div>
-  <!-- .row -->
-  
-</div>
-<!-- .container --> 
-
-</body>
-
 

@@ -46,7 +46,7 @@
 	<div class="container">
 	<div class="row clearfix">
 		<div class="col-md-12 column">
-			© 2014 - HAPPY WATER - ALL RIGHTS RESERVED
+			HAPPY WATER - ALL RIGHTS RESERVED
 		</div>
 	</div>
 	</div>

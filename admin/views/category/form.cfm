@@ -322,12 +322,6 @@
                 </div>
             </div>
         </div> 
-        <cfdump eval=form>
-        <cfdump eval="qCategory">
-        <cfdump eval="#URL.categoryID#">
-        <cfdump eval=formaction> 
-        <cfdump var="#getContextRoot()#">
-            <!-- END Master Page -->
         </section>
     </div>
 </cfoutput>
