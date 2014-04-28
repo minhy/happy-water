@@ -1,4 +1,3 @@
-
 <script language="javascript">
 			function checkDelete() {
 			    if (confirm("Are you sure you want delete it?")) {
@@ -10,20 +9,18 @@
 
 				$(document).ready( function () {
 		    $('#table_id').dataTable({
+		    	"bJQueryUI": true,
                 "sPaginationType": "full_numbers"
 		    });
 		    
 		} );
 		</script>
 <cfoutput>
-<cfparam name="news_id" type="varchar" default="ne">
-<cfparam name="user_id" type="integer" default="1">
 <cfquery name="qGetArticle">
 	select article.*,categoryName from article,category
 	where article.tag=category.tag
 	order by tag
 </cfquery>
-
 <cfset stt=1>
 
 <h3 class="header-title">Article Management</h3>
