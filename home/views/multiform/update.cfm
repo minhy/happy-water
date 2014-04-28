@@ -1,5 +1,5 @@
 <cfoutput>
-	<cfdump eval=SESSION.userID/>
+	
 <cftransaction isolation="serializable">
 	<cfquery name="qUpdateUser" >
 		update  user set groupre_id=<cfqueryparam sqltype="varchar" value="#URL.groupid#"/>
@@ -7,5 +7,5 @@
 	</cfquery>
 </cftransaction>
 
- <cflocation url="#getContextRoot()#"/> 
+ <cflocation url="#buildUrl('product.recomment')#"/> 
 </cfoutput>
