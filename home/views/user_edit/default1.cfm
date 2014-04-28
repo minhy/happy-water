@@ -68,13 +68,11 @@
 </cfif>
 
 <cfoutput>
+
 <link href="#getContextRoot()#/home/css/form.css" rel="stylesheet">
 <link rel="stylesheet" href="#getContextRoot()#/home/css/jquery-ui.css">
+
 </cfoutput>
-
-
-
-<body>
 
       
       <form id="registration-form" class="form-horizontal" action ="" method ="post" enctype="multipart/form-data">
@@ -110,7 +108,7 @@
 
           </div>
           
-          <div class="form-control-group" style="float:left;">
+          <div class="form-control-group" style="float:left;padding-left:160px">
             <label class="control-label" for="name">DateOfBirth</label>
             <div class="controls">
 
@@ -173,18 +171,12 @@
           
           
           <div class="form-actions" style="padding:17px 270px;padding-left:320px;float:left">
-            <button type="submit" class="btn btn-success btn-large">Save</button>
+            <button type="submit" class="btn btn-success btn-large">Edit</button>
             
           </div>
   </cfoutput>
       </form>
     
-  <div>
-    <p style="clear:both"> </p>
-  </div>
-  
-
-<!-- .container --> 
 <cfoutput>
 <script src="#getContextRoot()#/home/js/jquery-1.7.1.min.js"></script> 
 

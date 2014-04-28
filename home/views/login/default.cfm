@@ -28,7 +28,7 @@
 		<cfelseif #check_login.level[1]# EQ 1 OR #check_login.level[1]# EQ 2>
         
               <cfset SESSION.isLoggedIn = true>
-              <cfset SESSION.isAdmin      = true>
+              <cfset SESSION.isAdmin    = true>
               <cfset SESSION.userID     = #check_login.userID[1]#>
               <cfset SESSION.Level      = #check_login.level[1]#>
               <cfset SESSION.name       = #check_login.firstName[1]#>
