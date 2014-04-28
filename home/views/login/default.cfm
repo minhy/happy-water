@@ -1,12 +1,13 @@
 
 
-
+<cfparam name="FORM.remember" default="false">
 <cfparam name="FORM.email" default="">
 <cfparam name="FORM.pass"  default="">
 <cfparam name="Login.check.text"  default="">
 
-<cfif CGI.REQUEST_METHOD EQ 'POST'>
 
+
+<cfif CGI.REQUEST_METHOD EQ 'POST'>
 
 <cfquery name="check_login" datasource="happy_water" result="result">
 	SELECT * FROM user
@@ -30,6 +31,9 @@
               <cfset SESSION.userID     = #check_login.userID[1]#>
               <cfset SESSION.Level      = #check_login.level[1]#>
               <cfset SESSION.name       = #check_login.firstName[1]#>
+              <cfif #FORM.remember# EQ true >
+                <cfcookie name="SESSION.isLoggedIn" value="true">
+              </cfif>
                <cflocation url="#getContextRoot()#/index.cfm/admin:main" addtoken="false">
         
 			<!--
@@ -45,6 +49,13 @@
               <cfset SESSION.userID     = #check_login.userID[1]#>
               <cfset SESSION.Level      = #check_login.level[1]#>
               <cfset SESSION.name       = #check_login.firstName[1]#>
+
+              <cfif #FORM.remember# EQ true >
+                <cfcookie name="SESSION.isLoggedIn" value="true">
+              </cfif>
+              
+
+
               <cflocation url="#getContextRoot()#/index.cfm" addtoken="false"> 
         <!--- </cflock> --->
            
@@ -92,7 +103,7 @@
            <div class="form-control-group">
             
             <div class="controls">
-              <input type="checkbox" class="checkbox" name="remember" style ="height:inherit" > Remember me?
+              <input type="checkbox" class="checkbox" name="remember" style ="height:inherit" value ="true" > Remember me?
             </div>
 
           </div>         
