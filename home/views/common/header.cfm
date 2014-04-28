@@ -1,3 +1,6 @@
+<cfparam name="SESSION.isLoggedIn" default="false">
+<cfparam name="SESSION.name" default="">
+<!---dsfsdjkfhgsduyhfhsdjfhgsjehfshgf---->
 <cfoutput>
 	<header id="header">
 		<div class="container header">
@@ -10,8 +13,33 @@
 				<div class="col-md-4 column">
 					<div class="row clearfix">
 						<div class="col-md-6 column register">
-							<a href="##">Register</a> / <a href="##">Sign In</a>
-						</div>
+					
+							<cfif SESSION.isLoggedIn EQ true>
+						
+					
+                        <a href="##" class="dropdown-toggle" data-toggle="dropdown">Hi!#SESSION.name# <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+                            <li >
+                            	<a href="#getContextRoot()#/index.cfm/home:user_edit">User edit</a>
+                            </li>
+
+                            <li >
+                            	<a href="#getContextRoot()#/index.cfm/home:changepassword">Change your password</a>
+                            </li>
+                            
+                        </ul>
+                   	
+							<a href="#getContextRoot()#/index.cfm/home:logout">Log Out</a>
+							<cfelse>
+							<a href="#getContextRoot()#/index.cfm/home:register">Register</a> / <a href="#getContextRoot()#/index.cfm/home:login">Sign In</a>
+							
+							</cfif>
+
+
+						<!--- </cflock> --->
+
+					</div>
 						<div class="col-md-6 column cart">
 							<a href="##" onclick="showShoppingCart()"><span class="glyphicon glyphicon-shopping-cart" data-toggle="modal" data-target="##myModal" id="aShoppingCart">(#arrayLen(session.shoppingcart)#products)</span></a>
 						</div>
