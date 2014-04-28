@@ -1,4 +1,4 @@
-<cfset userID = #session.userID#>
+<cfset userID = 11>
 <cfoutput>
 	<cfparam name="URL.page" default="1">
 	<cfset URL.idpage = (URL.page -1)*9 />

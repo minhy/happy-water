@@ -30,13 +30,13 @@
 	<div class="row clearfix">
 		<div class="col-md-12" align="center">
 			<ul class="pagination">
-			  <li><a href="product.cfm?page=#URL.page-1#" onclick="return checkPrev()">&laquo;</a></li>
+			  <li><a href="?page=#URL.page-1#" onclick="return checkPrev()">&laquo;</a></li>
 			  <cfloop from="1" to="#sumpage#" index="i">			
 				<li>
 					<a href="product.cfm?page=#i#">#i#</a>
 				</li>
 			  </cfloop>
-			  <li><a href="product.cfm?page=#URL.page+1#" onclick="return checkNext(#sumpage#)">&raquo;</a></li>
+			  <li><a href="?page=#URL.page+1#" onclick="return checkNext(#sumpage#)">&raquo;</a></li>
 			</ul>
 		</div>
 	</div>
