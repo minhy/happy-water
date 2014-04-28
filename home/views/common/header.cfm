@@ -27,6 +27,10 @@
                             <li >
                             	<a href="#getContextRoot()#/index.cfm/home:changepassword">Change your password</a>
                             </li>
+
+                            <li >
+                            	<a href="#getContextRoot()#/index.cfm/home:product/recomment">recomment</a>
+                            </li>
                             
                         </ul>
                    	
