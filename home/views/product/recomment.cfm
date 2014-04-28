@@ -25,7 +25,7 @@
 		LIMIT #URL.idpage#,9
 	</cfquery>  
 
-	<a href="#buildUrl('multiform.update')#?groupid=''">Survey again</a>
+	<a href="#buildUrl('multiform.update')#?groupid=0">Survey again</a>
 
 	<cfset sumpage = ceiling(qSumRecord.dem/9)>
 	<div class="row clearfix">
