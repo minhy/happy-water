@@ -5,7 +5,7 @@
 	<cfquery name="qSumRecord" datasource="happy_water">
 		SELECT Count(productID) as dem
 		FROM product
-		WHERE categoryID = #URL.categoryID#
+		WHERE categoryID = #URL.categoryID#  and status = 1 and IsActive = 1
 		ORDER BY productID
 
 	</cfquery> 
@@ -13,7 +13,7 @@
 	<cfquery name="qGetByCategory" datasource="happy_water">
 		SELECT * 
 		FROM product 
-		WHERE categoryID = #URL.categoryID#
+		WHERE categoryID = #URL.categoryID# and status = 1 and IsActive = 1
 		ORDER BY productDate DESC
 		LIMIT #URL.idpage#,9
 	</cfquery>  

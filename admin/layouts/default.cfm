@@ -1,4 +1,8 @@
-<cfoutput>
+<cfif #Session.isAdmin# EQ true AND #Session.isLoggedIn# EQ true>
+	
+
+
+<cfoutput>	 		
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,3 +58,6 @@
 </body>
 </html>
 </cfoutput>
+<cfelse>
+	<cflocation url="#getContextRoot()#/index.cfm/admin:main.error" addtoken="false">
+</cfif>
