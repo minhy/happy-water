@@ -212,8 +212,10 @@ p.bginfo:hover {
 }
 
 img.productImg{
-  float: right;
+  float: left;
   display: block;
+  margin-right: 5px;
+  margin-top: 5px;
 }
 
 #trTotal{
