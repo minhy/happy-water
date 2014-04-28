@@ -72,28 +72,4 @@
 		</div>
 	</div>
 	<!-- END Master Page -->
-	<!-- Modal -->
-	<script type="text/javascript">
-		function btnBuyOnClick(productID){
-			var quantity = $("[name='nQuantity" + productID + "']").val();
-			$.ajax({
-		               type: "get",
-		               url: "http://#CGI.SERVER_NAME#:#CGI.SERVER_PORT#/home/remote/shoppingcartservices.cfc?",
-		               data: {
-		               	method:"updateShoppingCart",
-		                   productID: productID,
-		                   quantity:quantity
-		               },
-		               dataType: "json",
-		               success: function(data){
-		               	if(data == true){
-		               		countProduct();
-		               		alert("Succsess");
-		               	}
-		               	else
-		               		alert("failed");
-		               }
-		           });
-		}
-	</script>
 </cfoutput>
