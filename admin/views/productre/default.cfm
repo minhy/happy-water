@@ -41,27 +41,30 @@
 			<tbody>
 				<cfloop query="qGetProductRe">
 					<tr>
-						<td>
+						<td style="width:5%; text-align: center">
 							#stt#
 						</td>
-						<td>
+						<td style="width:5%; text-align: center">
 							#qGetProductRe.productID#
 						</td>
-						<td>
+						<td style="width:15%; text-align: center">
 							#qGetProductRe.productName#
 						</td>
-						<td>
+						<td style="width:40%; text-align: center">
 							#qGetProductRe.Description#
 						</td>
-						<td>
+						<td style="width:15%; text-align: center">
 							#qGetProductRe.price#
 						</td>
-						<td>
+						<td style="width:15%; text-align: center">
 							#qGetProductRe.groupre_name#
 						</td>
 						<td>
-							
-							<a href="#buildUrl('productre.delete')#?productID=#qGetProductRe.productID#&groupReID=#qGetProductRe.groupRe_id#" onclick ="return checkDelete()">[delete]</a>
+							<a href="#buildUrl('productre.delete')#?productID=#qGetProductRe.productID#&groupReID=#qGetProductRe.groupRe_id#" onclick ="return checkDelete()">
+								<div class="btn-group btn-group-xs">
+			  						<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+			  					</div>
+			  				</a>					
 						</td>
 					</tr>
 					<cfset stt=stt+1>
@@ -72,7 +75,7 @@
 		<div class="col-md-3">
 			<div class="btn-group">
 				<a href="#buildUrl('productre.productreform')#">
-  				<button type="button" class="btn btn-default">Add Product Group</button>
+  				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add Product Group</button>
   				</a>
 			</div>
 		</div>

@@ -50,18 +50,26 @@
 			<tbody>
 				<cfloop query="qGetArticle">
 					<tr>
-						<td>
+						<td style="text-align: center">
 							#stt#
 						</td>
-						<td>
+						<td style="width: 60%">
 							#qGetArticle.article_title#
 						</td>
-							<td>
+						<td style="text-align: center">
 							#qGetArticle.categoryName#
 						</td>
 						<td>
-							<a href="#buildUrl('article.articleform')#?id=#qGetArticle.article_id#&tag=#qGetArticle.tag#">[edit]</a>
-							<a href="#buildUrl('article.delete')#?id=#qGetArticle.article_id#" onclick ="return checkDelete()">[delete]</a>
+							<a href="#buildUrl('article.articleform')#?id=#qGetArticle.article_id#&tag=#qGetArticle.tag#">
+								<div class="btn-group btn-group-xs">
+			  						<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span> Edit</button>
+			  					</div>
+							</a>
+							<a href="#buildUrl('article.delete')#?id=#qGetArticle.article_id#" onclick ="return checkDelete()">
+								<div class="btn-group btn-group-xs">
+			  						<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+			  					</div>
+							</a>
 						</td>
 					</tr>
 					<cfset stt=stt+1>
@@ -72,7 +80,7 @@
 		<div class="col-md-3">
 			<div class="btn-group">
 				<a href="#buildUrl('article.articleform')#">
-  				<button type="button" class="btn btn-default">Add Ariticle</button>
+  				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add Ariticle</button>
   				</a>
 			</div>
 		</div>
