@@ -24,10 +24,20 @@
 			<div class="row clearfix">
 				<cfloop query="qGetByNew">
 			<div class="col-md-4">
-				<a href="#buildUrl('product.detail')#/?productID=#qGetByNew.productID#" class="category-startpage">
+		
 				<img class="categories" src="#qGetByNew.image#" width="200" height="200">
-				<p class="bginfo">#qGetByNew.description#</p>
-				<div class="category-name">#qGetByNew.productName#</div>
+				<p class="bginfo">
+					#qGetByNew.description#
+						<br>
+						<br>
+						<br>
+						<br>
+						<input type="number" name="nQuantity#qGetByNew.productID#"
+						value="1" min="1" max="99" class="form-control" style="width:50px; float:left; margin-left: 40px;">
+						<button style="float:left" class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetByNew.productID#)">Buy!</button>
+				</p>
+				<a href="#buildUrl('product.detail')#/?productID=#qGetByNew.productID#">
+				<div class="category-name" style="width:200px; padding:3px;">#qGetByNew.productName#</div>
 				</a>
 			</div>
 		</cfloop>

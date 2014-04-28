@@ -19,11 +19,20 @@
 		<div class="col-md-9" align="center">
 			<div class="row clearfix">
 				<cfloop query="qGetAll">
-					<div class="col-md-4">
-						<a href="#buildUrl('product.detail')#/?productID=#qGetAll.productID#" class="category-startpage">
+					<div class="col-md-4" style="margin-bottom:10px;">
 						<img class="categories" src="#qGetAll.image#" width="200" height="200">
-						<p class="bginfo">#qGetAll.description#</p>
-						<div class="category-name">#qGetAll.productName#</div>
+						<p class="bginfo">
+							#qGetAll.description#
+								<br>
+								<br>
+								<br>
+								<br>
+								<input type="number" name="nQuantity#qGetAll.productID#"
+								value="1" min="1" max="99" class="form-control" style="width:50px; float:left; margin-left: 40px;">
+								<button style="float:left" class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetAll.productID#)">Buy!</button>
+						</p>
+						<a href="#buildUrl('product.detail')#/?productID=#qGetAll.productID#">
+						<div class="category-name" style="width:200px; padding:3px;">#qGetAll.productName#</div>
 						</a>
 					</div>
 				</cfloop>

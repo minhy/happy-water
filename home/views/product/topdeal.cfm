@@ -25,10 +25,19 @@
 			<div class="row clearfix">
 				<cfloop query="qGetByTopdeal">
 					<div class="col-md-4">
-						<a href="#buildUrl('product.detail')#/?productID=#qGetByTopdeal.productID#" class="category-startpage">
 						<img class="categories" src="#qGetByTopdeal.image#" width="200" height="200">
-						<p class="bginfo">#qGetByTopdeal.description#</p>
-						<div class="category-name">#qGetByTopdeal.productName#</div>
+						<p class="bginfo">
+							#qGetByTopdeal.description#
+								<br>
+								<br>
+								<br>
+								<br>
+								<input type="number" name="nQuantity#qGetByTopdeal.productID#"
+								value="1" min="1" max="99" class="form-control" style="width:50px; float:left; margin-left: 40px;">
+								<button style="float:left" class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetByTopdeal.productID#)">Buy!</button>
+						</p>
+						<a href="#buildUrl('product.detail')#/?productID=#qGetByTopdeal.productID#">
+						<div class="category-name" style="width:200px; padding:3px;">#qGetByTopdeal.productName#</div>
 						</a>
 					</div>
 				</cfloop>
