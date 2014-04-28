@@ -1,3 +1,4 @@
+
 <cfquery name="qGetMenuBottom">
 	SELECT * 
 	FROM menu 

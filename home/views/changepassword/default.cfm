@@ -44,12 +44,8 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Change Password</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="#getContextRoot()#/home/css/style.css" rel="stylesheet">
+
+<link href="#getContextRoot()#/home/css/form.css" rel="stylesheet">
 <link rel="stylesheet" href="#getContextRoot()#/home/css/jquery-ui.css">
 
 </cfoutput>
