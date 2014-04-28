@@ -7,5 +7,5 @@
 	</cfquery>
 </cftransaction>
 
- <cflocation url="#getContextRoot()#"/> 
+ <cflocation url="#getContextRoot()#/index.cfm/"/> 
 </cfoutput>
