@@ -1,3 +1,28 @@
+/*
+------------
+Visit twitterbootstrap.org for more tut 
+-------------
+*/
+
+@import url('bootstrap.min1.css');
+@import url('bootstrap-responsive.min.css');
+/* New styles */
+
+label.valid {
+  width: 24px;
+  height: 24px;
+  background: url(img/valid.png) center center no-repeat;
+  display: inline-block;
+  text-indent: -9999px;
+}
+label.error {
+  font-weight: bold;
+  color: red;
+  padding: 2px 8px;
+  margin-top: 2px;
+}
+/* change css by Thien */
+
 @media (min-width: 1200px) {
     .container{
         max-width: 970px;
