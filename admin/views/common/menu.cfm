@@ -24,9 +24,6 @@
 	      </ul>
 	    </li>
 	</ul>
-
-	
-
 </div>
 
 </cfoutput>
