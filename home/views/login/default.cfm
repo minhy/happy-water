@@ -1,13 +1,14 @@
 
 
-<cfparam name="FORM.remember" default="false">
+<cfparam name="FORM.remember" default=false>
 <cfparam name="FORM.email" default="">
 <cfparam name="FORM.pass"  default="">
 <cfparam name="Login.check.text"  default="">
 
 
-
+<!--- <cfdump eval = form> --->
 <cfif CGI.REQUEST_METHOD EQ 'POST'>
+
 
 <cfquery name="check_login" datasource="happy_water" result="result">
 	SELECT * FROM user
@@ -31,9 +32,12 @@
               <cfset SESSION.userID     = #check_login.userID[1]#>
               <cfset SESSION.Level      = #check_login.level[1]#>
               <cfset SESSION.name       = #check_login.firstName[1]#>
-              <cfif #FORM.remember# EQ true >
+              
+              <!--- <cfif #FORM.remember# EQ true >
                 <cfcookie name="SESSION.isLoggedIn" value="true">
               </cfif>
+              --->
+              
                <cflocation url="#getContextRoot()#/index.cfm/admin:main" addtoken="false">
         
 			<!--
@@ -50,9 +54,9 @@
               <cfset SESSION.Level      = #check_login.level[1]#>
               <cfset SESSION.name       = #check_login.firstName[1]#>
 
-              <cfif #FORM.remember# EQ true >
+            <!---   <cfif #FORM.remember# EQ "true" >
                 <cfcookie name="SESSION.isLoggedIn" value="true">
-              </cfif>
+              </cfif> --->
               
 
 
