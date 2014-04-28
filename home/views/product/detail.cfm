@@ -59,17 +59,52 @@
 			<div class="header-title">
 				<h3> NEW RELEASES</h3>
 			</div>
-			<cfloop query="qGetNewProduct">
-					<div class="alert alert-info">
-						<a href="productDetail.cfm?productID=#qGetNewProduct.productID#">
-						<img class="productImg" src="#qGetNewProduct.image#" width="32" height="32">
-						#qGetNewProduct.productName#
-						</a><br>
-						<span>$#qGetProductByID.price#</span>
-					</div>
 
-			</cfloop>
+			<div id="divNewReleases">
+				<cfloop query="qGetNewProduct">
+						<div class="alert alert-info">
+							<a href="productDetail.cfm?productID=#qGetNewProduct.productID#">
+							<img class="productImg" src="#qGetNewProduct.image#" width="32" height="32">
+							#qGetNewProduct.productName#
+							</a><br>
+							<span>
+								$#qGetProductByID.price#
+							</span>
+							<div class="input-group" style="margin-right:5px; display:inline-block; width:105px; float:right; top: -16px;">
+								<input type="number" name="nQuantity#qGetNewProduct.productID#"
+									value="1" min="1" max="99" class="form-control" style="width:50px">
+								<span class="input-group-btn">
+								<button class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetNewProduct.productID#)">Buy!</button>
+								</span>
+							</div>
+						</div>
+				</cfloop>
+		    </div>
 		</div>
 	</div>
 	<!-- END Master Page -->
+	<!-- Modal -->
+	<script type="text/javascript">
+		function btnBuyOnClick(productID){
+			var quantity = $("[name='nQuantity" + productID + "']").val();
+			$.ajax({
+		               type: "get",
+		               url: "http://#CGI.SERVER_NAME#:#CGI.SERVER_PORT#/home/remote/shoppingcartservices.cfc?",
+		               data: {
+		               	method:"updateShoppingCart",
+		                   productID: productID,
+		                   quantity:quantity
+		               },
+		               dataType: "json",
+		               success: function(data){
+		               	if(data == true){
+		               		countProduct();
+		               		alert("Succsess");
+		               	}
+		               	else
+		               		alert("failed");
+		               }
+		           });
+		}
+	</script>
 </cfoutput>

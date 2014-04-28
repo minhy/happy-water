@@ -23,7 +23,7 @@
 		<div class="col-md-9" align="center">
 			<div class="row clearfix">
 				<cfloop query="qGetByNew">
-			<div class="col-md-4">
+			<div class="col-md-4" style="margin-bottom:10px;">
 		
 				<img class="categories" src="#qGetByNew.image#" width="200" height="200">
 				<p class="bginfo">
