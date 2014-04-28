@@ -1,5 +1,10 @@
 <!---- Contain shipping fee --->
 <cfparam name="shippingfee" type="float" default="0">
+<!---- Contain address --->
+<cfparam name="address" type="string" default="">
+<cfparam name="user_address" type="string" default="">
+<cfparam name="user_name" type="string" default="">
+
 
 
 
@@ -87,32 +92,47 @@
 
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
 							<h4 class="modal-title" id="myModalLabel">
-								Tell us where is your location !
+								Check out your cart !
 							</h4>
 						</div>
 						<div class="modal-body">
-							<label for="countries">Choose your country</label>
-							<div class="form-group">
-								<div class="clearfix">
-									<select class="form-control" name="countries" id="countries" >
-										<option value="0">Viet Nam</option>
-										<option value="30">Laos</option>
-										<option value="30">Cambodia</option>
-										<option value="40">Brunei</option>
-										<option value="30">East Timor</option>								
-										<option value="40">Indonesia</option>
-										<option value="50">Malaysia</option>
-										<option value="50">Myanmar (Burma)</option>
-										<option value="40">Philippines </option>
-										<option value="50">Singapore</option>
-										<option value="50">Thailand</option>								
-									</select>
-								</div>
-							</div>
-							<label for="shippingfee">Your shipping fee</label>
-							<div class="form-group">
-								<div class="clearfix">
-									<input type="number" class="form-control" name="shippingfee" id="shippingfee" value="#shippingfee#" disabled>
+							<div class="row clearfix">
+								<cfif SESSION.isLoggedIn eq true>
+									<cfinclude template="shoppingcartloggedin.cfm">
+								<cfelse>
+									<cfinclude template="shoppingcartnotlogin.cfm">
+								</cfif>
+								<div class="col-md-6 column" style="border-left:1px solid brown;">
+									<label for="countries">Choose a country</label>
+									<div class="form-group">
+										<div class="clearfix">
+											<select class="form-control" name="countries" id="countries" >
+												<option value="0">Viet Nam</option>
+												<option value="30">Laos</option>
+												<option value="30">Cambodia</option>
+												<option value="40">Brunei</option>
+												<option value="30">East Timor</option>								
+												<option value="40">Indonesia</option>
+												<option value="50">Malaysia</option>
+												<option value="50">Myanmar (Burma)</option>
+												<option value="40">Philippines </option>
+												<option value="50">Singapore</option>
+												<option value="50">Thailand</option>								
+											</select>
+										</div>
+									</div>
+									<label for="shippingfee">Shipping fee</label>
+									<div class="form-group">
+										<div class="clearfix">
+											<input type="number" class="form-control" name="shippingfee" id="shippingfee" value="#shippingfee#" disabled>
+										</div>
+									</div>
+									<label for="shippingfee">Delivery place</label>
+									<div class="form-group">
+										<div class="clearfix">
+											<textarea type="text" class="form-control" name="address" id="address" value="#address#"></textarea>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
