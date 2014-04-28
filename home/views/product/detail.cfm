@@ -67,6 +67,7 @@
 						</a><br>
 						<span>$#qGetProductByID.price#</span>
 					</div>
+
 			</cfloop>
 		</div>
 	</div>

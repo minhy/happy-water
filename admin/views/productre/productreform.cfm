@@ -24,14 +24,30 @@
             });
 
 		});
+
+            function test(sel) {
+            //alert(sel.options[sel.selectedIndex].value);
+             window.location.href="productreform?groupid="+sel.options[sel.selectedIndex].value;
+    };
 	</script>
 <cfoutput>
+    <cftry>
+        <cfparam name="URL.groupid" default="g1"/>
+        <cfset groupid=URL.groupid/>
+        <cfcatch>
+         <cfset groupid="g1"/>
+        </cfcatch>
+    </cftry>
+  
 <h3 class="header-title"><a href="#buildUrl('productre')#"><span class="glyphicon glyphicon-circle-arrow-left"></span></a> Add Product Group</h3>
 <form action="" method="POST">
     <div class="row clearfix">
         <div class="col-md-9">
             <cfquery name="qGetProduct">
-                select * from product
+                    select product.* from product ,product_re 
+                    where product.productID not in
+                     (select productid from product_re where groupre_id='#groupid#')
+                    group by product.productID
             </cfquery>
                 <table id="product_group_add" class="display">
                 <thead>
@@ -60,9 +76,14 @@
             <cfquery name="qGetGroup">
                 select * from groupre
             </cfquery>
-            <select  class="form-control" >
+            <select  class="form-control" onchange="test(this)" >
             <cfloop query="qGetGroup">
-              <option name="groupid" class="option" value="#qGetGroup.groupre_id#" >#qGetGroup.groupre_name#</option>
+            <cfif #qGetGroup.groupre_id# eq #URL.groupid#>
+                    <cfset selected="selected"/>
+                <cfelse>
+                    <cfset selected=""/>
+            </cfif>
+              <option name="groupid" class="option" value="#qGetGroup.groupre_id#" #selected#  >#qGetGroup.groupre_name#</option>
             </cfloop>
             </select>
             <br>

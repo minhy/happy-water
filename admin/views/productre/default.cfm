@@ -9,6 +9,7 @@
 
 	$(document).ready( function () {
 	$('#table_id').dataTable({
+		"bJQueryUI": true,
 	    "sPaginationType": "full_numbers"
 	});	
 	});

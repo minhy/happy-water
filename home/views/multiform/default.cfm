@@ -128,6 +128,7 @@ function multiform( name,level,question_tf,nq,tfparent) {
 	select groupre_id from user where userID=<cfqueryparam sqltype="integer" value="#user_id#">
 </cfquery>
 
+
 <cfif #tmpRe.RecordCount# gt 0 and #qGetUserRe.groupre_id# eq "">
 	<cfquery name="qGetQuestionByLevel" result="tmpResult">
 		select * from question where question_level=<cfqueryparam sqltype="integer" value="#level#">
