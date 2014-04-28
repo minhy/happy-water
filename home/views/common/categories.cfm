@@ -2,7 +2,7 @@
 <cfquery name="qCategories" datasource="happy_water">
 	SELECT *
 	FROM category
-	WHERE parentID = 6
+	WHERE parentID = 7
 	ORDER BY categoryID
 </cfquery> 
 <section id="categories" class="section">
