@@ -98,8 +98,6 @@ form.signin input::-webkit-input-placeholder { color:#bbb; text-shadow:0 0 2px #
 </style>
 
 
-<script src="#getContextRoot()#/admin/js/jquery-1.9.1.min.js"></script>
-
 <script type="text/javascript">
 
 function assgin( id){
@@ -209,11 +207,8 @@ $(document).ready(function() {
 		</cfquery>
 
 		<!-- Show list user on table -->
-		<form>
-			<input id="search" type="text" placeholder="Type to search">
-		</form>
 		<table id="table_user" class="display">
-			<thead>
+			<thead style="background-color: black;">
 				<tr>
 					<th>User ID</th>
 					<th>First Name</th>
@@ -285,5 +280,8 @@ $(document).ready(function() {
 				return !~text.indexOf(val);
 			}).hide();
 		});
+		$('#table_user').dataTable({
+        "sPaginationType": "full_numbers"
+    	});
 	});
 </script>
