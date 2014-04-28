@@ -10,16 +10,18 @@
 
     <cfparam name="Validation.categoryName.text" default="&nbsp"/>
     <cfparam name="Validation.categoryName.class" default=""/>
+    <cfparam name="Validation.description.text" default="&nbsp"/>
+    <cfparam name="Validation.description.class" default=""/>
     <cfparam name="Validation.parentID.text" default="&nbsp"/>
     <cfparam name="Validation.parentID.class" default=""/>
     <cfparam name="Validation.image.class" default=""/>
     <cfparam name="Validation.image.text" default="&nbsp"/>
-    <cfparam name="Validation.status.class" default=""/>
-    <cfparam name="Validation.status.text" default="&nbsp"/>
+   <!---  <cfparam name="Validation.status.class" default=""/>
+    <cfparam name="Validation.status.text" default="&nbsp"/> --->
     <cfparam name="Validation.IsActive.class" default=""/>
     <cfparam name="Validation.IsActive.text" default="&nbsp"/>
-    <cfparam name="Validation.tag.class" default=""/>
-    <cfparam name="Validation.tag.text" default="&nbsp"/>
+    <!--- <cfparam name="Validation.tag.class" default=""/>
+    <cfparam name="Validation.tag.text" default="&nbsp"/> --->
 
     <cfparam name="Validation.Valid" default="true"/>
 
@@ -46,11 +48,12 @@
 <cfswitch expression="#FormAction#">
     <cfcase value="show">
         <cfparam name="FORM.categoryName" type="string" default=""/>
+        <cfparam name="FORM.description" type="string" default=""/>
         <cfparam name="FORM.parentID" type="string" default="0"/>
-        <cfparam name="FORM.status" type="string" default="0"/>
+        <!--- <cfparam name="FORM.status" type="string" default="0"/> --->
         <cfparam name="FORM.IsActive" type="string" default="0"/>
         <cfparam name="FORM.image" type="string" default=""/>
-        <cfparam name="FORM.tag" type="string" default=""/>
+        <!--- <cfparam name="FORM.tag" type="string" default=""/> --->
     </cfcase>
 
     <cfcase value="edit">
@@ -63,11 +66,12 @@
 
         <cfset FORM.categoryID = qEdit.categoryID/>
         <cfset FORM.categoryName = qEdit.categoryName/>
+        <cfset FORM.description = qEdit.description/>
         <cfset FORM.parent = qEdit.parentID/>
         <cfset FORM.IsActive = qEdit.IsActive/>
-        <cfset FORM.status = qEdit.status/>
+        <!--- <cfset FORM.status = qEdit.status/> --->
         <cfset FORM.image =qEdit.image/>
-        <cfset FORM.tag = qEdit.tag/>
+        <!--- <cfset FORM.tag = qEdit.tag/> --->
 
         <cfquery name="qParent">      
             SELECT *
@@ -93,6 +97,11 @@
                 <cfset Validation.categoryName.class = InvalidClass/>
                 <cfset Validation.Valid = false/>
             </cfif>
+            <cfif NOT IsDefined('FORM.description') OR Len(Trim(FORM.description)) GT 255 OR Len(Trim(FORM.description)) EQ 0>
+                <cfset Validation.description.text = "Please provide a description with maximal 255 characters."/>
+                <cfset Validation.description.class = InvalidClass/>
+                <cfset Validation.Valid = false/>
+            </cfif>
             <cfif NOT IsDefined('FORM.image') OR FORM.image EQ "">
                 <cfset Validation.image.text = "Please choose an image."/>
                 <cfset Validation.image.class = InvalidClass/>
@@ -109,20 +118,19 @@
                             INSERT INTO `happy_water`.`category` 
                             (
                                 `categoryName`,
+                                `description`,
                                 `parentID`,
-                                `image`,
-                                `status`,
-                                `IsActive`,
-                                `tag`
+                                `image`,                       
+                                `IsActive`
+                          
                             ) 
                             VALUES
                             (
                                 <cfqueryparam sqltype="varchar" value="#FORM.categoryName#"/>,
+                                <cfqueryparam sqltype="varchar" value="#FORM.description#"/>,
                                 <cfqueryparam sqltype="varchar" value="#FORM.parentID#"/>,
                                 <cfqueryparam sqltype="varchar" value="/images/category/#Reupload.clientfile#"/>,
-                                <cfqueryparam sqltype="bit" value="#FORM.status#"/>,
-                                <cfqueryparam sqltype="bit" value="#FORM.IsActive#"/>,
-                                <cfqueryparam sqltype="varchar" value="#FORM.tag#"/>   
+                                <cfqueryparam sqltype="bit" value="#FORM.IsActive#"/>  
                             )
                         </cfquery>
                         
@@ -136,7 +144,6 @@
 
                     </cftry>
                 </cftransaction>
-                <!--- lab7.1 step4 --->
                 <cflocation url="#buildUrl('category.default')#"/>
             </cfif>
     </cfcase>
@@ -155,7 +162,12 @@
                 <cfset Validation.categoryName.text = "Please provide a title with maximal 255 characters."/>
                 <cfset Validation.categoryName.class = InvalidClass/>
                 <cfset Validation.Valid = false/>
-            </cfif>
+        </cfif>
+        <cfif NOT IsDefined('FORM.description') OR Len(Trim(FORM.description)) GT 255 OR Len(Trim(FORM.description)) EQ 0>
+            <cfset Validation.description.text = "Please provide a description with maximal 255 characters."/>
+            <cfset Validation.description.class = InvalidClass/>
+            <cfset Validation.Valid = false/>
+        </cfif>
         <cfif NOT IsDefined('FORM.image') OR FORM.image EQ "">
             <cfset Validation.image.text = "Please choose an image."/>
             <cfset Validation.image.class = InvalidClass/>
@@ -165,21 +177,20 @@
             <cftransaction isolation="serializable" action="begin">
                 <cftry>
 
-                    <cfquery name="update_category" result="Result">
+        <cfquery name="update_category" result="Result">
 
         UPDATE `category`
         SET 
             `categoryName` = <cfqueryparam sqltype="varchar" value="#FORM.categoryName#"/>,
+            `description` = <cfqueryparam sqltype="varchar" value="#FORM.description#"/>,
             `parentID` = <cfqueryparam sqltype="varchar" value="#FORM.parentID#"/>
             <cfif FORM.image is not "">
             ,`image` = <cfqueryparam sqltype="varchar" value="/images/category/#Reupload.clientfile#"/>
             </cfif>,
-            `status` = <cfqueryparam sqltype="bit" value="#FORM.status#"/>,
-            `IsActive` = <cfqueryparam sqltype="bit" value="#FORM.IsActive#"/>,
-            `tag` = <cfqueryparam sqltype="varchar" value="#FORM.tag#"/>
+            `IsActive` = <cfqueryparam sqltype="bit" value="#FORM.IsActive#"/>
             
         WHERE `categoryID` = <cfqueryparam sqltype="integer" value="#FORM.categoryID#"/>
-                    </cfquery>
+        </cfquery>
                     <cftransaction action="commit"/>
                 <cfcatch>
                     <cftransaction action="rollback"/>
@@ -242,6 +253,16 @@
                          <input type="text" class="form-control" id="categoryName" name="categoryName" validate="regex" pattern="[A-Z a-z 0-9]{1,20}" value="#FORM.categoryName#"/>
                     </div>
 
+                    <!--- Description --->
+                    <label for="description">Description</label>
+                    <div class="#Validation.description.class#">
+                        #Validation.description.text#
+                    </div>
+                    <div class="form-group">
+                         <textarea type="text" required="yes" class="form-control" id="description" name="description">#FORM.description#</textarea>
+                         <script type="text/javascript">CKEDITOR.replace( 'description'); </script>
+                    </div>
+
                     <!---Parent --->
                     <label for="parentID">Parent</label>
                     <div class="#Validation.parentID.class#">
@@ -276,7 +297,7 @@
                     </div>
 
                     <!--- Status --->
-                    <label for="status">Status</label>
+                    <!--- <label for="status">Status</label>
                     <div class="#Validation.status.class#">
                         #Validation.status.text#
                     </div>
@@ -287,7 +308,7 @@
                          <p class="input-group-addon">
                             <input type="radio" id="status" name="status" value="1" <cfif FORM.status> checked</cfif>> In stock
                          </p>
-                    </div>
+                    </div> --->
                  
                     <!---- Image ---->
                     <label for="image">Choose an image</label>
@@ -303,13 +324,13 @@
                     </div>
 
                     <!---Tag --->
-                    <label for="tag">Tag</label>
+                    <!--- <label for="tag">Tag</label>
                     <div class="#Validation.tag.class#">
                         #Validation.tag.text#
                     </div>
                     <div class="form-group">
                          <input type="text" class="form-control" id="tag" name="tag" <!--- validate="regex" pattern="[A-Za-z]{1,20}" ---> value="#FORM.tag#"/>
-                    </div>
+                    </div> --->
 
                     <!--Submit-->
                     <div class="div_center">
@@ -320,4 +341,6 @@
             </div>
         </div>
     </div> 
+<!---     <cfdump eval=formaction>
+    <cfdump eval=form> --->
 </cfoutput>

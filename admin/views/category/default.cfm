@@ -67,11 +67,12 @@ function chuyentrang(status, id, url){
             <tr>
                 <th>Category ID</th>
                 <th>Category Name</th>
+                <th>Description</th>
                 <th>Parent</th>
                 <th>Image</th>
                 <th>IsActive</th>
-                <th>IsSelling</th>
-                <th>Tag</th>
+                <!--- <th>Description</th>
+                <th>Tag</th> --->
                 <th>Action</th>
             </tr>
         </thead>
@@ -87,20 +88,20 @@ function chuyentrang(status, id, url){
                 <cfelse>
                     <cfset a="no">
                 </cfif>
-                <cfif #qCategory.status# equal "1">
+                <!--- <cfif #qCategory.status# equal "1">
                     <cfset b="yes">
                 <cfelse>
                     <cfset b="no">
-                </cfif>
+                </cfif> --->
                 <tr id="#qCategory.categoryID#">
                     <td class="col-md-1 column">#qCategory.categoryID#</td>
                     <td>#qCategory.categoryName#</td>
-                    <td class="col-md-2 column">#qParent.categoryName#
+                    <td class="col-md-3 column">#qCategory.description#</td>
+                    <td class="col-md-1 column">#qParent.categoryName#
                     </td>
-                    <td><img src="#getContextRoot()##qCategory.image#" width="50" height="50"/></td>                   
+                    <td><img src="#getContextRoot()##qCategory.image#" width="80" height="80"/></td>                   
                     <td class="col-md-1 column">#a#</td>
-                    <td class="col-md-1 column">#b#</td>
-                    <td class="col-md-2 column">#qCategory.tag#</td>
+                    <!--- <td class="col-md-2 column">#qCategory.tag#</td> --->
                     <td class="col-md-2 column">
                         <div class="btn-group btn-group-xs">
                             <!--- <button type="button" class="btn btn-default" onclick="chuyentrang(1,'#qCategory.categoryID#', '#buildUrl('category.form')#');"><span class="glyphicon glyphicon-plus"></span> Add</button> --->
