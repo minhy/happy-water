@@ -42,12 +42,7 @@
 </cfif>
 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Forgot password</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <cfoutput>
 
 <link href="#getContextRoot()#/home/css/form.css" rel="stylesheet">
@@ -57,17 +52,7 @@
 
 
 
-</head>
-<body>
-<div class="container">
-  <div class="row-fluid">
-    <div class="span12">
-    
-    </div>
-  </div>
-  <div class="row-fluid">
-  <div class="span6 offset6">
-    <div id="maincontent" class="span8"> 
+
       
       <form id="registration-form" class="form-horizontal" action ="" method ="post" enctype="multipart/form-data" >
        <cfoutput>
@@ -96,12 +81,7 @@
       </fieldset>
   </cfoutput>
       </form>
-    </div>
-    <!-- .span --> 
-  </div>
-  <!-- .row -->
-  
-</div>
+    
 <!-- .container --> 
 
 </body>
