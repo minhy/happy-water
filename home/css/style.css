@@ -207,32 +207,15 @@ p.bginfo:hover {
   padding-bottom: 10px;
 }
 
+.featured .input-group-btn {
+  width: 100%;
+}
+
 img.productImg{
   float: right;
   display: block;
 }
 
-.featured div{
-  display: inline-block;
-  width: 130px;
-}
-
-.featured div input{
-  float: right;
-  margin-left: 20px;
-}
-
-/*Style of Thiện */
-label.valid {
-  width: 24px;
-  height: 24px;
-  background: url(img/valid.png) center center no-repeat;
-  display: inline-block;
-  text-indent: -9999px;
-}
-label.error {
-  font-weight: bold;
-  color: red;
-  padding: 2px 8px;
-  margin-top: 2px;
+#trTotal{
+  background-color:#DDDDDD;
 }

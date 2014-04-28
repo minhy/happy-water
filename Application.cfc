@@ -1,5 +1,14 @@
 component extends="lib.framework" {
 	
+	this.name = "SessionCaching";
+    this.sessionmanagement = true;
+    this.sessionTimeout = CreateTimeSpan(0,0,30,30);
+    
+    function onSessionStart() {
+        session.uniqueID = CreateUUID();
+        session.shoppingcart = arrayNew(1);
+    }
+
 	this.defaultdatasource = "happy_water";
 	this.tag.cflocation.addtoken = false;
 

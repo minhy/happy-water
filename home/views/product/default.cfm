@@ -14,7 +14,7 @@
 		limit #URL.idpage#,9
 	</cfquery>  
 
-	<cfset sumpage = qSumColumn.dem/9+1>
+	<cfset sumpage = ceiling(qSumColumn.dem/9+1)>
 	<div class="row clearfix">
 		<cfloop query="qGetAll">
 			<div class="col-md-4">
