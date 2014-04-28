@@ -7,5 +7,5 @@
 	</cfquery>
 </cftransaction>
 
- <cflocation url="#buildUrl('product.recomment')#"/> 
+ <!--- <cflocation url="#buildUrl('product.recomment')#"/>  --->
 </cfoutput>
