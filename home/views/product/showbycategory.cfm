@@ -37,6 +37,7 @@
 						value="1" min="1" max="99" class="quantity form-control">
 						<button style="float:left" class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetByCategory.productID#)">Buy!</button>
 				</p>
+				<a href="#buildUrl('product.detail')#/?productID=#qGetByCategory.productID#">
 				<div class="category-name kh_category-name">
 					#qGetByCategory.productName#<br> 
 					<span style="float:left;margin-left:5px;">#dollarformat(qGetByCategory.price*(100-qGetByCategory.discount)/100)#</span>

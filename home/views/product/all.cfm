@@ -57,15 +57,19 @@
 			</div>
 			<div class="row clearfix">
 				<div class="col-md-12" align="center">
-					<ul class="pagination" style="float: none;">
-					  <li><a href="?page=#URL.page-1#" onclick="return checkPrev()">&laquo;</a></li>
-					  <cfloop from="1" to="#sumpage#" index="i">			
-						<li>
-							<a href="?page=#i#">#i#</a>
-						</li>
-					  </cfloop>
-					  <li><a href="?page=#URL.page+1#" onclick="return checkNext(#sumpage#)">&raquo;</a></li>
-					</ul>
+					<cfif #qSumRecord.dem# eq 0>
+						No product
+						<cfelse>
+							<ul class="pagination" style="float: none;">
+							  <li><a href="?page=#URL.page-1#" onclick="return checkPrev()">&laquo;</a></li>
+							  <cfloop from="1" to="#sumpage#" index="i">			
+								<li>
+									<a href="?page=#i#">#i#</a>
+								</li>
+							  </cfloop>
+							  <li><a href="?page=#URL.page+1#" onclick="return checkNext(#sumpage#)">&raquo;</a></li>
+							</ul>
+					</cfif>
 				</div>
 			</div>
 		</div>
