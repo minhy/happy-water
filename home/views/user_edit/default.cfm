@@ -77,7 +77,7 @@
 <body>
 
       
-      <form id="registration-form" class="form-horizontal" action ="" method ="post" enctype="multipart/form-data">
+      <form id="registration-form" class="form-horizontal" action ="" method ="post" enctype="multipart/form-data" style="width:800px">
        <cfoutput>
           <h1 style="padding-left:200px">Edit form </h1>
           <br/>
@@ -91,6 +91,7 @@
               <input class="form-control" name="email" id="disabledInput" type="text" placeholder="#FORM.email#" style ="height:inherit;width:228px" disabled width="220px">
 
             </div>
+
           </div>
 
 
