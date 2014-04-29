@@ -65,7 +65,6 @@
 <input type="hidden" id="xAxis" value="#Ox#"> 
 <input type="hidden" id="yAxis" value="#Oy#">
 
-
 <!--- Script draw chart --->
 <script language="javascript">
 $(function () {
