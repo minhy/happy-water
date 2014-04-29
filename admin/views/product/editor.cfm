@@ -142,17 +142,17 @@
 		<cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
 			<cfset Validation.status.text = "Please select one."/>
 			<cfset Validation.status.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.IsActive') OR NOT ListFind('0,1',FORM.IsActive)>
 			<cfset Validation.IsActive.text = "Please select one."/>
 			<cfset Validation.IsActive.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.productDate') OR FORM.productDate EQ "">
 			<cfset Validation.productDate.text = "Please select date edit the product."/>
 			<cfset Validation.productDate.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
 		<cfif Validation.Valid>
 			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
@@ -247,27 +247,17 @@
 		<cfif NOT IsDefined('FORM.productDate') OR FORM.productDate EQ "">
 			<cfset Validation.productDate.text = "Please select date edit the product."/>
 			<cfset Validation.productDate.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
-		<!--- <cfif NOT IsDefined('FORM.image') OR FORM.image is "">
-			<cfset Validation.image.text = "Please choose an image."/>
-			<cfset Validation.image.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
-		</cfif> --->
-		<!--- <cfif  Not IsImageFile(FORM.image)>
-		    <cfset Validation.image.text = "The file must an image."/>
-			<cfset Validation.image.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
-		</cfif> --->
 		<cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
 			<cfset Validation.status.text = "Please select one."/>
 			<cfset Validation.status.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.IsActive') OR NOT ListFind('0,1',FORM.IsActive)>
 			<cfset Validation.IsActive.text = "Please select one."/>
 			<cfset Validation.IsActive.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
 
 		<cfif Validation.Valid>
@@ -387,6 +377,9 @@
 
 				<!--- Product Date --->
 				<label for="productDate">Date of editing product</label>
+				<div class="#Validation.productDate.class#">
+					#Validation.productDate.text#
+				</div>
 				<div class="form-group">
 					 <input type="text" class="form-control" id="productDate" name="productDate" value="#dateformat(#FORM.productDate#, "dd/mm/yyyy")#"/>
 				</div>
@@ -429,7 +422,7 @@
 							 <select name="categoryID" class="form-control btn btn-option" >
 							 	<option value="0">--- Select a Category ---</option>
 						    	<cfloop query="#lstCategory#">
-										<option value="#lstCategory.categoryID#" <cfif lstCategory.categoryID EQ FORM.categoryID> selected</cfif>#lstCategory.categoryName#</option>
+										<option value="#lstCategory.categoryID#" <cfif lstCategory.categoryID EQ FORM.categoryID> selected</cfif>>#lstCategory.categoryName#</option>
 								</cfloop>
 							 </select>
 						 </div>

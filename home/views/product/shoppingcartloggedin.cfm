@@ -12,13 +12,13 @@
 	<label>Your address</label>
 	<div class="form-group">
 		<div class="clearfix">
-			<textarea type="text" class="form-control" name="user_address" id="user_address" value="#user_address#"></textarea>
+			<textarea type="text" class="form-control" name="user_address" id="user_address">#user_address#</textarea>
 		</div>
 	</div>
 	<label>If you use this information to delvery. Please press this button below.</label>
 	<div class="form-group">
 		<div class="clearfix">
-		  	<a class="btn btn-success btn-large" >Get it !</a>
+		  	<a class="btn btn-success btn-large" id="getit" >Get it !</a>
 		</div>
 	</div>
 </div>

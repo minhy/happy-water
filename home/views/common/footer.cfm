@@ -24,7 +24,7 @@
 														<cfif IsDefined('session.shoppingcart')>
 														<cfset variables.totalprice = 0>
 														<table class="table">
-															<thead>
+															<thead style="font-size:13px;">
 																<th>##</b></th>
 																<th>Product</th>
 																<th>Price</th>

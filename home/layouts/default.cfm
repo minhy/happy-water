@@ -11,7 +11,7 @@
 		<link href="#getContextRoot()#/home/css/style.css" rel="stylesheet">
 		<script type="text/javascript" src="#getContextRoot()#/home/js/jquery.min.js"></script>
 		<script type="text/javascript" src="#getContextRoot()#/home/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="#getContextRoot()#/home/js/script.js"></script>
+		<script type="text/javascript" src="#getContextRoot()#/home/js/scripts.js"></script>
 	</head>
 <body>    
 	#view( "common/header" )#

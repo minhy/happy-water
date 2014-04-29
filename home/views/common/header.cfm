@@ -52,7 +52,7 @@
 
 					</div>
 						<div class="col-md-4 column cart">
-							<a href="##" onclick="showShoppingCart()"><span class="glyphicon glyphicon-shopping-cart" data-toggle="modal" data-target="##myModal" id="aShoppingCart">(#arrayLen(session.shoppingcart)#products)</span></a>
+							<a href="##" onclick="showShoppingCart()"><span class="glyphicon glyphicon-shopping-cart" data-toggle="modal" data-target="##myModal" id="aShoppingCart">(#arrayLen(session.shoppingcart)# products)</span></a>
 						</div>
 					</div>
 				</div>
@@ -142,13 +142,13 @@
 			               	var totalprice = 0;
 			               	for(var i=0;i<data.length;i++){
 			               		totalprice += data[i].PRICE*data[i].QUANTITY;
-			               		s += "<tr class='trProduct' style='background-color:DDDDDD;'>"
+			               		s += "<tr class='trProduct' style='background-color:DDDDDD; font-size:13px;'>"
 								    + "<td>" + Number(i+1) + "</td>"  
 								    + "<td>" + data[i].NAME + "</td>"
 								    + "<td>" + formatUSD(Number(data[i].PRICE)) + "</td>"
 								    + "<td> <input type='number' value='"+ data[i].QUANTITY +"' min='0' max='99' onchange='changeQuantity(" + data[i].PRODUCTID + ",this.value," + data[i].PRICE + "," + Number(i+1)+ ")'> </td>"
 								    + "<td id='tdTotal" + Number(i+1) +"'>"+ formatUSD(Number(data[i].PRICE*data[i].QUANTITY)) + "</td>"
-								    + "<td><a href='##' onclick='deleteProduct("+ data[i].PRODUCTID +")'>Remove</td>"
+								    + "<td><a class='btn btn-danger' href='##' onclick='deleteProduct("+ data[i].PRODUCTID +")'>Remove</td>"
 								    +"</tr>"
 								    + "<input type='hidden' id='hdTotal" + Number(i+1) + "' value='" + Number(data[i].PRICE*data[i].QUANTITY) +"'>"
 								    + "<input type='hidden' name='hdProductID' value='" + data[i].PRODUCTID +"'>";
