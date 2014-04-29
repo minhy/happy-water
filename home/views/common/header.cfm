@@ -20,6 +20,12 @@
                         <a href="##" class="dropdown-toggle" data-toggle="dropdown">Hi!#SESSION.name# <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             
+                        	<cfif SESSION.isAdmin EQ true>
+                        		<li >
+                            	<a href="#getContextRoot()#/index.cfm/admin:main">Admin Dashboard</a>
+                            </li>
+                        	</cfif>
+
                             <li >
                             	<a href="#getContextRoot()#/index.cfm/home:user_edit">User edit</a>
                             </li>
@@ -29,7 +35,7 @@
                             </li>
 
                             <li >
-                            	<a href="#getContextRoot()#/index.cfm/home:product/recomment">recomment</a>
+                            	<a href="#getContextRoot()#/index.cfm/home:product/recomment">Recomment</a>
                             </li>
                             
                         </ul>
