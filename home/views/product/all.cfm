@@ -1,7 +1,7 @@
 <cfoutput>
 	<cfparam name="URL.page" default="1">
 	<cfset URL.idpage = (URL.page -1)*9 />
-	<cfquery name="qSumColumn">
+	<cfquery name="qSumRecord">
 		select Count(productID) as dem
 		from product where status = 1 and IsActive = 1
 		order by productID
@@ -14,7 +14,7 @@
 		limit #URL.idpage#,9
 	</cfquery>  
 
-	<cfset sumpage = ceiling(qSumColumn.dem/9)>
+	<cfset sumpage = ceiling(qSumRecord.dem/9)>
 
 	<legend ><h1 style="color: ##0088cc;">All Products</h1></legend>
 
