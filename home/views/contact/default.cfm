@@ -1,3 +1,8 @@
+<cfquery name="qGetContact">
+	SELECT *
+	FROM article
+	WHERE tag="contact"
+</cfquery>
 <cfset Validation.isInvalid = false/>
 <cfset InvalidClass = " invalid"/>
 <cfif CGI.REQUEST_METHOD EQ 'get' >
@@ -87,55 +92,68 @@
 <div class="header-title">
 	<h1>Contact</h1>
 </div>
-<form action="##" method="post">
-	<div class="row clearfix">
-		<div class="col-md-2">
-			Your name:
-		</div>
-		<div class="col-md-10 form#Validation.yname.class#">
-			<div class="input-group">
-				<input type="text" name="yname" value="#FORM.yname#" class="form-control" placeholder="Your name" size="50">
-				<p>#Validation.yname.text#</p>
+<div class="row clearfix">
+	<div class="col-md-7">
+		<form action="##" method="post">
+			<div class="row clearfix">
+				<div class="col-md-2">
+					Your name:
+				</div>
+				<div class="col-md-10 form#Validation.yname.class#">
+					<div class="input-group">
+						<input type="text" name="yname" value="#FORM.yname#" class="form-control" placeholder="Your name" size="50">
+						<p>#Validation.yname.text#</p>
+					</div>
+				</div>
+
+				<div class="col-md-2">
+					Your email:
+				</div>
+				<div class="col-md-10 form#Validation.email.class#">
+					<div class="input-group">
+						<input type="email" name="email" value="#FORM.email#" class="form-control" placeholder="Your email" size="50">
+						<p>#Validation.email.text#</p>
+					</div>				
+				</div>
+
+				<div class="col-md-2">
+					Subject:
+				</div>
+				<div class="col-md-10 form#Validation.subject.class#">
+					<div class="input-group">
+						<input type="text" name="Subject" value="#FORM.subject#" class="form-control" placeholder="Subject" size="50">
+						<p>#Validation.subject.text#</p>
+					</div>				
+				</div>
+
+				<div class="col-md-2">
+					Your message:
+				</div>
+				<div class="col-md-10 form#Validation.comment.class#">
+					<div class="input-group">
+					  <textarea type="text" rows="10" cols="55" name="comment" value="" class="form-control" placeholder="Message">#FORM.comment#</textarea>
+					  <p>#Validation.comment.text#</p>
+					</div>					
+				</div>
+
+				<div class="col-md-2">
+				</div>
+				<div class="col-md-10">
+					<div class="btn-group">
+					  	<button type="submit" class="btn btn-default" value="Submit">Send Message</button>
+					</div>
+				</div>
 			</div>
-		</div>
-
-		<div class="col-md-2">
-			Your email:
-		</div>
-		<div class="col-md-10 form#Validation.email.class#">
-			<div class="input-group">
-				<input type="email" name="email" value="#FORM.email#" class="form-control" placeholder="Your email" size="50">
-				<p>#Validation.email.text#</p>
-			</div>				
-		</div>
-
-		<div class="col-md-2">
-			Subject:
-		</div>
-		<div class="col-md-10 form#Validation.subject.class#">
-			<div class="input-group">
-				<input type="text" name="Subject" value="#FORM.subject#" class="form-control" placeholder="Subject" size="50">
-				<p>#Validation.subject.text#</p>
-			</div>				
-		</div>
-
-		<div class="col-md-2">
-			Your message:
-		</div>
-		<div class="col-md-10 form#Validation.comment.class#">
-			<div class="input-group">
-			  <textarea type="text" rows="10" cols="55" name="comment" value="" class="form-control" placeholder="Message">#FORM.comment#</textarea>
-			  <p>#Validation.comment.text#</p>
-			</div>					
-		</div>
-
-		<div class="col-md-2">
-		</div>
-		<div class="col-md-10">
-			<div class="btn-group">
-			  	<button type="submit" class="btn btn-default" value="Submit">Send Message</button>
-			</div>
-		</div>
+		</form>
 	</div>
-</form>
+	<div class="col-md-5">
+		<center>
+			<p>#qGetContact.article_description#</p>
+			<p>
+				<img src="#getContextRoot()#/#qGetContact.article_img#">			
+			</p>
+			<p>#qGetContact.article_content#</p>		
+		</center>
+	</div>
+</div>
 </cfoutput>
