@@ -28,8 +28,12 @@
 				<cfloop query="qGetByTopdeal">
 					<div class="col-md-4" style="margin-bottom:10px;">
 						<img class="categories" src="#qGetByTopdeal.image#" width="200" height="200">
-						<p class="bginfo">
-							#qGetByTopdeal.description#
+						<p class="bginfo kh_bginfo">
+							<cfif #len(qGetByTopdeal.description)# gt 200>
+								#left(qGetByTopdeal.description, 200)# ...	
+								<cfelse>
+									#qGetByTopdeal.description#
+							</cfif>
 								<br>
 								<br>
 								<br>
@@ -39,7 +43,7 @@
 								<button style="float:left" class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetByTopdeal.productID#)">Buy!</button>
 						</p>
 						<a href="#buildUrl('product.detail')#/?productID=#qGetByTopdeal.productID#">
-						<div class="category-name">
+						<div class="category-name kh_category-name">
 							#qGetByTopdeal.productName#<br> 
 							<span style="float:left;margin-left:5px;">#dollarformat(qGetByTopdeal.price*(100-qGetByTopdeal.discount)/100)#</span>
 							<br>

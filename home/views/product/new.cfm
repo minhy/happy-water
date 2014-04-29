@@ -30,8 +30,12 @@
 			<div class="col-md-4" style="margin-bottom:10px;">
 		
 				<img class="categories" src="#qGetByNew.image#" width="200" height="200">
-				<p class="bginfo">
-					#qGetByNew.description#
+				<p class="bginfo kh_bginfo">
+					<cfif #len(qGetByNew.description)# gt 200>
+								#left(qGetByNew.description, 200)# ...	
+								<cfelse>
+									#qGetByNew.description#
+							</cfif>
 						<br>
 						<br>
 						<br>
@@ -41,7 +45,7 @@
 						<button style="float:left" class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetByNew.productID#)">Buy!</button>
 				</p>
 				<a href="#buildUrl('product.detail')#/?productID=#qGetByNew.productID#">
-				<div class="category-name">
+				<div class="category-name kh_category-name">
 					#qGetByNew.productName#<br> 
 					<span style="float:left;margin-left:5px;">#dollarformat(qGetByNew.price*(100-qGetByNew.discount)/100)#</span>
 					<br>

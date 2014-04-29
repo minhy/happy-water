@@ -26,8 +26,12 @@
 				<cfloop query="qGetAll">
 					<div class="col-md-4" style="margin-bottom:10px;">
 						<img class="categories" src="#qGetAll.image#">
-						<p class="bginfo">
-							#qGetAll.description#
+						<p class="bginfo kh_bginfo">
+							<cfif #len(qGetAll.description)# gt 200>
+								#left(qGetAll.description, 200)# ...	
+								<cfelse>
+									#qGetAll.description#
+							</cfif>
 								<br>
 								<br>
 								<br>
@@ -37,7 +41,7 @@
 								<button style="float:left" class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetAll.productID#)">Buy!</button>
 						</p>
 						<a href="#buildUrl('product.detail')#/?productID=#qGetAll.productID#">
-						<div class="category-name">
+						<div class="category-name kh_category-name">
 							#qGetAll.productName#<br> 
 							<span style="float:left;margin-left:5px;">#dollarformat(qGetAll.price*(100-qGetAll.discount)/100)#</span>
 							<br>

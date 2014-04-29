@@ -178,6 +178,12 @@ p.bginfo {
   left: 0;
 }
 
+p.kh_bginfo {
+  margin-left: 16px;
+  height: 365px !important;
+  width: 365px !important;
+}
+
 p.bginfo:hover {
   -ms-opacity: 1;
   opacity: 1;
@@ -219,4 +225,9 @@ img.categories{
   height: 34px;
   float:left; 
   margin-left: 110px;
+}
+
+.kh_category-name {
+  width: 365px !important;
+  padding: 5px;
 }
