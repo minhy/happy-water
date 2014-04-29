@@ -1,11 +1,4 @@
-﻿
-
-@media (min-width: 1200px) {
-    .container{
-        max-width: 970px;
-    }
-}
-section {
+﻿section {
   margin-bottom: 30px;
 }
 body {
@@ -51,8 +44,8 @@ a:hover {
   color: #CCC;
 }
 #categories img {
-  width: 292px;
-  height: 292px;
+  width: 360px;
+  height: 360px;
 }
 #multiform {
   border: solid 1px #CCC;
