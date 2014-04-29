@@ -161,14 +161,14 @@ p.details{
 }
 
 p.bginfo {
-  margin-left: 16px;
+  margin: 0px;
   display: block;
   overflow: hidden;
   -ms-opacity: 0;
   opacity: 0;
-  background: rgba(0,0,0,0);
-  height: 277px;
-  width: 364px;
+  background: rgba(34, 36, 41, 0.56);
+  height: 100%;
+  width: 100%;
   padding: 10px;
   font-size: 12px;
   color: #fff;
@@ -176,14 +176,6 @@ p.bginfo {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 99;
-  -webkit-transition: all .5s ease;
-  -moz-transition: all .5s ease;
-  -o-transition: all .5s ease;
-  -ms-transition: all .5s ease;
-  transition: all .5s ease;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
-  filter: alpha(opacity=0);
 }
 
 p.bginfo:hover {
@@ -220,11 +212,6 @@ img.categories{
   height: 365px;
   background-color: black;
   border: 1px solid #C2C2C2;
-}
-
-div.category-name{
-  width: 365px;
-  padding: 3px;
 }
 
 .col-md-4 input.quantity{
