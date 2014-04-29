@@ -5,14 +5,15 @@
 	<header id="header">
 		<div class="container header">
 			<div class="row clearfix">
-				<div class="col-md-2 column logo">
-				</div>
+				<a href="#getContextRoot()#">
+					<div class="col-md-1 column logo"></div>
+				</a>
 				<div class="col-md-6 column">
 					<cfinclude template="menu.cfm" />
 				</div>
 				<div class="col-md-4 column">
 					<div class="row clearfix">
-						<div class="col-md-6 column register">
+						<div class="col-md-8 column register">
 					
 							<cfif SESSION.isLoggedIn EQ true>
 						
@@ -50,7 +51,7 @@
 						<!--- </cflock> --->
 
 					</div>
-						<div class="col-md-6 column cart">
+						<div class="col-md-4 column cart">
 							<a href="##" onclick="showShoppingCart()"><span class="glyphicon glyphicon-shopping-cart" data-toggle="modal" data-target="##myModal" id="aShoppingCart">(#arrayLen(session.shoppingcart)#products)</span></a>
 						</div>
 					</div>
