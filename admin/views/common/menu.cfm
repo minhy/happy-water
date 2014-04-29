@@ -6,7 +6,7 @@
 	      <a href="##" class="dropdown-toggle" data-toggle="dropdown">User Management <b class="caret"></b></a>
 	      <ul class="dropdown-menu">
 	        <li><a href="#getContextRoot()#/index.cfm/admin:user">User </a></li>
-	        <li><a href="#getContextRoot()#/index.cfm/admin:statistic">statistic</a></li>
+	        <li><a href="#getContextRoot()#/index.cfm/admin:statistic">Statistic</a></li>
 	      </ul>
 	    </li>
 	</ul>
