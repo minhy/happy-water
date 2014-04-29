@@ -59,9 +59,13 @@
 						 <cfqueryparam sqltype="varchar" value="#FORM.comment#"/>)
 					</cfquery>
 					<cfmail
+						server="smtp.gmail.com"
 						useSSL = "true"
+						port="465"
+						username="nguyen.hoang.thien1410@gmail.com"
+						password="0914735651"
 					    from="#form.email#" 
-					    to="levanxuan@gmail.com" 
+					    to="nguyen.hoang.thien1410@gmail.com" 
 					    subject="#form.subject#"> 
 					    #form.comment#
 					</cfmail>
