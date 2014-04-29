@@ -1,11 +1,8 @@
 <!---- Contain shipping fee --->
 <cfparam name="shippingfee" type="float" default="0">
 <!---- Contain address --->
-<cfparam name="address" type="string" default="">
 <cfparam name="user_address" type="string" default="">
 <cfparam name="user_name" type="string" default="">
-
-
 
 
 <!--- Get total price to cart--->
@@ -20,7 +17,7 @@
 	<!--- teamplate checkout--->
 <cfoutput>
 	<cfparam name="form.countries" default=""/>
-<form  name="checkout" method="POST" action=" ">
+<form id="checkout"  name="checkout" method="POST" action=" ">
 	<div id="page">
 		<table id="cart" class="table">
 		    <tbody>	          
@@ -86,11 +83,31 @@
 									    var optionSelected = $("option:selected", this);
 									    $('##shippingfee').val(this.value);
 									});
+
+									$('##getit').click(function(){
+										var adrr = $('##user_address').val();
+										var re   = $('##user_name').val();
+										$('##address').val(adrr);
+										$('##recipient').val(re);
+									});
+
+									$('##ok').click(function(){
+									    if ($('##address').val()==="") {
+									      // invalid
+									      $('##recipient').next('.hide-inline').removeClass('hide').removeClass('hide-inline');
+									      $('##address').next('.hide-inline').removeClass('hide').removeClass('hide-inline');
+									      return false;
+									    }
+									    else {
+									      $('##checkout').submit();
+									      return true;
+									    }
+									});
 								});
 							</script>
 
 
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
 							<h4 class="modal-title" id="myModalLabel">
 								Check out your cart !
 							</h4>
@@ -98,6 +115,13 @@
 						<div class="modal-body">
 							<div class="row clearfix">
 								<cfif SESSION.isLoggedIn eq true>
+									<cfquery name="qGetUserInfo">
+										SELECT firstname, address
+										FROM user
+										WHERE userID = #SESSION.userID#
+									</cfquery>
+									<cfset user_address = qGetUserInfo.address>
+									<cfset user_name = qGetUserInfo.firstname>
 									<cfinclude template="shoppingcartloggedin.cfm">
 								<cfelse>
 									<cfinclude template="shoppingcartnotlogin.cfm">
@@ -127,27 +151,37 @@
 											<input type="number" class="form-control" name="shippingfee" id="shippingfee" value="#shippingfee#" disabled>
 										</div>
 									</div>
-									<label for="shippingfee">Delivery place</label>
+									
+									<label for="recipient">Recipient</label>
 									<div class="form-group">
 										<div class="clearfix">
-											<textarea type="text" class="form-control" name="address" id="address" value="#address#"></textarea>
+											<input type="text" class="form-control" name="recipient" id="recipient"></input>
+											<div class="hide hide-inline" style="color:red;">
+												This is required
+											</div>
 										</div>
 									</div>
+
+									<label for="address">Delivery place</label>
+									<div class="form-group">
+										<div class="clearfix">
+											<input type="text" class="form-control" name="address" id="address"></input>
+											<div class="hide hide-inline" style="color:red;">
+												This is required
+											</div>
+										</div>
+									</div>
+
 								</div>
 							</div>
 						</div>
 						<div class="modal-footer">
 							 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button> 
-							 <button type="submit" name="submit" class="btn btn-primary">Ok</button>
+							 <button type="submit" name="submit" class="btn btn-primary" id="ok">Ok</button>
 						</div>
 					</div>
-					
 				</div>
-				
 			</div>
-			
-
-
 	</div>
 </form>
 </cfoutput> 
@@ -155,41 +189,38 @@
 
 <!--- <cfif CGI.REQUEST_METHOD EQ 'POST'> --->
 <cfif isDefined("form.submit")>
-
 		<!--- set today to add orderDate--->
-	<cfset toDay=dateFormat( now(),"yyyy/MM/dd")>
-	<cfset shipping = #form.countries#/>
-	<cfset totalship = #shipping#+#totalprice#/>
+		<cfset toDay=dateFormat( now(),"yyyy/MM/dd")>
+		<cfset shipping = #form.countries#/>
+		<cfset totalship = #shipping#+#totalprice#/>
 
-		<!--- insert order to database --->
-	<cfquery name="AddToOrder" datasource="happy_water" result="od">
-		INSERT INTO `order`
-		(userID, orderDate, shippingFee, total)
-		VALUES
-		('#4#', '#toDay#', '#shippingfee#', '#totalship#')
-	</cfquery>
-
-		<!--- insert order detail to database --->
-
-
-	<cfloop array="#session.shoppingcart#" index="item">
-		<cfquery name="AddToOrderDetail" datasource="happy_water">
-			INSERT INTO `orderdetail`
-			(orderID, productID, quantity,price)
+			<!--- insert order to database --->
+		<cfquery name="AddToOrder" result="od">
+			INSERT INTO `order`
+			(userID, orderDate, shippingFee, total)
 			VALUES
-			('#od.GENERATED_KEY#', '#item.productID#', '#item.quantity#', '#item.price#')
+			('#4#', '#toDay#', '#shippingfee#', '#totalship#')
 		</cfquery>
 
-	</cfloop>
+			<!--- insert order detail to database --->
 
 
-<cfscript>
-	arrayClear(session.shoppingcart);
-</cfscript>
-<cfif #ArrayLen(session.shoppingcart)# eq 0>
-	<cflocation url="#buildUrl('home:main')#">
-</cfif>
+		<cfloop array="#session.shoppingcart#" index="item">
+			<cfquery name="AddToOrderDetail">
+				INSERT INTO `orderdetail`
+				(orderID, productID, quantity,price, address, recipient)
+				VALUES
+				('#od.GENERATED_KEY#', '#item.productID#', '#item.quantity#', '#item.price#', '#user_address#','#user_name#')
+			</cfquery>
 
+		</cfloop>
+
+		<cfscript>
+			arrayClear(session.shoppingcart);
+		</cfscript>
+		<cfif #ArrayLen(session.shoppingcart)# eq 0>
+			<cflocation url="#buildUrl('product.thanks')#/?orderID=#od.GENERATED_KEY#&userID=#SESSION.userID#">
+		</cfif>
 </cfif>
 
 
