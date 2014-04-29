@@ -27,7 +27,7 @@
 			</div>
 		</div>
 	<div class="alert alert-info">
-		<p>MORE RELATED TOPICS:</p>
+		<p>RELATED ARTICLES:</p>
 		<cfloop query= qGetArticleAll>
 				<p><a href="article_detail?id=#qGetArticleAll.article_id#">- #qGetArticleAll.article_title#</a></p>
 		</cfloop>
