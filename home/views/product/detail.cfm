@@ -13,6 +13,7 @@
 		limit 4
 	</cfquery>
 	<!-- Master Page -->
+	<legend ><h1>Product Details</h1></legend>
 	<div class="row clearfix">
 		<div class="col-md-8 showimg">
 			<div>
@@ -23,6 +24,7 @@
 			</p>
 			<!--- #view( "common/test" )# --->
 		</div>
+
 		<div class="col-md-4">
 			<div class="header-title">
 				<h3> FEATURED PRODUCTS</h3>
