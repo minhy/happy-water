@@ -59,6 +59,11 @@
 			</div>
 		</div>
 		<script type="text/javascript">
+
+			$( document ).ready(function() {
+				countProduct();
+			});
+
 			var numberProduct = 0;
 			
 			function formatUSD(currency) {
