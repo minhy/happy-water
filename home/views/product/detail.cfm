@@ -38,7 +38,7 @@
 				<div class="productDetails" style="width:100%; margin-bottom:10px;">
 					<div style="width:100%;">
 						Name: #qGetProductByID.productName#<br>
-						<span>Price: $#qGetProductByID.price#</span>
+						<span>Price: #dollarformat(qGetProductByID.price*(100-qGetProductByID.discount)/100)#</span>
 						
 					</div>
 				</div>
@@ -59,37 +59,19 @@
 			</div>
 			<!---      </form> --->
 			<div class="header-title">
-				<h3> NEW RELEASES</h3>
+				<h3>related products</h3>
 			</div>
 
 			<div id="divNewReleases">
 				<cfloop query="qGetNewProduct">
-						<!--- <div class="alert alert-info">
-							<div style="width: 180px;">
-								<a href="productDetail.cfm?productID=#qGetNewProduct.productID#">
-								<img class="productImg" src="#qGetNewProduct.image#" width="32" height="32">
-									<span>#qGetNewProduct.productName#</span>
-								</a><br>
-								<span>
-									$#qGetProductByID.price#
-								</span>
-							</div>
-							<div class="input-group" style="margin-right:5px; display:inline-block; width:105px; float:right; top: -16px;">
-								<input type="number" name="nQuantity#qGetNewProduct.productID#"
-									value="1" min="1" max="99" class="form-control" style="width:50px">
-								<span class="input-group-btn">
-								<button class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetNewProduct.productID#)">Buy!</button>
-								</span>
-							</div>
-						</div> --->
 						<table style="margin-bottom:10px; width:347px;">
 							<tr class="alert alert-info">
-								<td>
+								<td style="width:35px">
 									<img class="productImg" style="margin-left: 5px;" src="#qGetNewProduct.image#" width="32" height="32">
 								</td>
 								<td>
 									<a href="productDetail.cfm?productID=#qGetNewProduct.productID#"><span style="margin-right: 5px;">#qGetNewProduct.productName#</span></a>
-									<br>$#qGetNewProduct.price#
+									<br>#dollarformat(qGetNewProduct.price*(100-qGetProductByID.discount)/100)#
 								</td>
 								<td>
 									<div class="input-group" style="margin-right:5px; display:inline-block; width:105px; float:right;">
