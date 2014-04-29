@@ -10,7 +10,7 @@
 <cfif #URL.groupid# eq "0">
 		 <cflocation url="#getContextRoot()#/index.cfm"/> 
 	<cfelse>
-		 <cflocation url="#buildUrl('product.recommend')#"/> 
+		 <cflocation url="#buildUrl('product.recommended')#"/> 
 </cfif>
 
 </cfoutput>
