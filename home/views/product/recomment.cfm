@@ -24,9 +24,14 @@
 		and `user`.`userID`= #userID#
 		LIMIT #URL.idpage#,9
 	</cfquery>  
-
-	<a href="#buildUrl('multiform.update')#?groupid=0">Survey again</a>
-
+	<div style="margin-bottom: 10px">
+		<div class="btn-group">
+			<a href="#buildUrl('multiform.update')#?groupid=0">
+				<button type="button" class="btn btn-danger"><span class="glyphicon glyphicon-refresh"></span> Survey again</button>
+			</a>
+		</div>
+	</a>
+	</div>
 	<cfset sumpage = ceiling(qSumRecord.dem/9)>
 	<div class="row clearfix">
 		<cfloop query="qRecomment">
