@@ -171,9 +171,10 @@ p.bginfo {
   overflow: hidden;
   -ms-opacity: 0;
   opacity: 0;
-  background: rgba(0,0,0,0);
-  height: 154px;
-  width: 200px;
+  background: rgba(34, 36, 41, 0.56);
+  height: 100%;
+  width: 100%;
+  margin: 0px;
   padding: 10px;
   font-size: 12px;
   color: #fff;
