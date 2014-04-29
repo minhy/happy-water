@@ -148,7 +148,7 @@
     	Description:
     </div>
     <div class="col-md-10 form#Validation.description.class#">
-		<textarea "textarea" rows="10" cols="55" name="Description" id="Description" value="" size="50">#FORM.description#</textarea>
+		<textarea "textarea" rows="5" cols="100" name="Description" id="Description" value="" size="50">#FORM.description#</textarea>
 		<p>#Validation.description.text#</p>
     </div>
 
