@@ -3,6 +3,7 @@
 <cfquery name="lstCategory">
 	SELECT * 
 	FROM Category
+	WHERE tag = "product"
 </cfquery>
 <cfquery name="lstBrand">
 	SELECT * 
@@ -40,8 +41,6 @@
 <cfparam name="Validation.status.text" default="&nbsp"/>
 <cfparam name="Validation.IsActive.class" default=""/>
 <cfparam name="Validation.IsActive.text" default="&nbsp"/>
-<cfparam name="Validation.productDate.class" default=""/>
-<cfparam name="Validation.productDate.text" default="&nbsp"/>
 
 <cfset InvalidClass = "label label-warning"/>
 
@@ -60,7 +59,6 @@
 		<cfparam name="FORM.brandID" type="string" default="0"/>
 		<cfparam name="FORM.text" type="string" default=""/>
 		<cfparam name="FORM.image" type="string" default=""/>
-		<cfparam name="FORM.productDate" type="string" default=""/>
 	</cfcase>
 	<cfcase value="edit">
 		
@@ -83,7 +81,6 @@
 		<cfset FORM.brandID = edit_product.brandID/>
 		<cfset FORM.text = edit_product.text/>
 		<cfset FORM.image =edit_product.image/>
-		<cfset FORM.productDate =edit_product.productDate/>
 
 	</cfcase>
 
@@ -138,7 +135,7 @@
 		    <cfset Validation.image.text = "The file must an image."/>
 			<cfset Validation.image.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
-		</cfif> --->
+		</cfif> ---><!--- 
 		<cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
 			<cfset Validation.status.text = "Please select one."/>
 			<cfset Validation.status.class = InvalidClass/>
@@ -148,15 +145,10 @@
 			<cfset Validation.IsActive.text = "Please select one."/>
 			<cfset Validation.IsActive.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
-		</cfif>
-		<cfif NOT IsDefined('FORM.productDate') OR FORM.productDate EQ "">
-			<cfset Validation.productDate.text = "Please select date edit the product."/>
-			<cfset Validation.productDate.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
-		</cfif>
+		</cfif> --->
 		<cfif Validation.Valid>
 			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
-			<cfset text = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
+			<cfset text = ReReplaceNoCase(#FORM.text#, '<[^>]*>', '', "ALL")>
 			<cftransaction isolation="serializable" action="begin">
 					<cftry>
 						<cfquery name="insert_product">
@@ -183,13 +175,21 @@
 								<cfqueryparam sqltype="float" value="#FORM.price#"/>,
 								<cfqueryparam sqltype="integer" value="#FORM.discount#"/>,
 								<cfqueryparam sqltype="float" value="#FORM.originalprice#"/>,
-								<cfqueryparam sqltype="tinyint" value="#FORM.status#"/>,
-								<cfqueryparam sqltype="tinyint" value="#FORM.IsActive#"/>,
+								<cfif  NOT IsDefined('FORM.status')>
+									<cfqueryparam sqltype="tinyint" value="0"/>,
+								<cfelse>
+									<cfqueryparam sqltype="tinyint" value="#FORM.status#"/>,
+								</cfif>
+								<cfif  NOT IsDefined('FORM.IsActive')>
+									<cfqueryparam sqltype="tinyint" value="0"/>,
+								<cfelse>
+									<cfqueryparam sqltype="tinyint" value="#FORM.IsActive#"/>,
+								</cfif>
 								<cfqueryparam sqltype="integer" value="#FORM.categoryID#"/>,
 								<cfqueryparam sqltype="integer" value="#FORM.brandID#"/>,
 								<cfqueryparam sqltype="clob" value="#text#"/>,
 								<cfqueryparam sqltype="varchar" value="#getContextRoot()#/images/product/#Reupload.clientfile#"/>,
-								<cfqueryparam sqltype="date" value="#FORM.productDate#">
+								<cfqueryparam sqltype="date" value="#now()#">
 							)
 							</cfquery>
 						<cftransaction action="commit"/>
@@ -244,12 +244,7 @@
 			<cfset Validation.brandID.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
 		</cfif>
-		<cfif NOT IsDefined('FORM.productDate') OR FORM.productDate EQ "">
-			<cfset Validation.productDate.text = "Please select date edit the product."/>
-			<cfset Validation.productDate.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
-		</cfif>
-		<cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
+		<!--- <cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
 			<cfset Validation.status.text = "Please select one."/>
 			<cfset Validation.status.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
@@ -258,11 +253,11 @@
 			<cfset Validation.IsActive.text = "Please select one."/>
 			<cfset Validation.IsActive.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
-		</cfif>
+		</cfif> --->
 
 		<cfif Validation.Valid>
 			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
-			<cfset text = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
+			<cfset text = ReReplaceNoCase(#FORM.text#, '<[^>]*>', '', "ALL")>
 			<cftransaction isolation="serializable" action="begin">
 				<cftry>
 					<cfquery name="update_product">
@@ -273,12 +268,20 @@
 							price = <cfqueryparam sqltype="float" value="#FORM.price#"/>,
 							discount = <cfqueryparam sqltype="integer" value="#FORM.discount#"/>,
 							originalprice = <cfqueryparam sqltype="float" value="#FORM.originalprice#"/>,
-							status = <cfqueryparam sqltype="tinyint" value="#FORM.status#"/>,
-							IsActive = <cfqueryparam sqltype="tinyint" value="#FORM.IsActive#"/>,
+							<cfif  NOT IsDefined('FORM.status')>
+								status = 0,
+							<cfelse>
+								status = <cfqueryparam sqltype="tinyint" value="#FORM.status#"/>,
+							</cfif>
+							<cfif  NOT IsDefined('FORM.IsActive')>
+								IsActive = 0,
+							<cfelse>
+								IsActive = <cfqueryparam sqltype="tinyint" value="#FORM.IsActive#"/>,
+							</cfif>
 							categoryID = <cfqueryparam sqltype="integer" value="#FORM.categoryID#"/>,
 							brandID = <cfqueryparam sqltype="integer" value="#FORM.brandID#"/>,
 							text = <cfqueryparam sqltype="clob" value="#text#"/>,
-							productDate = <cfqueryparam sqltype="date" value="#FORM.productDate#"/>
+							productDate = <cfqueryparam sqltype="date" value="#now()#"/>
 							<cfif FORM.image is not "">
 								,image = <cfqueryparam sqltype="varchar" value="#getContextRoot()#/images/product/#Reupload.clientfile#"/>
 							</cfif>
@@ -288,6 +291,7 @@
 					<cflocation url="#buildUrl('product.default')#"/>
 				<cfcatch>
 					<cftransaction action="rollback"/>
+					<cfdump eval=form>
 					<cfdump var="#cfcatch#"/><cfabort>
 				</cfcatch>
 				</cftry>
@@ -321,156 +325,162 @@
 
 <cfoutput>
 <br>
-<legend><h1>Product Management - Updater</h1></legend>
-<div  style="width:600px; margin:auto;">
+<legend><h1>Product Management - Update</h1></legend>
+<div  style="width:100%; margin:auto;">
 	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<cfif NOT Validation.Valid>
+		<cfif NOT Validation.Valid>
 			<div class="alert alert-dange">
 				<h3>Oops! Could not save new product</h3>
 			</div>
-			</cfif>
-			<form  method="post"  enctype="multipart/form-data">
-				<input type="hidden" name="productID" value="#FORM.productID#"/>
-				<!--- Product Name --->
-				<label for="productName">Product Name</label>
-				<div class="#Validation.productName.class#">
-					#Validation.productName.text#
-				</div>
-				<div class="form-group">
-					 <input type="text" class="form-control" id="productName" name="productName" value="#FORM.productName#"/>
-				</div>
+		</cfif>
+	</div>
+<form  method="post"  enctype="multipart/form-data">
 
-				<!--- Description --->
-				<label for="description">Description</label>
-				<div class="#Validation.description.class#">
-					#Validation.description.text#
-				</div>
-				<div class="form-group">
-					 <textarea type="text" required="yes" class="form-control" id="description" name="description">#FORM.description#</textarea>
-					 <script type="text/javascript">CKEDITOR.replace( 'description'); </script>
-				</div>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="row clearfix">
+				<div class="col-md-4 column" style="border-right: 1px solid brown;">
+					<input type="hidden" name="productID" value="#FORM.productID#"/>
 
-				<!--- Price --->
-				<label for="price">Price</label>
-				<div class="#Validation.price.class#">
-					#Validation.price.text#
-				</div>
-				<div class="form-group">
-					 <input type="number" class="form-control" id="price" name="price" value="#FORM.price#"/>
-				</div>
+					<!--- Product Name --->
+					<label for="productName">Product Name</label>
+					<div class="#Validation.productName.class#">
+						#Validation.productName.text#
+					</div>
+					<div class="form-group">
+						 <input type="text" class="form-control" id="productName" name="productName" value="#FORM.productName#"/>
+					</div>
+					
+					<!--- Description --->
+					<label for="description">Description</label>
+					<div class="#Validation.description.class#">
+						#Validation.description.text#
+					</div>
+					<div class="form-group">
+						 <textarea type="text" required="yes" class="form-control" id="description" name="description">#FORM.description#</textarea>
+					</div>
 
-				<!--- Discount --->
-				<label for="discount">Discount</label>
-				<div class="form-group">
-					 <input type="number" class="form-control" id="discount" name="discount" value="#FORM.discount#"/>
-				</div>
-
-				<!--- Original Price --->
-				<label for="price">Original Price</label>
-				<div class="#Validation.originalprice.class#">
-					#Validation.originalprice.text#
-				</div>
-				<div class="form-group">
-					 <input type="number" class="form-control" id="originalprice" name="originalprice" value="#FORM.originalprice#"/>
-				</div>
-
-				<!--- Product Date --->
-				<label for="productDate">Date of editing product</label>
-				<div class="#Validation.productDate.class#">
-					#Validation.productDate.text#
-				</div>
-				<div class="form-group">
-					 <input type="text" class="form-control" id="productDate" name="productDate" value="#dateformat(#FORM.productDate#, "dd/mm/yyyy")#"/>
-				</div>
-
-				<!--- Status --->
-				<label for="status">Status</label>
-				<div class="#Validation.status.class#">
-					#Validation.status.text#
-				</div>
-				<div class="form-group">
-					 <p class="input-group-addon">
-				        <input type="radio" id="status" name="status" value="0" <cfif NOT FORM.status> checked</cfif>> Out of stock
-				     </p>
-				     <p class="input-group-addon">
-				        <input type="radio" id="status" name="status" value="1" <cfif FORM.status> checked</cfif>> In stock
-				     </p>
-				</div>
-
-				<!--- Is Active --->
-				 <label for="IsActive">Is Active</label>
-				<div class="#Validation.IsActive.class#">
-					#Validation.IsActive.text#
-				</div>
-				<div class="form-group">
-				     <p class="input-group-addon">
-				        <input type="radio" id="IsActive" name="IsActive" value="0" <cfif NOT FORM.IsActive> checked</cfif>> Not selling
-				     </p>
-					 <p class="input-group-addon">
-				        <input type="radio" id="IsActive" name="IsActive" value="1" <cfif FORM.IsActive> checked</cfif>> Selling
-				     </p>
-				</div>
-
-				<!---- Category ID --->
-				<label for="categoryID">Category</label>
-				<div class="#Validation.categoryID.class#">
-					#Validation.categoryID.text#
-				</div>
-				<div class="form-group">
-						 <div class="clearfix">
-							 <select name="categoryID" class="form-control btn btn-option" >
-							 	<option value="0">--- Select a Category ---</option>
-						    	<cfloop query="#lstCategory#">
-										<option value="#lstCategory.categoryID#" <cfif lstCategory.categoryID EQ FORM.categoryID> selected</cfif>>#lstCategory.categoryName#</option>
-								</cfloop>
-							 </select>
-						 </div>
-				</div>
-
-				<!---- Brand ID --->
-				<label for="brandID">Brand</label>
-				<div class="#Validation.brandID.class#">
-					#Validation.brandID.text#
-				</div>
-				<div class="form-group">
-					 <div class="clearfix">
-							 <select name="brandID" class="form-control btn btn-option" >
-							 	<option value>--- Select a Brand ---</option>
-						    	<cfloop query="#lstBrand#">
-									<option value="#lstBrand.brandID#" <cfif lstBrand.brandID EQ FORM.brandID> selected</cfif> >#lstBrand.brandName#</option>
-								</cfloop>
-							 </select>
-						 </div>
-				</div>
-
-				<!---- Text ---->
-				<label for="text">Text</label>
-				<div class="form-group">
-					 <textarea type="text" class="form-control" id="text" name="text">#FORM.text#</textarea>
-					 <script type="text/javascript">CKEDITOR.replace( 'text'); </script>
-				</div>
-
-				<!---- Image ---->
-				<label for="image">Choose an image</label>
-				<div class="#Validation.image.class#">
-					#Validation.image.text#
-				</div>
-				<div class="form-group">
-					<input type="file" name="image" id="image" value="#FORM.image#"/>
-				</div>
-				<label for="image">Current image</label>
-				<div class="form-group">
-					<img id="currentImage" src="#getContextRoot()##FORM.image#" alt="hinh" width="144" height="144">
-				</div>
-				<div class="div_center">
-					<div class="alert alert-info">
-						<button type="submit" class="btn btn-default btn_center">Submit</button>
+					<div class="row clearfix">
+						<div class="col-md-4 column">
+							<!--- Original Price --->
+							<label for="price">Original Price</label>
+							<div class="#Validation.originalprice.class#">
+								#Validation.originalprice.text#
+							</div>
+							<div class="form-group">
+								 <input type="number" class="form-control" id="originalprice" name="originalprice" value="#FORM.originalprice#"/>
+							</div>
+						</div>
+						<div class="col-md-4 column">
+							<!--- Price --->
+							<label for="price">Price</label>
+							<div class="#Validation.price.class#">
+								#Validation.price.text#
+							</div>
+							<div class="form-group">
+								 <input type="number" class="form-control" id="price" name="price" value="#FORM.price#"/>
+							</div>	
+						</div>
+						<div class="col-md-4 column">
+							<!--- Discount --->
+							<label for="discount">Discount</label>
+							<div class="form-group">
+								 <input type="number" class="form-control" id="discount" name="discount" value="#FORM.discount#"/>
+							</div>
+						</div>
 					</div>
 				</div>
-			</form>
+				<div class="col-md-4 column">
+					<div class="row clearfix">
+						<div class="col-md-6 column">
+							<!--- Status --->
+							<label for="status">Stock status</label>
+							<div class="#Validation.status.class#">
+								#Validation.status.text#
+							</div>
+							<div class="form-group">
+						        <input type="checkbox" id="status" name="status" value="#FORM.status#" <cfif FORM.status> checked</cfif>> In stock
+							</div>
+						</div>
+						<div class="col-md-6 column">
+							<!--- Is Active --->
+							<label for="IsActive">Is Active</label>
+							<div class="#Validation.IsActive.class#">
+								#Validation.IsActive.text#
+							</div>
+							<div class="form-group">
+						        <input type="checkbox" id="IsActive" name="IsActive" value="#FORM.IsActive#" <cfif FORM.IsActive> checked</cfif>> Selling
+							</div>
+						</div>
+					</div>
+					<!---- Category ID --->
+					<label for="categoryID">Category</label>
+					<div class="#Validation.categoryID.class#">
+						#Validation.categoryID.text#
+					</div>
+					<div class="form-group">
+							 <div class="clearfix">
+								 <select name="categoryID" class="form-control btn btn-option" >
+								 	<option value="0">--- Select a Category ---</option>
+							    	<cfloop query="#lstCategory#">
+											<option value="#lstCategory.categoryID#" <cfif lstCategory.categoryID EQ FORM.categoryID> selected</cfif>>#lstCategory.categoryName#</option>
+									</cfloop>
+								 </select>
+							 </div>
+					</div>
+
+					<!---- Brand ID --->
+					<label for="brandID">Brand</label>
+					<div class="#Validation.brandID.class#">
+						#Validation.brandID.text#
+					</div>
+					<div class="form-group">
+						 <div class="clearfix">
+								 <select name="brandID" class="form-control btn btn-option" >
+								 	<option value>--- Select a Brand ---</option>
+							    	<cfloop query="#lstBrand#">
+										<option value="#lstBrand.brandID#" <cfif lstBrand.brandID EQ FORM.brandID> selected</cfif> >#lstBrand.brandName#</option>
+									</cfloop>
+								 </select>
+							 </div>
+					</div>
+				</div>
+				<div class="col-md-4 column" style="border-left: 1px solid brown;">
+					
+					<!---- Image ---->
+					<label for="image">Choose an image</label>
+					<div class="#Validation.image.class#">
+						#Validation.image.text#
+					</div>
+					<div class="form-group">
+						<input type="file" name="image" id="image" value="#FORM.image#"/>
+					</div>
+					<label for="image">Current image</label>
+					<div class="form-group">
+						<img id="currentImage" src="#getContextRoot()##FORM.image#" alt="hinh" width="144" height="144">
+					</div>
+
+				</div>
+			</div>
 		</div>
 	</div>
+	<hr>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<!---- Text ---->
+			<label for="text">Text</label>
+			<div class="form-group">
+				 <textarea type="text" class="form-control" id="text" name="text">#FORM.text#</textarea>
+				 <script type="text/javascript">CKEDITOR.replace( 'text'); </script>
+			</div>
+		</div>
+	</div>
+	<div class="div_center">
+		<div class="alert alert-info">
+			<button type="submit" class="btn btn-default btn_center">Submit</button>
+		</div>
+	</div>
+</form>
 </div>
 </cfoutput>
 

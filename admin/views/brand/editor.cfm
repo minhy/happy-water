@@ -86,8 +86,16 @@
 							(
 								<cfqueryparam sqltype="varchar" value="#FORM.brandName#"/>,
 								<cfqueryparam sqltype="clob" value="#desc#"/>,
-								<cfqueryparam sqltype="tinyint" value="#FORM.status#"/>,
-								<cfqueryparam sqltype="tinyint" value="#FORM.IsActive#"/>
+								<cfif  NOT IsDefined('FORM.status')>
+									<cfqueryparam sqltype="tinyint" value="0"/>,
+								<cfelse>
+									<cfqueryparam sqltype="tinyint" value="#FORM.status#"/>,
+								</cfif>
+								<cfif  NOT IsDefined('FORM.IsActive')>
+									<cfqueryparam sqltype="tinyint" value="0"/>
+								<cfelse>
+									<cfqueryparam sqltype="tinyint" value="#FORM.IsActive#"/>
+								</cfif>
 							)
 							</cfquery>
 						<cftransaction action="commit"/>
@@ -135,8 +143,16 @@
 						SET 
 							brandName = <cfqueryparam sqltype="varchar" value="#FORM.brandName#"/>,
 							description = <cfqueryparam sqltype="clob" value="#desc#"/>,
-							status = <cfqueryparam sqltype="tinyint" value="#FORM.status#"/>,
-							IsActive = <cfqueryparam sqltype="tinyint" value="#FORM.IsActive#"/>
+							<cfif  NOT IsDefined('FORM.status')>
+								status = 0,
+							<cfelse>
+								status = <cfqueryparam sqltype="tinyint" value="#FORM.status#"/>,
+							</cfif>
+							<cfif  NOT IsDefined('FORM.IsActive')>
+								IsActive = 0
+							<cfelse>
+								IsActive = <cfqueryparam sqltype="tinyint" value="#FORM.IsActive#"/>
+							</cfif>
 						WHERE brandID = <cfqueryparam sqltype="integer" value="#FORM.brandID#"/>
 					</cfquery>
 					<cftransaction action="commit"/>
@@ -154,70 +170,72 @@
 <cfoutput>
 <br>
 <legend><h1>Brand Management - Updater</h1></legend>
-<div  style="width:600px; margin:auto;">
+<div  style="width:100%; margin:auto;">
 	<div class="row clearfix">
-		<div class="col-md-12 column">
-			<cfif NOT Validation.Valid>
-				<div class="alert alert-dange">
-					<h3>Oops! Could not save new brand</h3>
-				</div>
-			</cfif>
-			<form  method="post"  enctype="multipart/form-data">
-				<input type="hidden" name="brandID" value="#FORM.brandID#"/>
-				<!--- brand Name --->
-				<label for="brandName">Brand Name</label>
-				<div class="#Validation.brandName.class#">
-					#Validation.brandName.text#
-				</div>
-				<div class="form-group">
-					 <input type="text" class="form-control" id="brandName" name="brandName" value="#FORM.brandName#"/>
-				</div>
+		<cfif NOT Validation.Valid>
+			<div class="alert alert-dange">
+				<h3>Oops! Could not save new brand</h3>
+			</div>
+		</cfif>
+	</div>
+<form  method="post"  enctype="multipart/form-data">
 
-				<!--- Description --->
-				<label for="description">Description</label>
-				<div class="#Validation.description.class#">
-					#Validation.description.text#
-				</div>
-				<div class="form-group">
-					 <textarea type="text" required="yes" class="form-control" id="description" name="description">#FORM.description#</textarea>
-					 <script type="text/javascript">CKEDITOR.replace( 'description'); </script>
-				</div>
-
-				<!--- Status --->
-				<label for="status">Status</label>
-				<div class="#Validation.status.class#">
-					#Validation.status.text#
-				</div>
-				<div class="form-group">
-					 <p class="input-group-addon">
-				        <input type="radio" id="status" name="status" value="0" <cfif NOT FORM.status> checked</cfif>> Old
-				     </p>
-				     <p class="input-group-addon">
-				        <input type="radio" id="status" name="status" value="1" <cfif FORM.status> checked</cfif>> New
-				     </p>
-				</div>
-
-				<!--- Is Active --->
-				 <label for="IsActive">Is Active</label>
-				<div class="#Validation.IsActive.class#">
-					#Validation.IsActive.text#
-				</div>
-				<div class="form-group">
-				     <p class="input-group-addon">
-				        <input type="radio" id="IsActive" name="IsActive" value="0" <cfif NOT FORM.IsActive> checked</cfif>> Not selling
-				     </p>
-					 <p class="input-group-addon">
-				        <input type="radio" id="IsActive" name="IsActive" value="1" <cfif FORM.IsActive> checked</cfif>> Selling
-				     </p>
-				</div>
-
-				<div class="div_center">
-					<div class="alert alert-info">
-						<button type="submit" class="btn btn-default btn_center">Submit</button>
+		<div class="row clearfix">
+			<div class="col-md-12 column">
+				<div class="row clearfix">
+					<div class="col-md-4 column" style="border-right: 1px solid brown;">
+						<input type="hidden" name="brandID" value="#FORM.brandID#"/>
+						<!--- brand Name --->
+						<label for="brandName">Brand Name</label>
+						<div class="#Validation.brandName.class#">
+							#Validation.brandName.text#
+						</div>
+						<div class="form-group">
+							 <input type="text" class="form-control" id="brandName" name="brandName" value="#FORM.brandName#"/>
+						</div>
+						<div class="row clearfix">
+							<div class="col-md-6 column">
+								<!--- Status --->
+								<label for="status">Status</label>
+								<div class="#Validation.status.class#">
+									#Validation.status.text#
+								</div>
+								<div class="form-group">
+								        <input type="checkbox" id="status" name="status" value="#FORM.status#" <cfif FORM.status> checked</cfif>> New
+								</div>
+							</div>
+							<div class="col-md-6 column">
+								<!--- Is Active --->
+								<label for="IsActive">Is Active</label>
+								<div class="#Validation.IsActive.class#">
+									#Validation.IsActive.text#
+								</div>
+								<div class="form-group">
+								        <input type="checkbox" id="IsActive" name="IsActive" value="#FORM.IsActive#" <cfif FORM.IsActive> checked</cfif>> Selling
+								</div>
+							</div>
+						</div>
+					</div>
+	
+					<div class="col-md-8 column" style="border-right: 1px solid brown;">
+						<!--- Description --->
+						<label for="description">Description</label>
+						<div class="#Validation.description.class#">
+							#Validation.description.text#
+						</div>
+						<div class="form-group">
+							 <textarea type="text" required="yes" class="form-control" id="description" name="description">#FORM.description#</textarea>
+						</div>
 					</div>
 				</div>
-			</form>
+			</div>
 		</div>
-	</div>
+
+		<div class="div_center">
+			<div class="alert alert-info">
+				<button type="submit" class="btn btn-default btn_center">Submit</button>
+			</div>
+		</div>
+</form>
 </div>
 </cfoutput>
