@@ -7,8 +7,8 @@
 				<div class="col-md-8 column">
 					<img src="#getContextRoot()#/admin/images/logo.png" style="height: 70px"/>
 				</div>
-				<div class="col-md-4 column">
-					Info User
+				<div class="col-md-4 column ">
+					<a href="#getContextRoot()#/index.cfm/home:logout" style="color:black">Log Out</a>
 				</div>
 			</div>
 		</div>
