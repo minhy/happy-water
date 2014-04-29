@@ -37,8 +37,15 @@
 								<button style="float:left" class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetAll.productID#)">Buy!</button>
 						</p>
 						<a href="#buildUrl('product.detail')#/?productID=#qGetAll.productID#">
-						<div class="category-name">#qGetAll.productName#: $#qGetAll.price# <br> 
-							<span style="font-size:20px;">Discount: #qGetAll.discount#%</span>
+						<div class="category-name">
+							#qGetAll.productName#<br> 
+							<span style="float:left;margin-left:5px;">#dollarformat(qGetAll.price*(100-qGetAll.discount)/100)#</span>
+							<br>
+							<cfif #qGetAll.discount# neq 0>
+								<span style="float:left;margin-right:5px; text-decoration: line-through;">#dollarformat(qGetAll.price)#</span>
+						
+								<span style="font-size:20px; float:right;margin-right:5px;">Discount: #qGetAll.discount#%</span>
+							</cfif>
 						</div>	
 						</a>
 					</div>

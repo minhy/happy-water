@@ -39,8 +39,15 @@
 								<button style="float:left" class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetByTopdeal.productID#)">Buy!</button>
 						</p>
 						<a href="#buildUrl('product.detail')#/?productID=#qGetByTopdeal.productID#">
-						<div class="category-name">#qGetByTopdeal.productName#: $#qGetByTopdeal.price# <br> 
-							<span style="font-size:20px;">Discount: #qGetByTopdeal.discount#%</span>
+						<div class="category-name">
+							#qGetByTopdeal.productName#<br> 
+							<span style="float:left;margin-left:5px;">#dollarformat(qGetByTopdeal.price*(100-qGetByTopdeal.discount)/100)#</span>
+							<br>
+							<cfif #qGetByTopdeal.discount# neq 0>
+								<span style="float:left;margin-right:5px; text-decoration: line-through;">#dollarformat(qGetByTopdeal.price)#</span>
+								
+								<span style="font-size:20px; float:right;margin-right:5px;">Discount: #qGetByTopdeal.discount#%</span>
+							</cfif>
 						</div>
 						</a>
 					</div>
