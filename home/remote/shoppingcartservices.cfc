@@ -30,7 +30,7 @@
 	    	type="numeric">
 
 	    <cfquery name="qGetProductByID" datasource="happy_water">
-			select *
+			select *, price*(100-discount)/100 as promotionprice
 			from product
 			where productID = <cfqueryparam cfsqltype="cf_sql_integer" value="#arguments.productID#">
 		</cfquery>
@@ -59,7 +59,7 @@
 				            product = structNew();
 				            product.productID = qGetProductByID.productID;
 				            product.name = qGetProductByID.productName;
-				            product.price = qGetProductByID.price;
+				            product.price = qGetProductByID.promotionprice;
 				            product.quantity = arguments.quantity;
 				            arrayAppend(session.shoppingcart, product);
 				            //return session.shoppingcart; 
