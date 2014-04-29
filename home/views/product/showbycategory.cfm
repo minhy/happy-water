@@ -21,10 +21,22 @@
 	<cfset sumpage = ceiling(qSumRecord.dem/9+1)>
 	<div class="row clearfix">
 		<cfloop query="qGetByCategory">
-			<div class="col-md-4">
-				<a href="#buildUrl('product.detail')#/?productID=#qGetByCategory.productID#" class="category-startpage">
-				<img class="categories" src="#qGetByCategory.image#" width="300" height="300">
-				<p class="bginfo">#qGetByCategory.description#</p>
+			<div class="col-md-4" style="margin-bottom:10px;">
+				<img class="categories" src="#qGetByCategory.image#" width="200" height="200">
+				<p class="bginfo kh_bginfo">
+					<cfif #len(qGetByCategory.description)# gt 200>
+						#left(qGetByCategory.description, 200)# ...	
+						<cfelse>
+							#qGetByCategory.description#
+					</cfif>
+						<br>
+						<br>
+						<br>
+						<br>
+						<input type="number" name="nQuantity#qGetByCategory.productID#"
+						value="1" min="1" max="99" class="quantity form-control">
+						<button style="float:left" class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetByCategory.productID#)">Buy!</button>
+				</p>
 				<div class="category-name kh_category-name">
 					#qGetByCategory.productName#<br> 
 					<span style="float:left;margin-left:5px;">#dollarformat(qGetByCategory.price*(100-qGetByCategory.discount)/100)#</span>
