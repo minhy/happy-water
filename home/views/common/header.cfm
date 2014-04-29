@@ -1,6 +1,6 @@
 <cfparam name="SESSION.isLoggedIn" default="false">
 <cfparam name="SESSION.name" default="">
-<!---dsfsdjkfhgsduyhfhsdjfhgsjehfshgf---->
+
 <cfoutput>
 	<header id="header">
 		<div class="container header">
@@ -150,10 +150,10 @@
 			               		s += "<tr class='trProduct' style='background-color:DDDDDD; font-size:13px;'>"
 								    + "<td>" + Number(i+1) + "</td>"  
 								    + "<td>" + data[i].NAME + "</td>"
-								    + "<td>" + formatUSD(Number(data[i].PRICE)) + "</td>"
-								    + "<td> <input type='number' value='"+ data[i].QUANTITY +"' min='0' max='99' onchange='changeQuantity(" + data[i].PRODUCTID + ",this.value," + data[i].PRICE + "," + Number(i+1)+ ")'> </td>"
-								    + "<td id='tdTotal" + Number(i+1) +"'>"+ formatUSD(Number(data[i].PRICE*data[i].QUANTITY)) + "</td>"
-								    + "<td><a class='btn btn-danger' href='##' onclick='deleteProduct("+ data[i].PRODUCTID +")'>Remove</td>"
+								    + "<td style='text-align:right;'>" + formatUSD(Number(data[i].PRICE)) + "</td>"
+								    + "<td style='text-align:center;'> <input type='number' value='"+ data[i].QUANTITY +"' min='0' max='99' onchange='changeQuantity(" + data[i].PRODUCTID + ",this.value," + data[i].PRICE + "," + Number(i+1)+ ")'> </td>"
+								    + "<td id='tdTotal" + Number(i+1) +"' style='text-align:right;'>"+ formatUSD(Number(data[i].PRICE*data[i].QUANTITY)) + "</td>"
+								    + "<td  style='text-align:right;'><a class='btn btn-danger' href='##' onclick='deleteProduct("+ data[i].PRODUCTID +")'>Remove</td>"
 								    +"</tr>"
 								    + "<input type='hidden' id='hdTotal" + Number(i+1) + "' value='" + Number(data[i].PRICE*data[i].QUANTITY) +"'>"
 								    + "<input type='hidden' name='hdProductID' value='" + data[i].PRODUCTID +"'>";
@@ -163,13 +163,14 @@
 								    + "<td>&nbsp;</td>"
 								    + "<td>&nbsp;</td>"
 								    + "<td>&nbsp;</td>"
-								    + "<td><b id='bTotal'> Total: 	" + formatUSD(Number(totalprice)) + "</b></td>"
+								    + "<td><b id='bTotal' style='font-size:15px;'> Total: 	" + formatUSD(Number(totalprice)) + "</b></td>"
 								    + "<td>&nbsp;</td>"
 								    + "</tr>";
 					    	$("##tbody").html(s);
 					   }
 			           });
 				}
+
 
 				function btnBuyOnClick(productID){
 					var quantity = $("[name='nQuantity" + productID + "']").val();

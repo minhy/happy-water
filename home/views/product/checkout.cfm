@@ -23,11 +23,11 @@
 		    <tbody>	          
 				<table class="table">
 					<thead>
-						<th>##</b></th>
-						<th>Product</th>
-						<th>Price</th>
-						<th>Quantity</th>
-						<th>Total</th>
+						<th style="text-align:left;">##</b></th>
+						<th style="text-align:left;">Product</th>
+						<th style="text-align:right;">Price</th>
+						<th style="text-align:center;">Quantity</th>
+						<th style="text-align:right;">Total</th>
 					</thead>
 
 					<!--- get product detail in cart --->
@@ -36,19 +36,19 @@
 						<tr style="background-color:##<cfif i MOD 2>EFEFEF<cfelse>FFFFFF</cfif>;">
 
 							<!---No column--->
-							<td>#i#</td>
+							<td style="text-align:center;">#i#</td>
 
 							<!---Name column--->
-							<td>#session.shoppingcart[i].name#</td>
+							<td style="text-align:left;">#session.shoppingcart[i].name#</td>
 
 							<!---Price column--->
-							<td>#DollarFormat(session.shoppingcart[i].price)#</td>
+							<td style="text-align:right;">#DollarFormat(session.shoppingcart[i].price)#</td>
 
 							<!---Quantity column--->
-							<td>#session.shoppingcart[i].quantity#</td>							
+							<td style="text-align:right;">#session.shoppingcart[i].quantity#</td>							
 
 							<!---Total price for product type --->
-							<td id="tdTotal#i#">
+							<td id="tdTotal#i#" style="text-align:right;">
 								#DollarFormat(total[i])#
 							</td>
 						</tr>
@@ -60,7 +60,7 @@
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
 						<td>&nbsp;</td>
-						<td><b id="bTotal">Total:&nbsp;&nbsp;#DollarFormat(variables.totalprice)#</b></td>
+						<td><b id="bTotal" style="font-size:15px;">Total:&nbsp;&nbsp;#DollarFormat(variables.totalprice)#</b></td>
 					</tr>
 				</table>
 
