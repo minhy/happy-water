@@ -13,7 +13,7 @@
 		limit 4
 	</cfquery>
 	<!-- Master Page -->
-	<legend ><h1>Product Details</h1></legend>
+	<legend><h1 style="color: ##0088cc;">Product Details: #qGetProductByID.productName#</h1></legend>
 	<div class="row clearfix">
 		<div class="col-md-8 showimg">
 			<div>
@@ -43,7 +43,7 @@
 					</div>
 				</div>
 				<div style="width:100%;">
-					<div style="margin-left: 90px; width:5%;">
+					<div style="margin-left: 156px; width:5%;">
 						<cfif #bought# eq 0>
 						<div class="input-group" style="margin-right:5px;">
 							<input type="number" name="nQuantity#qGetProductByID.productID#"
@@ -64,14 +64,16 @@
 
 			<div id="divNewReleases">
 				<cfloop query="qGetNewProduct">
-						<div class="alert alert-info">
-							<a href="productDetail.cfm?productID=#qGetNewProduct.productID#">
-							<img class="productImg" src="#qGetNewProduct.image#" width="32" height="32">
-							#qGetNewProduct.productName#
-							</a><br>
-							<span>
-								$#qGetProductByID.price#
-							</span>
+						<!--- <div class="alert alert-info">
+							<div style="width: 180px;">
+								<a href="productDetail.cfm?productID=#qGetNewProduct.productID#">
+								<img class="productImg" src="#qGetNewProduct.image#" width="32" height="32">
+									<span>#qGetNewProduct.productName#</span>
+								</a><br>
+								<span>
+									$#qGetProductByID.price#
+								</span>
+							</div>
 							<div class="input-group" style="margin-right:5px; display:inline-block; width:105px; float:right; top: -16px;">
 								<input type="number" name="nQuantity#qGetNewProduct.productID#"
 									value="1" min="1" max="99" class="form-control" style="width:50px">
@@ -79,7 +81,27 @@
 								<button class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetNewProduct.productID#)">Buy!</button>
 								</span>
 							</div>
-						</div>
+						</div> --->
+						<table style="margin-bottom:10px; width:347px;">
+							<tr class="alert alert-info">
+								<td>
+									<img class="productImg" style="margin-left: 5px;" src="#qGetNewProduct.image#" width="32" height="32">
+								</td>
+								<td>
+									<a href="productDetail.cfm?productID=#qGetNewProduct.productID#"><span style="margin-right: 5px;">#qGetNewProduct.productName#</span></a>
+									<br>$#qGetNewProduct.price#
+								</td>
+								<td>
+									<div class="input-group" style="margin-right:5px; display:inline-block; width:105px; float:right;">
+								<input type="number" name="nQuantity#qGetNewProduct.productID#"
+									value="1" min="1" max="99" class="form-control" style="width:50px">
+								<span class="input-group-btn">
+								<button class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetNewProduct.productID#)">Buy!</button>
+								</span>
+							</div>
+								</td>
+							</tr>
+						</table>
 				</cfloop>
 		    </div>
 		</div>

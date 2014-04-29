@@ -1,9 +1,4 @@
-﻿div.col-md-1.column.logo {
-  padding: 0px;
-  width: 110px;
-  margin-left: 10px;
-}
-section {
+﻿section {
   margin-bottom: 30px;
 }
 body {
@@ -171,10 +166,9 @@ p.bginfo {
   overflow: hidden;
   -ms-opacity: 0;
   opacity: 0;
-  background: rgba(34, 36, 41, 0.56);
-  height: 100%;
-  width: 100%;
-  margin: 0px;
+  background: rgba(0,0,0,0);
+  height: 277px;
+  width: 364px;
   padding: 10px;
   font-size: 12px;
   color: #fff;
@@ -219,4 +213,22 @@ img.productImg{
 
 #trTotal{
   background-color:#DDDDDD;
+}
+
+img.categories{
+  width: 365px;
+  height: 365px;
+  background-color: black;
+}
+
+div.category-name{
+  width: 365px;
+  padding: 3px;
+}
+
+.col-md-4 input.quantity{
+  width:50px;
+  height: 34px;
+  float:left; 
+  margin-left: 110px;
 }

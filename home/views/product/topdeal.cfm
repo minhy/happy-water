@@ -18,10 +18,12 @@
 
 	<cfset sumpage = ceiling(qSumRecord.dem/9+1)>
 
+	<legend ><h1 style="color: ##0088cc;">Top Deal Products</h1></legend>
 
+	<cfinclude template="selection.cfm">
 
 	<div class="row clearfix">
-		<div class="col-md-9" align="center">
+		<div class="col-md-12" align="center">
 			<div class="row clearfix">
 				<cfloop query="qGetByTopdeal">
 					<div class="col-md-4" style="margin-bottom:10px;">
@@ -33,18 +35,20 @@
 								<br>
 								<br>
 								<input type="number" name="nQuantity#qGetByTopdeal.productID#"
-								value="1" min="1" max="99" class="form-control" style="width:50px; float:left; margin-left: 40px;">
+								value="1" min="1" max="99" class="quantity form-control">
 								<button style="float:left" class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetByTopdeal.productID#)">Buy!</button>
 						</p>
 						<a href="#buildUrl('product.detail')#/?productID=#qGetByTopdeal.productID#">
-						<div class="category-name" style="width:200px; padding:3px;">#qGetByTopdeal.productName#</div>
+						<div class="category-name">#qGetByTopdeal.productName#: $#qGetByTopdeal.price# <br> 
+							<span style="font-size:20px;">Discount: #qGetByTopdeal.discount#%</span>
+						</div>
 						</a>
 					</div>
 				</cfloop>
 			</div>
 			<div class="row clearfix">
 				<div class="col-md-12" align="center">
-					<ul class="pagination">
+					<ul class="pagination" style="float: none;">
 					  <li><a href="?page=#URL.page-1#" onclick="return checkPrev()">&laquo;</a></li>
 					  <cfloop from="1" to="#sumpage#" index="i">			
 						<li>
