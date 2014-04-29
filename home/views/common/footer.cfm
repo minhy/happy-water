@@ -25,12 +25,12 @@
 														<cfset variables.totalprice = 0>
 														<table class="table">
 															<thead style="font-size:13px;">
-																<th>##</b></th>
-																<th>Product</th>
-																<th>Price</th>
-																<th>Quantity</th>
-																<th>Total</th>
-																<th>Action</th>
+																<th style="text-align:left;">##</b></th>
+																<th style="text-align:left;">Product</th>
+																<th style="text-align:right;">Price</th>
+																<th style="text-align:center;">Quantity</th>
+																<th style="text-align:right;">Total</th>
+																<th style="text-align:right;">Action</th>
 															</thead>
 															<tbody  id="tbody">
 															</tbody>

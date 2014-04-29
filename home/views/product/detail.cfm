@@ -9,7 +9,8 @@
 	<cfquery name="qGetNewProduct" datasource="happy_water">
 		select *
 		from product
-		order by productID desc
+		where productID != <cfqueryparam value="#url.productID#" cfsqltype="cf_sql_integer">
+		ORDER BY RAND()
 		limit 4
 	</cfquery>
 	<!-- Master Page -->
