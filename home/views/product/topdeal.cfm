@@ -67,8 +67,5 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-md-3" align="center">
-			<cfinclude template="selection.cfm">
-		</div>
 	</div>
 </cfoutput>
