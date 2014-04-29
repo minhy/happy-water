@@ -9,7 +9,7 @@ CKEDITOR.editorConfig = function( config ) {
 	// http://docs.ckeditor.com/#!/api/CKEDITOR.config
 
 	// The toolbar groups arrangement, optimized for two toolbar rows.
-	config.toolbarGroups = [
+	config.toolbarGroups_MyToolbar = [
 		{ name: 'clipboard',   groups: [ 'clipboard', 'undo' ] },
 		{ name: 'editing',     groups: [ 'find', 'selection', 'spellchecker' ] },
 		{ name: 'links' },
@@ -35,4 +35,28 @@ CKEDITOR.editorConfig = function( config ) {
 
 	// Make dialogs simpler.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
+
+	config.toolbar = 'MyToolbar';
+	config.toolbar = 'MyToolbar2';
+    config.toolbar_MyToolbar =
+    [
+        ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
+        ['Image','Flash','Table','HorizontalRule'],
+        '/',
+        ['Styles','Format'],
+        ['Link','Unlink','Anchor']
+    ];
+		
+    config.toolbar_MyToolbar2 =
+    [
+        ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Scayt','RemoveFormat'],
+        ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+        '/',
+        ['Styles','Format'],
+        ['Bold','Italic','Strike'],
+        ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+        ['Link','Unlink','Anchor'],
+        ['Maximize'],
+        ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv']
+    ];
 };

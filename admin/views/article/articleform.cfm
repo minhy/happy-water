@@ -250,10 +250,22 @@
     </div>
     <div class="col-md-10 form#Validation.content.class#">
 		<textarea "textarea" rows="10" cols="55" name="content" id="content" value="" size="50">#FORM.content#</textarea>
-		<script type="text/javascript">CKEDITOR.replace('content'); </script>
+		<script language="javascript1.2">
+	CKEDITOR.replace( 'content',
+		{
+			filebrowserBrowseUrl : '../../admin/cffm/cffm.cfm?editorType=cke&EDITOR_RESOURCE_TYPE=file',
+			filebrowserImageBrowseUrl : '../../admin/cffm/cffm.cfm?editorType=cke&EDITOR_RESOURCE_TYPE=image',
+			filebrowserFlashBrowseUrl : '../../admin/cffm/cffm.cfm?editorType=cke&EDITOR_RESOURCE_TYPE=flash',
+			filebrowserUploadUrl : '../../admin/cffm/cffm.cfm?action=QuickUpload&editorType=cke&EDITOR_RESOURCE_TYPE=file',
+			filebrowserImageUploadUrl : '../../admin/cffm/cffm.cfm?action=QuickUpload&editorType=cke&EDITOR_RESOURCE_TYPE=image',
+			filebrowserFlashUploadUrl : '../../admin/cffm/cffm.cfm?action=QuickUpload&editorType=cke&EDITOR_RESOURCE_TYPE=flash',
+			toolbar : 'MyToolbar2'
+		} 
+	);
+	</script>
 		<p>#Validation.content.text#</p>
-    </div>
 
+    </div>
     <div class="col-md-2">
     	Active:
     </div>
