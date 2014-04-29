@@ -191,6 +191,99 @@ $(function () {
     });
 });
 </script>
+
+<script language="javascript">
+    $(function () {
+        $('##user_product').highcharts({
+            chart: {
+                zoomType: 'xy'
+            },
+            title: {
+                text: 'Statistic user and profit in current month'
+            },
+            subtitle: {
+                text: 'Source: Happy-Water'
+            },
+            xAxis: [{
+                categories: [
+                <cfloop from="1" to="#DatePart('d', #Now()#)#" step="1" index="i">
+                    #i#,
+                </cfloop>
+
+                ]
+            }],
+            yAxis: [{ // Primary yAxis
+                labels: {
+                    format: '{value}C',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                },
+                title: {
+                    text: 'Profit',
+                    style: {
+                        color: Highcharts.getOptions().colors[1]
+                    }
+                }
+            }, { // Secondary yAxis
+                title: {
+                    text: 'User',
+                    style: {
+                        color: Highcharts.getOptions().colors[0]
+                    }
+                },
+                labels: {
+                    format: '{value} User',
+                    style: {
+                        color: Highcharts.getOptions().colors[0]
+                    }
+                },
+                opposite: true
+            }],
+            tooltip: {
+                shared: true
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'left',
+                x: 120,
+                verticalAlign: 'top',
+                y: 100,
+                floating: true,
+                backgroundColor: (Highcharts.theme && Highcharts.theme.legendBackgroundColor) || '##FFFFFF'
+            },
+            series: [{
+                name: 'User',
+                type: 'column',
+                yAxis: 1,
+                data: [<cfloop from="1" to="#day(#Now()#)#" index="k">
+                    
+                <cfquery name="count" result="result">
+                    select * from user where DATE_FORMAT(RegisterDate,'%Y-%m-%d') = DATE_FORMAT(#createDate(#year(#Now()#)#,#month(#Now()#)#,#k#)#,'%Y-%m-%d')
+                </cfquery>
+
+                #result.RECORDCOUNT#,
+
+                </cfloop>],
+                tooltip: {
+                    valueSuffix: ' user'
+                }
+    
+            }, {
+                name: 'Profit',
+                type: 'spline',
+                data: [
+                    7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6
+
+                      ],
+                tooltip: {
+                    valueSuffix: '°C'
+                }
+            }]
+        });
+    });
+    </script>
+
 <body>
     <div class="col-md-12 column">
         <div class="tabbable" id="tabs-111222">
@@ -204,6 +297,9 @@ $(function () {
                 <li>
                     <a href="##panel-123789" data-toggle="tab">Top Group-Product</a>
                 </li>
+                <li>
+                    <a href="##panel-test" data-toggle="tab">test</a>
+                </li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="panel-123123">
@@ -214,6 +310,34 @@ $(function () {
                 </div>
                 <div class="tab-pane" id="panel-123789">
                     <div id="con3" style="min-width: 700px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+                </div>
+                <div class="tab-pane" id="panel-test">
+                    <div id="user_product" style="min-width: 700px; height: 400px; max-width: 600px; margin: 0 auto">
+                    </div>
+
+                   #year(#Now()#)#
+                   #month(#Now()#)#
+                   #day(#Now()#)#
+                   #DateAdd('d', 2, #Now()#)#
+                <!--- <cfloop from="1" to="#DatePart('d', #Now()#)#" step="1" index="i">
+                    #i#,
+                </cfloop>
+                 --->
+                #Dateformat(#now()#,"yyyy-mm-dd")#
+
+                <!--- <cfloop from="1" to="#day(#Now()#)#" index="k">
+                    
+                <cfquery name="count" result="result">
+                    select * from user where DATE_FORMAT(RegisterDate,'%Y-%m-%d') = DATE_FORMAT(#createDate(#year(#Now()#)#,#month(#Now()#)#,#k#)#,'%Y-%m-%d')
+                </cfquery>
+
+                #result.RECORDCOUNT#,
+
+                </cfloop> --->
+                #count.RegisterDate#
+                
+                #createDate("2014","04",29)#
+
                 </div>
             </div>
         </div>

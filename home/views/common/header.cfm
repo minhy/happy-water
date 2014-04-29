@@ -36,7 +36,7 @@
                             </li>
 
                             <li >
-                            	<a href="#getContextRoot()#/index.cfm/home:product/recomment">Recomment</a>
+                            	<a href="#getContextRoot()#/index.cfm/home:product/recommended">Recommened Products</a>
                             </li>
                             
                         </ul>
