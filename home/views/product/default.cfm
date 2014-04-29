@@ -1,14 +1,14 @@
 <cfoutput>
 	<cfparam name="URL.page" default="1">
 	<cfset URL.idpage = (URL.page -1)*9 />
-	<cfquery name="qSumColumn" datasource="happy_water">
+	<cfquery name="qSumColumn">
 		select Count(productID) as dem
 		from product where status = 1 and IsActive = 1
 		order by productID
 
 	</cfquery> 
 
-	<cfquery name="qGetAll" datasource="happy_water">
+	<cfquery name="qGetAll">
 		select *
 		from product where status = 1 and IsActive = 1
 		limit #URL.idpage#,9
