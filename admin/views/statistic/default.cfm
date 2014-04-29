@@ -18,6 +18,21 @@
     ORDER BY total DESC LIMIT 5
 </cfquery>
 
+<!--- Get revenue statistic on the range chosen by user --->
+<cfparam name="FORM.StartDate" default="#now()#">
+<cfparam name="FORM.EndDate" default="#now()#">
+<cfquery name="qGetOptionalRevenue">
+    SELECT
+        day(orderDate) as aday,
+        monthname(orderDate) as amonth,
+        year(orderDate) as ayear,
+        SUM(total) as total
+    FROM `happy_water`.`order`
+    WHERE orderdate BETWEEN <cfqueryparam cfsqltype="string" value="#DateFormat(FORM.StartDate, "yyyy-mm-dd")#"> AND <cfqueryparam cfsqltype="string" value="#DateFormat(FORM.EndDate, "yyyy-mm-dd")#">
+    GROUP BY aday, amonth, ayear
+    ORDER BY orderDate
+</cfquery>
+
 <cfquery name="qTop" result="top">
     select category.categoryName, sum(orderdetail.quantity) as quantity, sum(`orderdetail`.price) as total, `order`.orderDate
     from category left join product on category.categoryID = product.categoryID
@@ -47,35 +62,9 @@
     limit 5
 </cfquery>
 
-<!--- Prepair dataset for chart --->
-<cfset Ox = "">
-<cfset Oy = "">
-<cfset index = 0>
-<cfloop query="qGetRevenue">
-    <cfset index = index + 1>
-    <cfset Ox = Ox & #qGetRevenue.amonth# & ', ' & #qGetRevenue.ayear#>
-    <cfset Oy = Oy & #qGetRevenue.total#>
-    <cfif #index# NEQ #result.RECORDCOUNT#>
-        <cfset Ox = Ox & ";">
-        <cfset Oy = Oy & ";">
-    </cfif>
-</cfloop>
-
-<!--- Use hidden type input for dataset saving and accessing it in JS --->
-<input type="hidden" id="xAxis" value="#Ox#"> 
-<input type="hidden" id="yAxis" value="#Oy#">
-
 <!--- Script draw chart --->
 <script language="javascript">
 $(function () {
-    var index = $("##xAxis").val().split(";");
-    var values = $("##yAxis").val().split(";");
-    for (i in values ) {
-        values[i] = parseInt(values[i], 10);
-    }
-    console.log(index);
-    console.log(values);
-
     $('##revenue').highcharts({
         chart: {
         },
@@ -83,7 +72,11 @@ $(function () {
             text: 'Revenue Statistic'
         },
         xAxis: {
-            categories: index
+            categories: [
+                <cfloop query="qGetRevenue">
+                    '#qGetRevenue.amonth#' + ', ' + '#qGetRevenue.ayear#',
+                </cfloop>
+            ]
         },
         tooltip: {
             valueSuffix: 'USD'
@@ -100,7 +93,11 @@ $(function () {
         },
         series: [{
             name: 'Revenue',
-            data: values
+            data: [
+                <cfloop query="qGetRevenue">
+                    #qGetRevenue.total#,
+                </cfloop>
+            ]
         }]
     });    
 });
@@ -246,32 +243,120 @@ $(function () {
         }]
     });
 });
-</script>
+$(function () {
+    $('##optionalRevenue').highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Revenue'
+        },
+        xAxis: {
+            categories: [
+                <cfloop query="qGetOptionalRevenue">
+                    '#qGetOptionalRevenue.amonth#' + ' ' + '#qGetOptionalRevenue.aday#' + ', ' + '#qGetOptionalRevenue.ayear#',
+                </cfloop>
+            ]
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Revenue ($)'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: 
+                '<td style="padding:0"><b>{point.y:.1f} $</b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+            useHTML: true
+        },
+        plotOptions: {
+            column: {
+                pointPadding: 0.2,
+                borderWidth: 0
+            }
+        },
+        series: [{
+            name: '#qGetOptionalRevenue.amonth#' + ' ' + '#qGetOptionalRevenue.aday#' + ', ' + '#qGetOptionalRevenue.ayear#',
+            data: [
+                <cfloop query="qGetOptionalRevenue">
+                    #qGetOptionalRevenue.total#,
+                </cfloop>
+            ]    
+        }]
+    });
+});
 
+$(document).ready(function(){
+    $('##table_top_user').dataTable({
+    "sPaginationType": "full_numbers"
+    });
+    $( "##startDate" ).datepicker({
+        defaultDate: "",
+        changeMonth: true,
+        changeYear: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+        $( "##endDate" ).datepicker( "option", "minDate", selectedDate );
+        }
+    });
+    $( "##endDate" ).datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        changeYear: true,
+        numberOfMonths: 1,
+        onClose: function( selectedDate ) {
+        $( "##startDate" ).datepicker( "option", "maxDate", selectedDate );
+        }
+    });
+    $("##butSub").click(function(){
+        $("##p11").removeClass("active");
+        $("##panel-625444").removeClass("active");
+        $("##p21").addClass("active");
+        $("##panel-111111").addClass("active");
+    });
+});
+</script>
+<style>
+    table, td, th
+    {
+        border:1px solid black;
+    }
+    th
+    {
+        background-color:black;
+        color:white;
+    }
+</style>
 <body>
     <div class="row clearfix">        
         <div class="col-md-12 column">
             <!--- Use tab table --->
             <div class="tabbable" id="tabs-794103">
                 <ul class="nav nav-tabs">
-                    <li class="active">
+                    <li id="p11">
                         <a href="##panel-625444" data-toggle="tab">Revenue</a>
                     </li>
                     <li>
                         <a href="##panel-932305" data-toggle="tab">Top Users</a>
                     </li>
+                    <li id="p21" class="active">
+                        <a href="##panel-111111" data-toggle="tab">Optional Statistic</a>
+                    </li>
                 </ul>
                 <!--- Tab contend --->
                 <div class="tab-content">
                     <!--- Tab Revenue --->
-                    <div class="tab-pane active" id="panel-625444">
+                    <div class="tab-pane " id="panel-625444">
                         <div id="revenue" style="width:100%; height:400px;"></div>
                     </div>
                     <!--- Tab Top Users --->
                     <div class="tab-pane" id="panel-932305">
                         <div class="container wrap main">
                             <table id="table_top_user" class="display">
-                                <thead>
+                                <thead style="background-color: black;">
                                     <tr>
                                         <th>User ID</th>
                                         <th>First Name</th>
@@ -297,6 +382,16 @@ $(function () {
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                    <div class="tab-pane active" id="panel-111111">
+                        <form method="Post">
+                            <label for="from">From</label>
+                            <input type="text" id="startDate" name="startDate">
+                            <label for="to">to</label>
+                            <input type="text" id="endDate" name="endDate">
+                            <input type ="Submit" value="submit">
+                        </form>
+                        <div id="optionalRevenue" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                     </div>
                 </div>  <!--- End tab content --->
             </div>  <!--- End tab table --->
