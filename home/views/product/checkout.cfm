@@ -1,6 +1,8 @@
 <!---- Contain shipping fee --->
 <cfparam name="shippingfee" type="float" default="0">
-
+<!---- Contain address --->
+<cfparam name="user_address" type="string" default="">
+<cfparam name="user_name" type="string" default="">
 
 
 <!--- Get total price to cart--->
@@ -15,7 +17,7 @@
 	<!--- teamplate checkout--->
 <cfoutput>
 	<cfparam name="form.countries" default=""/>
-<form  name="checkout" method="POST" action=" ">
+<form id="checkout"  name="checkout" method="POST" action=" ">
 	<div id="page">
 		<table id="cart" class="table">
 		    <tbody>	          
@@ -81,53 +83,105 @@
 									    var optionSelected = $("option:selected", this);
 									    $('##shippingfee').val(this.value);
 									});
+
+									$('##getit').click(function(){
+										var adrr = $('##user_address').val();
+										var re   = $('##user_name').val();
+										$('##address').val(adrr);
+										$('##recipient').val(re);
+									});
+
+									$('##ok').click(function(){
+									    if ($('##address').val()==="") {
+									      // invalid
+									      $('##recipient').next('.hide-inline').removeClass('hide').removeClass('hide-inline');
+									      $('##address').next('.hide-inline').removeClass('hide').removeClass('hide-inline');
+									      return false;
+									    }
+									    else {
+									      $('##checkout').submit();
+									      return true;
+									    }
+									});
 								});
 							</script>
 
 
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
 							<h4 class="modal-title" id="myModalLabel">
-								Tell us where is your location !
+								Check out your cart !
 							</h4>
 						</div>
 						<div class="modal-body">
-							<label for="countries">Choose your country</label>
-							<div class="form-group">
-								<div class="clearfix">
-									<select class="form-control" name="countries" id="countries" >
-										<option value="0">Viet Nam</option>
-										<option value="30">Laos</option>
-										<option value="30">Cambodia</option>
-										<option value="40">Brunei</option>
-										<option value="30">East Timor</option>								
-										<option value="40">Indonesia</option>
-										<option value="50">Malaysia</option>
-										<option value="50">Myanmar (Burma)</option>
-										<option value="40">Philippines </option>
-										<option value="50">Singapore</option>
-										<option value="50">Thailand</option>								
-									</select>
-								</div>
-							</div>
-							<label for="shippingfee">Your shipping fee</label>
-							<div class="form-group">
-								<div class="clearfix">
-									<input type="number" class="form-control" name="shippingfee" id="shippingfee" value="#shippingfee#" disabled>
+							<div class="row clearfix">
+								<cfif SESSION.isLoggedIn eq true>
+									<cfquery name="qGetUserInfo">
+										SELECT firstname, address
+										FROM user
+										WHERE userID = #SESSION.userID#
+									</cfquery>
+									<cfset user_address = qGetUserInfo.address>
+									<cfset user_name = qGetUserInfo.firstname>
+									<cfinclude template="shoppingcartloggedin.cfm">
+								<cfelse>
+									<cfinclude template="shoppingcartnotlogin.cfm">
+								</cfif>
+								<div class="col-md-6 column" style="border-left:1px solid brown;">
+									<label for="countries">Choose a country</label>
+									<div class="form-group">
+										<div class="clearfix">
+											<select class="form-control" name="countries" id="countries" >
+												<option value="0">Viet Nam</option>
+												<option value="30">Laos</option>
+												<option value="30">Cambodia</option>
+												<option value="40">Brunei</option>
+												<option value="30">East Timor</option>								
+												<option value="40">Indonesia</option>
+												<option value="50">Malaysia</option>
+												<option value="50">Myanmar (Burma)</option>
+												<option value="40">Philippines </option>
+												<option value="50">Singapore</option>
+												<option value="50">Thailand</option>								
+											</select>
+										</div>
+									</div>
+									<label for="shippingfee">Shipping fee</label>
+									<div class="form-group">
+										<div class="clearfix">
+											<input type="number" class="form-control" name="shippingfee" id="shippingfee" value="#shippingfee#" disabled>
+										</div>
+									</div>
+									
+									<label for="recipient">Recipient</label>
+									<div class="form-group">
+										<div class="clearfix">
+											<input type="text" class="form-control" name="recipient" id="recipient"></input>
+											<div class="hide hide-inline" style="color:red;">
+												This is required
+											</div>
+										</div>
+									</div>
+
+									<label for="address">Delivery place</label>
+									<div class="form-group">
+										<div class="clearfix">
+											<input type="text" class="form-control" name="address" id="address"></input>
+											<div class="hide hide-inline" style="color:red;">
+												This is required
+											</div>
+										</div>
+									</div>
+
 								</div>
 							</div>
 						</div>
 						<div class="modal-footer">
 							 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button> 
-							 <button type="submit" name="submit" class="btn btn-primary">Ok</button>
+							 <button type="submit" name="submit" class="btn btn-primary" id="ok">Ok</button>
 						</div>
 					</div>
-					
 				</div>
-				
 			</div>
-			
-
-
 	</div>
 </form>
 </cfoutput> 
@@ -135,41 +189,38 @@
 
 <!--- <cfif CGI.REQUEST_METHOD EQ 'POST'> --->
 <cfif isDefined("form.submit")>
-
 		<!--- set today to add orderDate--->
-	<cfset toDay=dateFormat( now(),"yyyy/MM/dd")>
-	<cfset shipping = #form.countries#/>
-	<cfset totalship = #shipping#+#totalprice#/>
+		<cfset toDay=dateFormat( now(),"yyyy/MM/dd")>
+		<cfset shipping = #form.countries#/>
+		<cfset totalship = #shipping#+#totalprice#/>
 
-		<!--- insert order to database --->
-	<cfquery name="AddToOrder" datasource="happy_water" result="od">
-		INSERT INTO `order`
-		(userID, orderDate, shippingFee, total)
-		VALUES
-		('#4#', '#toDay#', '#shippingfee#', '#totalship#')
-	</cfquery>
-
-		<!--- insert order detail to database --->
-
-
-	<cfloop array="#session.shoppingcart#" index="item">
-		<cfquery name="AddToOrderDetail" datasource="happy_water">
-			INSERT INTO `orderdetail`
-			(orderID, productID, quantity,price)
+			<!--- insert order to database --->
+		<cfquery name="AddToOrder" result="od">
+			INSERT INTO `order`
+			(userID, orderDate, shippingFee, total)
 			VALUES
-			('#od.GENERATED_KEY#', '#item.productID#', '#item.quantity#', '#item.price#')
+			('#4#', '#toDay#', '#shippingfee#', '#totalship#')
 		</cfquery>
 
-	</cfloop>
+			<!--- insert order detail to database --->
 
 
-<cfscript>
-	arrayClear(session.shoppingcart);
-</cfscript>
-<cfif #ArrayLen(session.shoppingcart)# eq 0>
-	<cflocation url="#buildUrl('home:main')#">
-</cfif>
+		<cfloop array="#session.shoppingcart#" index="item">
+			<cfquery name="AddToOrderDetail">
+				INSERT INTO `orderdetail`
+				(orderID, productID, quantity,price, address, recipient)
+				VALUES
+				('#od.GENERATED_KEY#', '#item.productID#', '#item.quantity#', '#item.price#', '#user_address#','#user_name#')
+			</cfquery>
 
+		</cfloop>
+
+		<cfscript>
+			arrayClear(session.shoppingcart);
+		</cfscript>
+		<cfif #ArrayLen(session.shoppingcart)# eq 0>
+			<cflocation url="#buildUrl('product.thanks')#/?orderID=#od.GENERATED_KEY#&userID=#SESSION.userID#">
+		</cfif>
 </cfif>
 
 

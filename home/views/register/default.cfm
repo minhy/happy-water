@@ -60,7 +60,7 @@
     <cftransaction isolation="serializable" action="begin">
       <cftry>
         <cfquery name="insertdatabase" datasource="happy_water">
-          INSERT INTO user(firstName,lastName,address,dateofbirth,email,level,avatar,password)
+          INSERT INTO user(firstName,lastName,address,dateofbirth,email,level,avatar,password,RegisterDate)
           Values (
             <cfqueryparam sqltype="string" value="#FORM.firstname#"/>,
             <cfqueryparam sqltype="string" value="#FORM.lastname#"/>,
@@ -69,7 +69,8 @@
             <cfqueryparam sqltype="string" value="#FORM.email#"/>,
             '3',
             <cfoutput>'#nameofphoto#'</cfoutput>,
-            <cfqueryparam sqltype="string" value="#Hash(#FORM.password#, "SHA")#"/>
+            <cfqueryparam sqltype="string" value="#Hash(#FORM.password#, "SHA")#"/>,
+            <cfqueryparam sqltype="string" value="#dateformat(#now()#, "yyyy-mm-dd")#"/>
             );
         </cfquery>
         <cftransaction action="commit"/>

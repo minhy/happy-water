@@ -65,6 +65,7 @@
                 <th>Product Name</th>
                 <th>Selling</th>
                 <th>In stock</th>
+                <th>Original Price</th>
                 <th>Price</th>
                 <th>Image</th>
                 <th>Date updating</th>
@@ -90,6 +91,7 @@
                         <cfelse> No
                         </cfif>
                     </td>
+                    <td class="col-md-1 column">#qShowAll.originalprice#</td>
                     <td class="col-md-1 column">#qShowAll.price#</td>
                     <td class="col-md-1 column"><img src="#getContextRoot()##qShowAll.image#" width="50" height="50"/></td>
                     <td class="col-md-1 column">#dateformat(#qShowAll.productDate#,"dd/mm/yyyy")#</td>

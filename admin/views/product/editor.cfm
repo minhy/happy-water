@@ -28,6 +28,8 @@
 <cfparam name="Validation.description.class" default=""/>
 <cfparam name="Validation.price.class" default=""/>
 <cfparam name="Validation.price.text" default=""/>
+<cfparam name="Validation.originalprice.class" default=""/>
+<cfparam name="Validation.originalprice.text" default=""/>
 <cfparam name="Validation.categoryID.class" default=""/>
 <cfparam name="Validation.categoryID.text" default="&nbsp"/>
 <cfparam name="Validation.brandID.class" default=""/>
@@ -50,6 +52,7 @@
 		<cfparam name="FORM.productName" type="string" default=""/>
 		<cfparam name="FORM.description" type="string" default=""/>
 		<cfparam name="FORM.price" type="float" default="0"/>
+		<cfparam name="FORM.originalprice" type="float" default="0"/>
 		<cfparam name="FORM.discount" type="numeric" default="0"/>
 		<cfparam name="FORM.status" type="boolean" default="0"/>
 		<cfparam name="FORM.IsActive" type="boolean" default="0"/>
@@ -72,6 +75,7 @@
 		<cfset FORM.productName = edit_product.productName/>
 		<cfset FORM.description = edit_product.description/>
 		<cfset FORM.price = edit_product.price/>
+		<cfset FORM.originalprice = edit_product.originalprice/>
 		<cfset FORM.discount = edit_product.discount/>
 		<cfset FORM.status = edit_product.status/>
 		<cfset FORM.IsActive = edit_product.IsActive/>
@@ -108,6 +112,12 @@
 			<cfset Validation.price.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
 		</cfif>
+
+		<cfif NOT IsDefined('FORM.originalprice') OR Len(Trim(FORM.originalprice)) EQ 0>
+			<cfset Validation.originalprice.text = "Please provide a originalprice with not null."/>
+			<cfset Validation.originalprice.class = InvalidClass/>
+			<cfset Validation.Valid = false/>
+		</cfif>
 		<cfif NOT IsDefined('FORM.categoryID') OR FORM.categoryID EQ 0>
 			<cfset Validation.categoryID.text = "Please provide a category ID."/>
 			<cfset Validation.categoryID.class = InvalidClass/>
@@ -132,17 +142,17 @@
 		<cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
 			<cfset Validation.status.text = "Please select one."/>
 			<cfset Validation.status.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.IsActive') OR NOT ListFind('0,1',FORM.IsActive)>
 			<cfset Validation.IsActive.text = "Please select one."/>
 			<cfset Validation.IsActive.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.productDate') OR FORM.productDate EQ "">
 			<cfset Validation.productDate.text = "Please select date edit the product."/>
 			<cfset Validation.productDate.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
 		<cfif Validation.Valid>
 			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
@@ -157,6 +167,7 @@
 								description,
 								price,
 								discount,
+								originalprice,
 								status,
 								IsActive,
 								categoryID,
@@ -171,6 +182,7 @@
 								<cfqueryparam sqltype="clob" value="#desc#"/>,
 								<cfqueryparam sqltype="float" value="#FORM.price#"/>,
 								<cfqueryparam sqltype="integer" value="#FORM.discount#"/>,
+								<cfqueryparam sqltype="float" value="#FORM.originalprice#"/>,
 								<cfqueryparam sqltype="tinyint" value="#FORM.status#"/>,
 								<cfqueryparam sqltype="tinyint" value="#FORM.IsActive#"/>,
 								<cfqueryparam sqltype="integer" value="#FORM.categoryID#"/>,
@@ -217,6 +229,11 @@
 			<cfset Validation.price.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
 		</cfif>
+		<cfif NOT IsDefined('FORM.originalprice') OR Len(Trim(FORM.originalprice)) EQ 0>
+			<cfset Validation.originalprice.text = "Please provide a originalprice with not null."/>
+			<cfset Validation.originalprice.class = InvalidClass/>
+			<cfset Validation.Valid = false/>
+		</cfif>
 		<cfif NOT IsDefined('FORM.categoryID') OR FORM.categoryID EQ 0>
 			<cfset Validation.categoryID.text = "Please provide a category ID."/>
 			<cfset Validation.categoryID.class = InvalidClass/>
@@ -230,27 +247,17 @@
 		<cfif NOT IsDefined('FORM.productDate') OR FORM.productDate EQ "">
 			<cfset Validation.productDate.text = "Please select date edit the product."/>
 			<cfset Validation.productDate.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
-		<!--- <cfif NOT IsDefined('FORM.image') OR FORM.image is "">
-			<cfset Validation.image.text = "Please choose an image."/>
-			<cfset Validation.image.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
-		</cfif> --->
-		<!--- <cfif  Not IsImageFile(FORM.image)>
-		    <cfset Validation.image.text = "The file must an image."/>
-			<cfset Validation.image.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
-		</cfif> --->
 		<cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
 			<cfset Validation.status.text = "Please select one."/>
 			<cfset Validation.status.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.IsActive') OR NOT ListFind('0,1',FORM.IsActive)>
 			<cfset Validation.IsActive.text = "Please select one."/>
 			<cfset Validation.IsActive.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
 
 		<cfif Validation.Valid>
@@ -265,6 +272,7 @@
 							description = <cfqueryparam sqltype="clob" value="#desc#"/>,
 							price = <cfqueryparam sqltype="float" value="#FORM.price#"/>,
 							discount = <cfqueryparam sqltype="integer" value="#FORM.discount#"/>,
+							originalprice = <cfqueryparam sqltype="float" value="#FORM.originalprice#"/>,
 							status = <cfqueryparam sqltype="tinyint" value="#FORM.status#"/>,
 							IsActive = <cfqueryparam sqltype="tinyint" value="#FORM.IsActive#"/>,
 							categoryID = <cfqueryparam sqltype="integer" value="#FORM.categoryID#"/>,
@@ -358,8 +366,20 @@
 					 <input type="number" class="form-control" id="discount" name="discount" value="#FORM.discount#"/>
 				</div>
 
+				<!--- Original Price --->
+				<label for="price">Original Price</label>
+				<div class="#Validation.originalprice.class#">
+					#Validation.originalprice.text#
+				</div>
+				<div class="form-group">
+					 <input type="number" class="form-control" id="originalprice" name="originalprice" value="#FORM.originalprice#"/>
+				</div>
+
 				<!--- Product Date --->
 				<label for="productDate">Date of editing product</label>
+				<div class="#Validation.productDate.class#">
+					#Validation.productDate.text#
+				</div>
 				<div class="form-group">
 					 <input type="text" class="form-control" id="productDate" name="productDate" value="#dateformat(#FORM.productDate#, "dd/mm/yyyy")#"/>
 				</div>
@@ -402,7 +422,7 @@
 							 <select name="categoryID" class="form-control btn btn-option" >
 							 	<option value="0">--- Select a Category ---</option>
 						    	<cfloop query="#lstCategory#">
-										<option value="#lstCategory.categoryID#" <cfif lstCategory.categoryID EQ FORM.categoryID> selected</cfif>#lstCategory.categoryName#</option>
+										<option value="#lstCategory.categoryID#" <cfif lstCategory.categoryID EQ FORM.categoryID> selected</cfif>>#lstCategory.categoryName#</option>
 								</cfloop>
 							 </select>
 						 </div>

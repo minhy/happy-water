@@ -1,6 +1,6 @@
 <cfparam name="URL.page" default="1">
 <cfset cr_page = "news" />
-<cfset limit  = 3 />
+<cfset limit  = 10 />
 <cfset URL.idpage = (URL.page -1)*#limit# />
 <cfquery name="qGetArticle">
 	SELECT *
@@ -58,7 +58,7 @@
 			</li>
 			</cfloop>
 			<li >
-				<a href="#cr_page#?page=#URL.page+1#" onclick="return checkNext(#sum_column-1#)">Next</a>
+				<a href="#cr_page#?page=#URL.page+1#" onclick="return checkNext(#sum_column#)">Next</a>
 			</li>
 	</ul>
 	</div>

@@ -5,14 +5,15 @@
 	<header id="header">
 		<div class="container header">
 			<div class="row clearfix">
-				<div class="col-md-2 column logo">
-				</div>
+				<a href="#getContextRoot()#">
+					<div class="col-md-1 column logo"></div>
+				</a>
 				<div class="col-md-6 column">
 					<cfinclude template="menu.cfm" />
 				</div>
 				<div class="col-md-4 column">
 					<div class="row clearfix">
-						<div class="col-md-6 column register">
+						<div class="col-md-8 column register">
 					
 							<cfif SESSION.isLoggedIn EQ true>
 						
@@ -20,6 +21,12 @@
                         <a href="##" class="dropdown-toggle" data-toggle="dropdown">Hi!#SESSION.name# <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             
+                        	<cfif SESSION.isAdmin EQ true>
+                        		<li >
+                            	<a href="#getContextRoot()#/index.cfm/admin:main">Admin Dashboard</a>
+                            </li>
+                        	</cfif>
+
                             <li >
                             	<a href="#getContextRoot()#/index.cfm/home:user_edit">User edit</a>
                             </li>
@@ -29,7 +36,7 @@
                             </li>
 
                             <li >
-                            	<a href="#getContextRoot()#/index.cfm/home:product/recomment">recomment</a>
+                            	<a href="#getContextRoot()#/index.cfm/home:product/recommended">Recommened Products</a>
                             </li>
                             
                         </ul>
@@ -44,8 +51,8 @@
 						<!--- </cflock> --->
 
 					</div>
-						<div class="col-md-6 column cart">
-							<a href="##" onclick="showShoppingCart()"><span class="glyphicon glyphicon-shopping-cart" data-toggle="modal" data-target="##myModal" id="aShoppingCart">(#arrayLen(session.shoppingcart)#products)</span></a>
+						<div class="col-md-4 column cart">
+							<a href="##" onclick="showShoppingCart()"><span class="glyphicon glyphicon-shopping-cart" data-toggle="modal" data-target="##myModal" id="aShoppingCart">(#arrayLen(session.shoppingcart)# products)</span></a>
 						</div>
 					</div>
 				</div>
@@ -135,13 +142,13 @@
 			               	var totalprice = 0;
 			               	for(var i=0;i<data.length;i++){
 			               		totalprice += data[i].PRICE*data[i].QUANTITY;
-			               		s += "<tr class='trProduct' style='background-color:DDDDDD;'>"
+			               		s += "<tr class='trProduct' style='background-color:DDDDDD; font-size:13px;'>"
 								    + "<td>" + Number(i+1) + "</td>"  
 								    + "<td>" + data[i].NAME + "</td>"
 								    + "<td>" + formatUSD(Number(data[i].PRICE)) + "</td>"
 								    + "<td> <input type='number' value='"+ data[i].QUANTITY +"' min='0' max='99' onchange='changeQuantity(" + data[i].PRODUCTID + ",this.value," + data[i].PRICE + "," + Number(i+1)+ ")'> </td>"
 								    + "<td id='tdTotal" + Number(i+1) +"'>"+ formatUSD(Number(data[i].PRICE*data[i].QUANTITY)) + "</td>"
-								    + "<td><a href='##' onclick='deleteProduct("+ data[i].PRODUCTID +")'>Remove</td>"
+								    + "<td><a class='btn btn-danger' href='##' onclick='deleteProduct("+ data[i].PRODUCTID +")'>Remove</td>"
 								    +"</tr>"
 								    + "<input type='hidden' id='hdTotal" + Number(i+1) + "' value='" + Number(data[i].PRICE*data[i].QUANTITY) +"'>"
 								    + "<input type='hidden' name='hdProductID' value='" + data[i].PRODUCTID +"'>";
@@ -157,6 +164,28 @@
 					    	$("##tbody").html(s);
 					   }
 			           });
+				}
+
+				function btnBuyOnClick(productID){
+					var quantity = $("[name='nQuantity" + productID + "']").val();
+					$.ajax({
+				               type: "get",
+				               url: "http://#CGI.SERVER_NAME#:#CGI.SERVER_PORT#/home/remote/shoppingcartservices.cfc?",
+				               data: {
+				               	method:"updateShoppingCart",
+				                   productID: productID,
+				                   quantity:quantity
+				               },
+				               dataType: "json",
+				               success: function(data){
+				               	if(data == true){
+				               		countProduct();
+				               		alert("Succsess");
+				               	}
+				               	else
+				               		alert("failed");
+				               }
+				           });
 				}
 		</script>
 	</header>

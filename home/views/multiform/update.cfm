@@ -7,5 +7,10 @@
 	</cfquery>
 </cftransaction>
 
- <cflocation url="#buildUrl('product.recomment')#"/> 
+<cfif #URL.groupid# eq "0">
+		 <cflocation url="#getContextRoot()#/index.cfm"/> 
+	<cfelse>
+		 <cflocation url="#buildUrl('product.recommended')#"/> 
+</cfif>
+
 </cfoutput>

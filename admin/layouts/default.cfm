@@ -13,14 +13,14 @@
   <meta name="author" content="">	
 	<link href="#getContextRoot()#/admin/css/bootstrap.min.css" rel="stylesheet">
 	<link href="#getContextRoot()#/admin/css/style.css" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="#getContextRoot()#/admin/css/demo_table.css">
     <link href="#getContextRoot()#/admin/css/jquery-ui.css" rel="stylesheet">
-
+    <link href="#getContextRoot()#/admin/css/jquery-ui-1.9.2.custom.css" rel="stylesheet">
+    <link href="#getContextRoot()#/admin/css/jquery.dataTables.css" rel="stylesheet">
+    <link href="#getContextRoot()#/admin/css/jquery.dataTables_themeroller.css" rel="stylesheet">
 
 	<script type="text/javascript" src="#getContextRoot()#/admin/js/jquery.min.js"></script>
-
-	<script src="#getContextRoot()#/admin/js/jquery-ui.js"></script>
-    
+	<script src="#getContextRoot()#/admin/js/jquery-ui.js"></script>  
+	<script type="text/javascript" charset="utf-8" src="#getContextRoot()#/admin/js/jquery-ui-1.9.2.js"></script>  
 	<script type="text/javascript" src="#getContextRoot()#/admin/js/bootstrap.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="#getContextRoot()#/admin/js/jquery.dataTables.js"></script>
 	<script type="text/javascript" src="#getContextRoot()#/admin/js/scripts.js"></script>

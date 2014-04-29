@@ -38,7 +38,7 @@
               </cfif>
               --->
               
-               <cflocation url="#getContextRoot()#/index.cfm/admin:main" addtoken="false">
+               <cflocation url="#getContextRoot()#/index.cfm" addtoken="false">
         
 			<!--
 			Set admin SESSION here
