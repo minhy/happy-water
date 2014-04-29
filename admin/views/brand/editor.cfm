@@ -169,7 +169,7 @@
 
 <cfoutput>
 <br>
-<legend><h1>Brand Management - Updater</h1></legend>
+<legend><h1>Brand Management - Update</h1></legend>
 <div  style="width:100%; margin:auto;">
 	<div class="row clearfix">
 		<cfif NOT Validation.Valid>

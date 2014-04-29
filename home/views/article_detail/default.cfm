@@ -10,7 +10,7 @@
 	WHERE article.article_isactive = 1
 	AND article.article_id != <cfqueryparam sqltype="integer" value="#URL.id#" />
 	AND article.tag = 'news'
-	ORDER BY article.article_id DESC LIMIT 0,5; 
+	ORDER BY article.article_editdate DESC LIMIT 0,5; 
 </cfquery>
 <cfoutput>
 	<div class="header-title">

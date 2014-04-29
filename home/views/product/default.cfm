@@ -1,15 +1,15 @@
 <cfoutput>
 	<cfparam name="URL.page" default="1">
 	<cfset URL.idpage = (URL.page -1)*9 />
-	<cfquery name="qSumColumn" datasource="happy_water">
+	<cfquery name="qSumColumn">
 		select Count(productID) as dem
 		from product where status = 1 and IsActive = 1
 		order by productID
 
 	</cfquery> 
 
-	<cfquery name="qGetAll" datasource="happy_water">
-		select *, price*(100-discount)/100 as promotionprice
+	<cfquery name="qGetAll">
+		select *
 		from product where status = 1 and IsActive = 1
 		limit #URL.idpage#,9
 	</cfquery>  
@@ -43,7 +43,7 @@
 						<a href="#buildUrl('product.detail')#/?productID=#qGetAll.productID#">
 						<div class="category-name kh_category-name">
 							#qGetAll.productName#<br> 
-							<span style="float:left;margin-left:5px;">#dollarformat(qGetAll.promotionprice)#</span>
+							<span style="float:left;margin-left:5px;">#dollarformat(qGetAll.price*(100-qGetAll.discount)/100)#</span>
 							<br>
 							<cfif #qGetAll.discount# neq 0>
 								<span style="float:left;margin-right:5px; text-decoration: line-through;">#dollarformat(qGetAll.price)#</span>
