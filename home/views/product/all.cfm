@@ -14,7 +14,7 @@
 		limit #URL.idpage#,9
 	</cfquery>  
 
-	<cfset sumpage = qSumColumn.dem/9+1>
+	<cfset sumpage = ceiling(qSumColumn.dem/9)>
 
 	<legend ><h1 style="color: ##0088cc;">All Products</h1></legend>
 

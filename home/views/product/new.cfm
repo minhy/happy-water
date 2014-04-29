@@ -17,7 +17,7 @@
 		LIMIT #URL.idpage#,9
 	</cfquery>  
 
-	<cfset sumpage = ceiling(qSumRecord.dem/9+1)>
+	<cfset sumpage = ceiling(qSumRecord.dem/9)>
 
 	<legend ><h1 style="color: ##0088cc;">New Products</h1></legend>
 

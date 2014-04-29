@@ -1,22 +1,28 @@
+<cfoutput>
 <cfparam name="URL.page" default="1">
-<cfset cr_page = "news" />
+<cfparam name="URL.category" default="1">
+<cfif URL.category eq "1">
+	<cfset cr_page = "news" />
+<cfelse>
+	<cfset cr_page = URL.category />
+</cfif>
 <cfset limit  = 10 />
 <cfset URL.idpage = (URL.page -1)*#limit# />
 <cfquery name="qGetArticle">
 	SELECT *
 	FROM article 
 	WHERE article_isactive = 1
-	AND tag ="news"
+	AND tag ="#cr_page#"
 	ORDER BY article_id ASC LIMIT #URL.idpage#,#limit#
 </cfquery>
 <cfquery name="qGetArticle1">
 	SELECT Count(article_id) as dem
 	FROM article
 	WHERE article_isactive = 1
-	AND tag ="news"
+	AND tag ="#cr_page#"
 	ORDER BY article_id ASC 
 </cfquery>
-<cfoutput>
+
 	<script type="text/javascript">
         function checkPrev(){
         	var search= window.location.search;
@@ -44,7 +50,7 @@
         }
  </script>
 <div class="header-title">
-	<h1>News</h1>
+	<h1>#qGetArticle.tag#</h1>
 </div>
 <cfset sum_column= ceiling(qGetArticle1.dem/#limit#) >
 <div class="row clearfix">
