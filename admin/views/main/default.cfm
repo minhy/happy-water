@@ -206,7 +206,7 @@ $(function () {
             },
             xAxis: [{
                 categories: [
-                <cfloop from="1" to="#DatePart('d', #Now()#)#" step="1" index="i">
+                <cfloop from="1" to="#DaysInMonth(#DateAdd('m', -1, #Now()#)#)#" step="1" index="i">
                     #i#,
                 </cfloop>
 
@@ -256,10 +256,10 @@ $(function () {
                 name: 'User',
                 type: 'spline',
                 yAxis: 1,
-                data: [<cfloop from="1" to="#day(#Now()#)#" index="k">
+                data: [<cfloop from="1" to="#DaysInMonth(#DateAdd('m', -1, #Now()#)#)#" index="k">
                     
                 <cfquery name="count" result="result">
-                    select * from user where DATE_FORMAT(RegisterDate,'%Y-%m-%d') = DATE_FORMAT(#createDate(#year(#Now()#)#,#month(#Now()#)#,#k#)#,'%Y-%m-%d')
+                    select * from user where DATE_FORMAT(RegisterDate,'%Y-%m-%d') = DATE_FORMAT(#createDate(#year(#Now()#)#,#month(#Now()#)#-1,#k#)#,'%Y-%m-%d')
                 </cfquery>
 
                 #result.RECORDCOUNT#,
@@ -284,7 +284,7 @@ orderdetail.price as aprice,
 sum(orderdetail.quantity) as aquantity, 
 `order`.orderDate as oday
 from product left join orderdetail on product.productID = orderdetail.productID left join `order` on `order`.orderID = orderdetail.orderID
-WHERE orderdetail.quantity is not null and orderDate = DATE_FORMAT(#createDate(#year(#Now()#)#,#month(#Now()#)#,#p#)#,'%Y-%m-%d')
+WHERE orderdetail.quantity is not null and orderDate = DATE_FORMAT(#createDate(#year(#Now()#)#,#month(#Now()#)#-1,#p#)#,'%Y-%m-%d')
 group BY product.productID) as demo
                 </cfquery>
                 <cfif #profit.atotal# EQ "">
@@ -368,7 +368,7 @@ group BY product.productID) as demo
                 type: 'spline',
                 yAxis: 1,
                 data: [<cfloop from="1" to="#day(#Now()#)#" index="k">
-                    
+                    //#DaysInMonth(#DateAdd('m', 1, #Now()#)#)#
                 <cfquery name="count" result="result">
                     select * from user where DATE_FORMAT(RegisterDate,'%Y-%m-%d') = DATE_FORMAT(#createDate(#year(#Now()#)#,#month(#Now()#)#,#k#)#,'%Y-%m-%d')
                 </cfquery>
@@ -451,6 +451,8 @@ group BY product.productID) as demo
 
                 <div class="tab-pane" id="panel-last">
                     <div id="user_product_last" style="min-width: 700px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+
+
                 </div>
 
                   <!---  #year(#Now()#)#
