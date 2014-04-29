@@ -26,7 +26,7 @@
 						<th style="text-align:left;">##</b></th>
 						<th style="text-align:left;">Product</th>
 						<th style="text-align:right;">Price</th>
-						<th style="text-align:center;">Quantity</th>
+						<th style="text-align:right;">Quantity</th>
 						<th style="text-align:right;">Total</th>
 					</thead>
 
