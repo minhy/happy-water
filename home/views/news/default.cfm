@@ -13,14 +13,14 @@
 	FROM article 
 	WHERE article_isactive = 1
 	AND tag ="#cr_page#"
-	ORDER BY article_id ASC LIMIT #URL.idpage#,#limit#
+	ORDER BY article_editdate DESC LIMIT #URL.idpage#,#limit#
 </cfquery>
 <cfquery name="qGetArticle1">
 	SELECT Count(article_id) as dem
 	FROM article
 	WHERE article_isactive = 1
 	AND tag ="#cr_page#"
-	ORDER BY article_id ASC 
+	ORDER BY article_editdate DESC 
 </cfquery>
 
 	<script type="text/javascript">
