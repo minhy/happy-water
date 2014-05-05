@@ -1,23 +1,21 @@
 
 
 
-<cfquery name="show" datasource="happy_water" result="result">
+<cfquery name="qGetUser" result="result">
   SELECT * FROM user
   WHERE userID = <cfqueryparam sqltype="integer" value="#Session.UserID#"/>
+  LIMIT 0,1
 </cfquery>
 
 <cfif result.RECORDCOUNT EQ 0 >
   <cflocation url="error.cfm" addtoken="false">
   <cfelse>
 
-
-
-
-<cfparam name="FORM.firstname" default="#show.firstName[1]#"/>
-<cfparam name="FORM.lastname" default="#show.lastName[1]#"/>
-<cfparam name="FORM.email" default="#show.email[1]#"/>
-<cfparam name="date" default="#show.dateofbirth[1]#"/>
-<cfparam name="FORM.address" default="#show.address[1]#"/>
+<cfparam name="FORM.firstname" default="#qGetUser.firstName#"/>
+<cfparam name="FORM.lastname" default="#qGetUser.lastName#"/>
+<cfparam name="FORM.email" default="#qGetUser.email#"/>
+<cfparam name="date" default="#qGetUser.dateofbirth#"/>
+<cfparam name="FORM.address" default="#qGetUser.address#"/>
 <cfparam name="nameofphoto" default=""/>
 <cfparam name="FORM.month" default="1"/>
 <cfparam name="FORM.day" default="1"/>
@@ -36,16 +34,17 @@
         <cfset Validation.date.text = "Invalid date" />
     <cfelse>
 
+
     <cfif FORM.photo is not "">
-       <cffile  action = "upload" 
-                destination = "/./home/images/user-avatar/#show.avatar[1]#" 
+       <cffile  action = "upload"
+                destination = "/./home/images/user-avatar/#qGetUser.avatar#" 
                 fileField = "photo" 
                 nameConflict = "Overwrite"/>
     </cfif>
 
     <cftransaction isolation="serializable" action="begin">
       <cftry>
-        <cfquery name="insertdatabase" datasource="happy_water">
+        <cfquery name="qUpdateUser">
           UPDATE user
           SET
           firstName   =  <cfqueryparam sqltype="string" value="#FORM.firstname#"/>,
@@ -86,7 +85,7 @@
           <h1 style="padding-left:200px">Edit form </h1>
           <br/>
           <div id="imagesavatar" style=" height:160px;width:160px;float:left" >
-            <img src="#getContextRoot()#/home/images/user-avatar/#show.avatar[1]#" width ="160px" height ="160px" style="float:left;" >  
+            <img src="#getContextRoot()#/home/images/user-avatar/#qGetUser.avatar#" width ="160px" height ="160px" style="float:left;" >  
           </div>
 
           <div class="form-control-group" style="float:left">
