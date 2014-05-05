@@ -44,6 +44,9 @@
 						Title
 					</th>
 					<th>
+						Active
+					</th>
+					<th>
 						Tag
 					</th>
 					<th>
@@ -59,6 +62,12 @@
 						</td>
 						<td style="width: 60%">
 							#qGetArticle.article_title#
+						</td>
+						<td style="text-align: center">
+	                        <cfif #qGetArticle.article_isactive# eq 1>
+	                            Yes
+	                        <cfelse> No
+	                        </cfif>
 						</td>
 						<td style="text-align: center">
 							#qGetArticle.categoryName#
