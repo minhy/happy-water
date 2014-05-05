@@ -156,7 +156,7 @@ function multiform( name,level,question_tf,nq,tfparent) {
 				<div class="col-md-1 border-question">
 					<div class="input-group">
 					    <span class="input-group">
-					        <input type="radio" name="active#i#" value="0" > No
+					        <input type="radio" name="active#i#" value="0" checked> No
 					    </span>
 	      			</div>
 				</div>
