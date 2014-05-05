@@ -420,7 +420,7 @@
 					</div>
 					<div class="form-group">
 							 <div class="clearfix">
-								 <select name="categoryID" class="form-control btn btn-option" >
+								 <select name="categoryID" class="form-control btn btn-option" style="border: 1px solid brown;">
 								 	<option value="0">--- Select a Category ---</option>
 							    	<cfloop query="#lstCategory#">
 											<option value="#lstCategory.categoryID#" <cfif lstCategory.categoryID EQ FORM.categoryID> selected</cfif>>#lstCategory.categoryName#</option>
@@ -436,7 +436,7 @@
 					</div>
 					<div class="form-group">
 						 <div class="clearfix">
-								 <select name="brandID" class="form-control btn btn-option" >
+								 <select name="brandID" class="form-control btn btn-option" style="border: 1px solid brown;">
 								 	<option value>--- Select a Brand ---</option>
 							    	<cfloop query="#lstBrand#">
 										<option value="#lstBrand.brandID#" <cfif lstBrand.brandID EQ FORM.brandID> selected</cfif> >#lstBrand.brandName#</option>
@@ -457,7 +457,7 @@
 					</div>
 					<label for="image">Current image</label>
 					<div class="form-group">
-						<img id="currentImage" src="#getContextRoot()##FORM.image#" alt="hinh" width="144" height="144">
+						<img id="currentImage" src="#getContextRoot()##FORM.image#" alt="No image" width="144" height="144">
 					</div>
 
 				</div>
@@ -483,11 +483,3 @@
 </form>
 </div>
 </cfoutput>
-
-<script>
-$(function() {
-        $("#productDate").datepicker({
-        		format:'dd/mm/yyyy'
-        	});
-    });
-</script>
