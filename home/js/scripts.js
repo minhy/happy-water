@@ -1,6 +1,6 @@
 function checkPrev(){
 	var search= window.location.search;
-	var result= search.substr(6,1);
+	var result= search.substr(search.lastIndexOf("=")+1,1);
     if(result<=1)
     {
     	return false;
@@ -13,7 +13,7 @@ function checkPrev(){
 
 function checkNext(totalPage){
 	var search= window.location.search;
-	var result= search.substr(6,1);
+	var result= search.substr(search.lastIndexOf("=")+1,1);
     if(result>=totalPage)
     {
     	return false;
