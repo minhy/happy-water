@@ -22,7 +22,7 @@
 	select * from menu
 </cfquery>
 <cfset stt=1>
-<h3 class="header-title">Menu Management</h3>
+<h3 class="header-title">Menu Management</h3><hr>
 <form action="#CGI.SCRIPT_NAME#" method="post">
 	<div class="row clearfix">
 	<div class="col-md-12">
@@ -43,6 +43,9 @@
 					Title
 				</th>
 				<th>
+					Active
+				</th>
+				<th>
 					Action
 				</th>
 			</tr>
@@ -55,6 +58,12 @@
 					</td>
 					<td style="width:75%; text-align: center">
 						#qGetMenu.menu_name#
+					</td>
+					<td style="text-align:center">
+						<cfif #qGetMenu.menu_isactive# eq 1>
+                            Yes
+                        <cfelse> No
+                        </cfif>
 					</td>
 					<td>
 						<a href="#buildUrl('menu.menuform')#?id=#qGetMenu.menu_id#">
