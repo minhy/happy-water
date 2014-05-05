@@ -26,9 +26,10 @@
   margin: 10px 10px 10px 0px;
   font-family: Helvetica;
   font-size: 20px;
-  background: linear-gradient(#C2DAFF, #1975FF);
+  background: linear-gradient(#F9F9F9, #C7C7C4);
   border:1px solid;
   border-radius: 20px;
+  box-shadow: 5px 5px 5px #888888;
   text-align: center;
 }
 .statis img {
