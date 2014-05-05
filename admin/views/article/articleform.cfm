@@ -4,8 +4,8 @@
 <cfparam name="URL.id"	type="integer" default="0">
 <cfparam name="userid"	type="integer" default="1">
 <cfparam name="URL.tag"	type="varchar" default="">
-	<cfset Validation.isInvalid = false/>
-	<cfset InvalidClass = " invalid"/>
+<cfset Validation.Valid = true/>
+<cfset InvalidClass = " invalid"/>
 
 
 <cfif CGI.REQUEST_METHOD EQ 'get' AND URL.id EQ 0>
@@ -35,34 +35,34 @@
 		<cfif NOT IsDefined('FORM.title') OR Len(Trim(FORM.title)) EQ 0>
 		<cfset Validation.title.text = "Please input title."/>
 		<cfset Validation.title.class = InvalidClass/>
-		<cfset Validation.isInvalid = true/>
+		<cfset Validation.Valid = false/>
 	</cfif>
 
 	<cfif NOT IsDefined('FORM.description') OR Len(Trim(FORM.description)) EQ 0>
 		<cfset Validation.description.text = "Please input description."/>
 		<cfset Validation.description.class = InvalidClass/>
-		<cfset Validation.isInvalid = true/>
+		<cfset Validation.Valid = false/>
 	</cfif>
 
 	<cfif NOT IsDefined('FORM.content') OR Len(Trim(FORM.content)) EQ 0>
 		<cfset Validation.content.text = "Please input content."/>
 		<cfset Validation.content.class = InvalidClass/>
-		<cfset Validation.isInvalid = true/>
+		<cfset Validation.Valid = false/>
 	</cfif>
 
 	<!---<cfif NOT IsDefined('FORM.photo') OR Len(Trim(FORM.photo)) EQ 0>
 		<cfset Validation.photo.text = "Please input photo."/>
 		<cfset Validation.photo.class = InvalidClass/>
-		<cfset Validation.isInvalid = true/>
+		<cfset Validation.Valid = false/>
 	</cfif>--->
 
 	<cfif FORM.photo is ""> 
 		<cfset Validation.photo.text = "Please input photo."/>
 		<cfset Validation.photo.class = InvalidClass/>
-		<cfset Validation.isInvalid = true/>
+		<cfset Validation.Valid = false/>
 	</cfif>
 
-	<cfif NOT  Validation.isInvalid>
+	<cfif Validation.Valid>
 			<cftransaction isolation="serializable" action="begin">
 				<cftry>
 					<cfif isDefined("form.photo") >
@@ -94,8 +94,12 @@
 						 <cfqueryparam sqltype="varchar" value="images/upload/#reupload.serverfile#"/>,
 						 <cfqueryparam sqltype="varchar" value="#FORM.description#"/>,
 						 <cfqueryparam sqltype="integer" value="#userid#"/>,
-						  <cfqueryparam sqltype="integer" value="#FORM.active#"/>,
-						   <cfqueryparam sqltype="varchar" value="#FORM.tag#"/>,
+						 <cfif  NOT IsDefined('FORM.active')>
+							<cfqueryparam sqltype="tinyint" value="0"/>,
+						 <cfelse>
+							<cfqueryparam sqltype="tinyint" value="#FORM.active#"/>,
+						 </cfif>
+					     <cfqueryparam sqltype="varchar" value="#FORM.tag#"/>,
 						 <cfqueryparam sqltype="date" value="#now()#"/>,
 						 <cfqueryparam sqltype="date" value="#now()#"/>)
 					</cfquery>
@@ -119,27 +123,28 @@
 		<cfset form.id=qGetArticleByID.article_id/>
 		<cfset form.description=qGetArticleByID.article_description/>
 		<cfset form.active=qGetArticleByID.article_isactive/>
+		<cfset form.photo = qGetArticleByID.article_img/>
 	</cfcase>
 	<cfcase value="update">
 		<cfif NOT IsDefined('FORM.title') OR Len(Trim(FORM.title)) EQ 0>
 		<cfset Validation.title.text = "Please input title."/>
 		<cfset Validation.title.class = InvalidClass/>
-		<cfset Validation.isInvalid = true/>
+		<cfset Validation.Valid = false/>
 	</cfif>
 
 	<cfif NOT IsDefined('FORM.description') OR Len(Trim(FORM.description)) EQ 0>
 		<cfset Validation.description.text = "Please input description."/>
 		<cfset Validation.description.class = InvalidClass/>
-		<cfset Validation.isInvalid = true/>
+		<cfset Validation.Valid = false/>
 	</cfif>
 
 	<cfif NOT IsDefined('FORM.content') OR Len(Trim(FORM.content)) EQ 0>
 		<cfset Validation.content.text = "Please input content."/>
 		<cfset Validation.content.class = InvalidClass/>
-		<cfset Validation.isInvalid = true/>
+		<cfset Validation.Valid = false/>
 	</cfif>
 
-	<cfif NOT  Validation.isInvalid>
+	<cfif  Validation.Valid>
 
 		<cftransaction isolation="serializable" action="begin">
 			<cftry>
@@ -159,8 +164,11 @@
 				article_description=<cfqueryparam sqltype="varchar" value="#FORM.description#"/>,
 				article_editdate =<cfqueryparam sqltype="date" value="#now()#"/>,
 				tag=<cfqueryparam sqltype="varchar" value="#FORM.tag#"/>,
-				article_isactive=<cfqueryparam sqltype="integer" value="#FORM.active#"/>
-
+				<cfif  NOT IsDefined('FORM.active')>
+					article_isactive = 0,
+				<cfelse>
+					article_isactive = <cfqueryparam sqltype="tinyint" value="#FORM.active#"/>,
+				</cfif>
 				<cfif FORM.photo is not ""> 
 					,article_img=<cfqueryparam sqltype="varchar" value="images/upload/#reupload.serverfile#"/>
 				</cfif>
@@ -192,95 +200,120 @@
 	<cfparam name="Validation.description.class"		default=""/>
 	<cfparam name="Validation.active.class" 		default=""/>
 	<cfparam name="Validation.tag.class" 		default=""/>
-	<cfparam name="Validation.isInvalid" 	default="false"/>
+	<cfparam name="Validation.Valid" 	default="false"/>
 
 
 		
-<h3 class="header-title"><a href="#buildUrl('article')#"><span class="glyphicon glyphicon-circle-arrow-left"></span></a> Add Article</h3>
+<h3 class="header-title"><a href="#buildUrl('article')#"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>Article Update</h3><hr>
 <form action="" method="post" enctype="multipart/form-data">
-<input type="hidden" name="id" value="#FORM.id#"/>
 <div class="row clearfix">
+		<div class="col-md-12 column">
+			<div class="row clearfix">
+				<div class="col-md-4 column">
+					<input type="hidden" name="id" value="#FORM.id#"/>
 
-    <div class="col-md-2">
-    	Category:
-    </div>
-    <div class="col-md-10 form#Validation.tag.class#">
-		<select name="tag" id ="tag">
-			  	<cfloop query="qGetCategory">
-			  		<cfif #qGetCategory.tag# eq #URL.tag#>
-						<cfset selected="selected"/>
-					<cfelse>
-						<cfset selected=""/>
-					</cfif>
-				  	<option 		  	
-				  	value="#qGetCategory.tag#" #selected# >#qGetCategory.categoryName#
-					</option>
-				</cfloop>
-		</select>
+					<!---- Category --->
+					<label for="categoryID">Category</label>
+					<div class="form#Validation.tag.class#">
+						#Validation.tag.text#
+					</div>
+					<div class="form-group">
+							 <div class="clearfix">
+								 <select name="tag" id ="tag" class="form-control" >
+								  	<cfloop query="qGetCategory">
+								  		<cfif #qGetCategory.tag# eq #URL.tag#>
+											<cfset selected="selected"/>
+										<cfelse>
+											<cfset selected=""/>
+										</cfif>
+									  	<option 		  	
+									  	value="#qGetCategory.tag#" #selected# >#qGetCategory.categoryName#
+										</option>
+									</cfloop>
+								</select>
+							 </div>
+					</div>
+					<!---Title --->
+					<label for="title">Title</label>
+					<div class="form#Validation.title.class#">
+						#Validation.title.text#
+					</div>
+					<div class="form-group">
+						 <input type="text" class="form-control" id="title" name="title" value="#FORM.title#"/>
+					</div>
+					
+				</div>
+				<div class="col-md-4 column" style="border-left: 1px solid brown;">
+					<div class="row clearfix">
+						<div class="col-md-6 column">
+							<!--- Active --->
+							<label for="active">Active</label>
+							<div class="form#Validation.active.class#">
+								#Validation.active.text#
+							</div>
+							<div class="form-group">
+						        <input type="checkbox" name="active" value="1"<cfif FORM.active> checked</cfif>/> Yes
+							</div>
+						</div>
+					</div>
+					<!--- Description --->
+					<label for="description">Description</label>
+					<div class="form#Validation.description.class#">
+						#Validation.description.text#
+					</div>
+					<div class="form-group">
+						 <textarea "textarea" name="Description"  class="form-control" id="Description" value="" style="margin: 0px -2.65625px 0px 0px; height: 120px; width: 367px;">#FORM.description#</textarea>
+					</div>
+				</div>
+				<div class="col-md-4 column" style="border-left: 1px solid brown;">
+					
+					<!---- Image ---->
+					<label for="photo">Choose an image</label>
+					<div class="#Validation.photo.class#">
+						#Validation.photo.text#
+					</div>
+					<div class="form-group">
+						<input type="file" name="photo"  size="50"/>
+					</div>
+					<label for="photo">Current image</label>
+					<div class="form-group">
+						<img id="currentImage" src="#getContextRoot()#/#FORM.photo#" alt="No image" width="144" height="144">
+					</div>
 
-		<p>#Validation.tag.text#</p>
-    </div>
-
-    <div class="col-md-2">
-    	Title:
-    </div>
-    <div class="col-md-10 form#Validation.title.class#">
-		<input type="text" name="title" value="#FORM.title#" size="50"/>
-		<p>#Validation.title.text#</p>
-    </div>
-
-    <div class="col-md-2">
-    	Description:
-    </div>
-    <div class="col-md-10 form#Validation.description.class#">
-		<textarea "textarea" rows="5" cols="100" name="Description" id="Description" value="" size="50">#FORM.description#</textarea>
-		<p>#Validation.description.text#</p>
-    </div>
-
-    <div class="col-md-2">
-    	Image:
-    </div>
-    <div class="col-md-10 form#Validation.photo.class#">
-		<input type="file" name="photo"  size="50"/>
-		<p>#Validation.photo.text#</p>
-    </div>
-
-    <div class="col-md-2">
-    	Content:
-    </div>
-    <div class="col-md-10 form#Validation.content.class#">
-		<textarea "textarea" rows="10" cols="55" name="content" id="content" value="" size="50">#FORM.content#</textarea>
-		<script language="javascript1.2">
-	CKEDITOR.replace( 'content',
-		{
-			filebrowserBrowseUrl : '../../admin/cffm/cffm.cfm?editorType=cke&EDITOR_RESOURCE_TYPE=file',
-			filebrowserImageBrowseUrl : '../../admin/cffm/cffm.cfm?editorType=cke&EDITOR_RESOURCE_TYPE=image',
-			filebrowserFlashBrowseUrl : '../../admin/cffm/cffm.cfm?editorType=cke&EDITOR_RESOURCE_TYPE=flash',
-			filebrowserUploadUrl : '../../admin/cffm/cffm.cfm?action=QuickUpload&editorType=cke&EDITOR_RESOURCE_TYPE=file',
-			filebrowserImageUploadUrl : '../../admin/cffm/cffm.cfm?action=QuickUpload&editorType=cke&EDITOR_RESOURCE_TYPE=image',
-			filebrowserFlashUploadUrl : '../../admin/cffm/cffm.cfm?action=QuickUpload&editorType=cke&EDITOR_RESOURCE_TYPE=flash',
-			toolbar : 'MyToolbar2'
-		} 
-	);
-	</script>
-		<p>#Validation.content.text#</p>
-
-    </div>
-    <div class="col-md-2">
-    	Active:
-    </div>
-    <div class="col-md-10 form#Validation.active.class#">
-		<input type="radio" name="active" value="1"<cfif FORM.active> checked</cfif>/> Yes<br>
-		<input type="radio" name="active" value="0"<cfif NOT FORM.active> checked</cfif>/> No<br>
-		<p>#Validation.active.text#</p>
-    </div>
-
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-10">
-        <div class="btn-group">
-            <button type="submit" class="btnSubmit btn btn-default">Submit</button>
-        </div>
-</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<hr>
+	<div class="row clearfix">
+		<div class="col-md-12 column">
+			<!---- Content ---->
+			<label for="text">Content</label>
+			<div class="#Validation.content.class#">
+				#Validation.content.text#
+			</div>
+			<div class="form-group">
+				<textarea "textarea" rows="10" cols="55" name="content" id="content" value="" size="50">#FORM.content#</textarea>
+				<script language="javascript1.2">
+					CKEDITOR.replace( 'content',
+						{
+							filebrowserBrowseUrl : '../../admin/cffm/cffm.cfm?editorType=cke&EDITOR_RESOURCE_TYPE=file',
+							filebrowserImageBrowseUrl : '../../admin/cffm/cffm.cfm?editorType=cke&EDITOR_RESOURCE_TYPE=image',
+							filebrowserFlashBrowseUrl : '../../admin/cffm/cffm.cfm?editorType=cke&EDITOR_RESOURCE_TYPE=flash',
+							filebrowserUploadUrl : '../../admin/cffm/cffm.cfm?action=QuickUpload&editorType=cke&EDITOR_RESOURCE_TYPE=file',
+							filebrowserImageUploadUrl : '../../admin/cffm/cffm.cfm?action=QuickUpload&editorType=cke&EDITOR_RESOURCE_TYPE=image',
+							filebrowserFlashUploadUrl : '../../admin/cffm/cffm.cfm?action=QuickUpload&editorType=cke&EDITOR_RESOURCE_TYPE=flash',
+							toolbar : 'MyToolbar2'
+						});
+				</script>
+			</div>
+		</div>
+	</div>
+    <!--- Submit button --->
+    <div class="div_center">
+		<div class="alert alert-info">
+			<button type="submit" class="btn btn-default btn_center">Submit</button>
+		</div>
+	</div>
 </form>
 </cfoutput>

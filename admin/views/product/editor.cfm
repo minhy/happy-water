@@ -302,7 +302,6 @@
 
 <script type="text/javascript" language="javascript">
 		$("document").ready(function(){
-
 			function readURL(input) {
 
 			    if (input.files && input.files[0]) {
@@ -314,10 +313,11 @@
 
 			        reader.readAsDataURL(input.files[0]);
 			    }
-			} 
+			};
+			 
 			$("#image").change(function() {
-				    		 readURL(this);
-			            });
+	    		 readURL(this);
+            });
 
 		});
 
