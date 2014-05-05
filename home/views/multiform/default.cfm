@@ -166,7 +166,11 @@ function multiform( name,level,question_tf,nq,tfparent) {
 			</div>
 			<div class="col-md-3">
 				<div class="btn-group">
-				  	<button type="submit" class="btn btn-default" value="Submit" onclick="return multiform('active',#level#,#question_tf#,#tmpResult.RecordCount#,#tfparent#)">Submit</button>
+					<cfif url.level lt 3>
+						<button type="submit" class="btn btn-default" value="Submit" onclick="return multiform('active',#level#,#question_tf#,#tmpResult.RecordCount#,#tfparent#)">Next</button>
+					<cfelse>
+						<button type="submit" class="btn btn-default" value="Submit" onclick="return multiform('active',#level#,#question_tf#,#tmpResult.RecordCount#,#tfparent#)">Submit</button>
+					</cfif>
 				</div>
 			</div>
 			</div>
