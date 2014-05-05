@@ -83,7 +83,7 @@
 	<Cfinvokeargument name="allowUnzip" value="Yes">
 	<cfinvokeargument name="allowCreateDirectory" value="Yes">
 	<cfinvokeargument name="allowMultipleUploads" value="Yes">
-	<cfinvokeargument name="maxUploadSize" value="5000000">
+	<cfinvokeargument name="maxUploadSize" value="10000000">
 	<cfinvokeargument name="useContextMenus" value="true">
 	<cfinvokeargument name="useFileActionButtons" value="false">
 </cfinvoke>
