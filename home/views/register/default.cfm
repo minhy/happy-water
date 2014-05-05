@@ -1,4 +1,4 @@
-
+<!---  --->
 
 <cfparam name="FORM.firstname" default=""/>
 <cfparam name="FORM.lastname" default=""/>
@@ -15,6 +15,7 @@
 <cfparam name="FORM.confirm_password" default=""/>
 <cfparam name="nameofphoto" default="default.jpg"/>
 <cfparam name="Validation.email.text" default="&nbsp;"/>
+<cfparam name="Validation.date.text" default="&nbsp;"/>
 
   
 <cfif CGI.REQUEST_METHOD EQ 'POST'>
@@ -56,7 +57,9 @@
 
 <cfif #result.RECORDCOUNT# GT 0>
   <cfset Validation.email.text = "Email has been taken"/>
-  <cfelse>
+  <cfelseif #DaysInMonth(#createDate(FORM.year,FORM.month,1)#)# LT FORM.day >
+        <cfset Validation.date.text = "Invalid date" />
+    <cfelse>
     <cftransaction isolation="serializable" action="begin">
       <cftry>
         <cfquery name="insertdatabase" datasource="happy_water">
@@ -162,15 +165,17 @@
                 <cfloop from="1920" to="2014" step="1" index="i">
                     <option value="#i#">#i#</option>           
                 </cfloop>
+                
             </select> (mm-dd-yyyy)
 
-
+            <p style="color:red;width:280px;height:0px;padding-left :160px"><b>#Validation.date.text#</b></p>
           </div>
 
           <div class="form-control-group">
             <label class="control-label" for="name">Password</label>
             <div class="controls">
               <input type="password" class="input-xlarge" name="password" id="password" style ="height:inherit">
+
             </div>
           </div>
           
