@@ -1,4 +1,3 @@
-
 <script language="javascript">
 			function checkDelete() {
 			    if (confirm("Are you sure you want delete it?")) {
@@ -25,7 +24,14 @@
 <h3 class="header-title">Questions Management</h3>
 <form action="#CGI.SCRIPT_NAME#" method="post">
 	<div class="row clearfix">
-		<div class="col-md-9">
+		<div class="col-md-12">
+			<div class="alert alert-info">
+				<div class="btn-group">
+					<a href="#buildUrl('question.questionform')#">
+	  				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add Question</button>
+	  				</a>
+				</div>
+			</div>
 			<table class="table" id="table_id">
 			<thead>
 				<tr>
@@ -66,13 +72,6 @@
 				</cfloop>
 			</tbody>
 			</table>
-		</div>
-		<div class="col-md-3">
-			<div class="btn-group">
-				<a href="#buildUrl('question.questionform')#">
-  				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add Question</button>
-  				</a>
-			</div>
 		</div>
 	</div>
 </form>

@@ -26,7 +26,14 @@
 <h3 class="header-title">Article Management</h3>
 <form action="#CGI.SCRIPT_NAME#" method="post">
 	<div class="row clearfix">
-		<div class="col-md-9">
+		<div class="col-md-12">
+			<div class="alert alert-info">
+				<div class="btn-group">
+					<a href="#buildUrl('article.articleform')#">
+	  				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add Ariticle</button>
+	  				</a>
+				</div>
+			</div>
 			<table class="table" id="table_id">
 			<thead>
 				<tr>
@@ -74,12 +81,6 @@
 			</tbody>
 			</table>
 		</div>
-		<div class="col-md-3">
-			<div class="btn-group">
-				<a href="#buildUrl('article.articleform')#">
-  				<button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus"></span> Add Ariticle</button>
-  				</a>
-			</div>
-		</div>
+	</div>
 </form>
 </cfoutput>
