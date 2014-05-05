@@ -22,7 +22,7 @@
 <cfparam name="FORM.month" default="1"/>
 <cfparam name="FORM.day" default="1"/>
 <cfparam name="FORM.year" default="1920"/>
-
+<cfparam name="Validation.date.text" default="&nbsp;"/>
 
 
 <cfset mo=listGetAt(#dateformat(date, "mm/dd/yyyy")#,1,"/")>
@@ -31,6 +31,10 @@
 
 
 <cfif CGI.REQUEST_METHOD EQ 'POST'>
+
+    <cfif #DaysInMonth(#createDate(FORM.year,FORM.month,1)#)# LT FORM.day >
+        <cfset Validation.date.text = "Invalid date" />
+    <cfelse>
 
     <cfif FORM.photo is not "">
        <cffile  action = "upload" 
@@ -64,7 +68,7 @@
     <cfset mo = FORM.month>
     <cfset dy = FORM.day>
     
-  
+      </cfif>
 </cfif>
 
 <cfoutput>
@@ -152,7 +156,7 @@
                     </cfif>          
                 </cfloop>
             </select> (mm-dd-yyyy)
-
+            <p style="color:red;width:280px;height:0px;padding-left :160px"><b>#Validation.date.text#</b></p>
             </div>
 
           </div>

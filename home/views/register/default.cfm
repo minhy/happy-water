@@ -20,14 +20,14 @@
   
 <cfif CGI.REQUEST_METHOD EQ 'POST'>
 
-<cfquery name="id_image" datasource="happy_water">
+<cfquery name="qGetUserID" >
   SELECT userID
   FROM user
   ORDER BY userID Desc
   LIMIT 0,1
 </cfquery>
   
- <cfset name_image =  #id_image.userID[1]+1#/> 
+ <cfset name_image =  #qGetUserID.userID+1#/> 
 
 <cfif FORM.photo is not "">
   
@@ -49,7 +49,7 @@
 
 
 
-<cfquery name="count" datasource="happy_water" result="Result">
+<cfquery name="qCountUser"  result="Result">
   SELECT * 
     FROM user
       WHERE email = <cfqueryparam cfsqltype="string" value="#FORM.email#"/>
