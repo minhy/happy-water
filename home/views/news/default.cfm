@@ -22,30 +22,16 @@
 	AND tag ="#cr_page#"
 	ORDER BY article_editdate DESC 
 </cfquery>
-
 	<script type="text/javascript">
         function checkPrev(){
         	var search= window.location.search;
         	var result= search.substr(6,1);
-            if(result<=1)
-            {
-            	return false;
-            }           
-            else{
-            	return true;
-            }
-             
+        	return result>1;
         }
         function checkNext(totalPage){
         	var search= window.location.search;
         	var result= search.substr(6,1);
-            if(result>=totalPage)
-            {
-            	return false;
-            }           
-            else{
-            	return true;
-            }
+        	return result<totalPage;
              
         }
  </script>
@@ -75,7 +61,7 @@
 				<img alt="#qGetArticle.article_title#" src="#getContextRoot()#/#qGetArticle.article_img#">
 			</div>
 			<div class="caption">
-				<a href="article_detail?id=#qGetArticle.article_id#"><h4>#qGetArticle.article_title#</h4></a>
+				<a href="news/detail?id=#qGetArticle.article_id#"><h4>#qGetArticle.article_title#</h4></a>
 				<p>#qGetArticle.article_description#</p>
 			</div>
 		</div>
