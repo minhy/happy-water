@@ -37,7 +37,7 @@
 								<br>
 								<br>
 								<input type="number" name="nQuantity#qGetAll.productID#"
-								value="1" min="1" max="99" class="form-control quantity">
+								value="1" min="1" max="99" class="form-control quantity" style="width:60px">
 								<button style="float:left" class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetAll.productID#)">Buy!</button>
 						</p>
 						<a href="#buildUrl('product.detail')#/?productID=#qGetAll.productID#">

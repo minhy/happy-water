@@ -85,7 +85,7 @@
 									<br>
 									<br>
 									<input type="number" name="nQuantity#querryGet.productID#"
-									value="1" min="1" max="99" class="quantity form-control">
+									value="1" min="1" max="99" class="quantity form-control" style="width:60px">
 									<button style="float:left" class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#querryGet.productID#)">Buy!</button>
 							</p>
 							<a href="#buildUrl('product.detail')#/?productID=#querryGet.productID#">

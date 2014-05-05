@@ -75,9 +75,9 @@
 									<br>#dollarformat(qGetNewProduct.promotionprice)#
 								</td>
 								<td>
-									<div class="input-group" style="margin-right:5px; display:inline-block; width:105px; float:right;">
+									<div class="input-group" style="margin-right:5px; display:inline-block; width:115px; float:right;">
 								<input type="number" name="nQuantity#qGetNewProduct.productID#"
-									value="1" min="1" max="99" class="form-control" style="width:50px">
+									value="1" min="1" max="99" class="form-control" style="width:60px">
 								<span class="input-group-btn">
 								<button class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetNewProduct.productID#)">Buy!</button>
 								</span>
