@@ -1,6 +1,3 @@
-
-
-
 <cfquery name="qGetUser" result="result">
   SELECT * FROM user
   WHERE userID = <cfqueryparam sqltype="integer" value="#Session.UserID#"/>
@@ -10,7 +7,6 @@
 <cfif result.RECORDCOUNT EQ 0 >
   <cflocation url="error.cfm" addtoken="false">
   <cfelse>
-
 <cfparam name="FORM.firstname" default="#qGetUser.firstName#"/>
 <cfparam name="FORM.lastname" default="#qGetUser.lastName#"/>
 <cfparam name="FORM.email" default="#qGetUser.email#"/>
@@ -21,27 +17,20 @@
 <cfparam name="FORM.day" default="1"/>
 <cfparam name="FORM.year" default="1920"/>
 <cfparam name="Validation.date.text" default="&nbsp;"/>
-
-
 <cfset mo=listGetAt(#dateformat(date, "mm/dd/yyyy")#,1,"/")>
 <cfset dy=listGetAt(#dateformat(date, "mm/dd/yyyy")#,2,"/")>
 <cfset yr=listGetAt(#dateformat(date, "mm/dd/yyyy")#,3,"/")>
 
-
 <cfif CGI.REQUEST_METHOD EQ 'POST'>
-
     <cfif #DaysInMonth(#createDate(FORM.year,FORM.month,1)#)# LT FORM.day >
         <cfset Validation.date.text = "Invalid date" />
     <cfelse>
-
-
     <cfif FORM.photo is not "">
        <cffile  action = "upload"
                 destination = "/./home/images/user-avatar/#qGetUser.avatar#" 
                 fileField = "photo" 
                 nameConflict = "Overwrite"/>
     </cfif>
-
     <cftransaction isolation="serializable" action="begin">
       <cftry>
         <cfquery name="qUpdateUser">
@@ -60,65 +49,62 @@
             <cfdump var="#cfcatch#"/><cfabort>
           </cfcatch>
       </cftry>
-
     </cftransaction> 
-
     <cfset yr = FORM.year>
     <cfset mo = FORM.month>
     <cfset dy = FORM.day>
-    
       </cfif>
 </cfif>
-
 <cfoutput>
-<link href="#getContextRoot()#/home/css/form.css" rel="stylesheet">
-<link rel="stylesheet" href="#getContextRoot()#/home/css/jquery-ui.css">
-</cfoutput>
 
+<div class="header-title">
+  <h1>Edit form</h1>
+</div>
 
-
-<body>
-
-      
-      <form id="registration-form" class="form-horizontal" action ="" method ="post" enctype="multipart/form-data" style="width:800px">
-       <cfoutput>
-          <h1 style="padding-left:200px">Edit form </h1>
-          <br/>
+<form id="registration-form" class="form-horizontal" action ="" method ="post" enctype="multipart/form-data">
+  <div class="row clearfix">
+    <div class="col-md-12 column">
+      <div class="row clearfix">
+        <div class="col-md-2 column">
           <div id="imagesavatar" style=" height:160px;width:160px;float:left" >
             <img src="#getContextRoot()#/home/images/user-avatar/#qGetUser.avatar#" width ="160px" height ="160px" style="float:left;" >  
           </div>
+        </div>
 
-          <div class="form-control-group" style="float:left">
-            <label class="control-label" for="email">Email Address</label>
-            <div class="controls">
-              <input class="form-control" name="email" id="disabledInput" type="text" placeholder="#FORM.email#" style ="height:inherit;width:228px" disabled width="220px">
-
-            </div>
-
+        <div class="col-md-10 column">
+          <div class="col-md-4 column">
+            Email Address
           </div>
 
-
-          <div class="form-control-group" style="float:left">
-            <label class="control-label" for="name">FirstName</label>
-            <div class="controls">
-              <input type="text" class="input-xlarge" name="firstname" id="firstname" value ="#FORM.firstname#" style ="height:inherit ;width:228px">
-            </div>
+          <div class="col-md-8 column">
+            <input class="form-control" name="email" id="disabledInput" type="text" placeholder="#FORM.email#" style ="height:inherit;width:228px" disabled width="220px">
+            <p></p>
           </div>
-          
 
-          <div class="form-control-group" style="float:left">
-            <label class="control-label" for="name">Lastname</label>
-            <div class="controls">
-              <input type="text" class="input-xlarge" name="lastname" id="lastname" value ="#FORM.lastname#" style ="height:inherit ;width:228px" >
-            </div>
-
+          <div class="col-md-4 column">
+            FirstName
           </div>
-          
-          <div class="form-control-group" style="float:left;">
-            <label class="control-label" for="name">DateOfBirth</label>
-            <div class="controls">
 
-              <select class="form-control" name="month" style ="width:70px ">
+          <div class="col-md-8 column">
+            <input type="text" class="input-xlarge" name="firstname" id="firstname" value ="#FORM.firstname#" style ="height:inherit ;width:228px">
+            <p></p>
+          </div>
+
+          <div class="col-md-4 column">
+            Lastname
+          </div>
+
+          <div class="col-md-8 column">
+            <input type="text" class="input-xlarge" name="lastname" id="lastname" value ="#FORM.lastname#" style ="height:inherit ;width:228px" >
+            <p></p>
+          </div>
+
+          <div class="col-md-4 column">
+            DateOfBirth
+          </div>
+
+          <div class="col-md-8 column">
+              <select class="form-control" name="month" style ="width:70px; float: left ">
                 <cfloop from="1" to="12" step="1" index="i">
                     <cfif i EQ #mo#>
                         <option value="#i#" selected>#i#</option>
@@ -130,76 +116,57 @@
                 </cfloop>
             </select> 
 
-            <select class="form-control" name="day" style ="width:70px ">
+            <select class="form-control" name="day" style ="width:70px; float: left  ">
                 <cfloop from="1" to="31" step="1" index="i">
                     <cfif i EQ #dy#>
                         <option value="#i#" selected>#i#</option>
-                      <cfelse>
-                  
-                        <option value="#i#">#i#</option>
-                   
+                      <cfelse>               
+                        <option value="#i#">#i#</option>     
                     </cfif> 
-                    
-
                 </cfloop>
             </select> 
 
-            <select class="form-control" name="year" style ="width:90px ">
+            <select class="form-control" name="year" style ="width:90px; float: left  ">
                 <cfloop from="1920" to="2014" step="1" index="i">
                     <cfif i EQ #yr#>
                         <option value="#i#" selected>#i#</option>
                       <cfelse>
-                  
                         <option value="#i#">#i#</option>
-                   
                     </cfif>          
                 </cfloop>
-            </select> (mm-dd-yyyy)
-            <p style="color:red;width:280px;height:0px;padding-left :160px"><b>#Validation.date.text#</b></p>
-            </div>
-
+            </select>
+            (mm-dd-yyyy)
+            <p style="color:red"><br><b>#Validation.date.text#</b></p>
           </div>
 
-          <div class="form-control-group" style="padding-left:160px;float:left">
-            <label class="control-label" for="name">Choose your avatar</label>
-            <div class="controls">
-              <input type="file" name="photo" id="photo">
-            </div>
+          <div class="col-md-4 column">
+            Choose your avatar
           </div>
-          
-          <div class="form-control-group" style="padding-left:160px;float:left">
-            <label class="control-label" for="message">Your Address</label>
-            <div class="controls">
-              <textarea class="input-xlarge" name="address" rows="3">#FORM.address#</textarea>
-            </div>
+
+          <div class="col-md-8 column">
+            <input type="file" name="photo" id="photo">
+            <p></p>
           </div>
-          
-          
-          
-          <div class="form-actions" style="padding:17px 270px;padding-left:320px;float:left">
+
+          <div class="col-md-4 column">
+            Your Address
+          </div>
+
+          <div class="col-md-8 column">
+            <textarea class="input-xlarge" name="address" rows="3">#FORM.address#</textarea>
+            <p></p>
+          </div>
+
+          <div class="col-md-4 column">
+          </div>
+
+          <div class="col-md-8 column">
             <button type="submit" class="btn btn-success btn-large">Save</button>
-            
           </div>
-  </cfoutput>
-      </form>
-    
-  <div>
-    <p style="clear:both"> </p>
+
+        </div>
+      </div>
+    </div>
   </div>
-  
-
-<!-- .container --> 
-<cfoutput>
-<script src="#getContextRoot()#/home/js/jquery-1.7.1.min.js"></script> 
-
-<script src="#getContextRoot()#/home/js/jquery.validate.js"></script> 
-
-<script src="#getContextRoot()#/home/js/script.js"></script> 
 </cfoutput>
-
-
-</body>
-
- 
-</html>
 </cfif>

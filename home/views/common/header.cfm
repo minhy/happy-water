@@ -18,7 +18,7 @@
 							<cfif SESSION.isLoggedIn EQ true>
 						
 					
-                        <a href="##" class="dropdown-toggle" data-toggle="dropdown">Hi!#SESSION.name# <b class="caret"></b></a>
+                        <a href="##" class="dropdown-toggle" data-toggle="dropdown">Hi! #SESSION.name# <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             
                         	<cfif SESSION.isAdmin EQ true>

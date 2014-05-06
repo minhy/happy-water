@@ -49,7 +49,7 @@
                 zoomType: 'xy'
             },
             title: {
-                text: 'Statistic user and profit in current month'
+                text: 'Statistic user and profit in last month'
             },
             subtitle: {
                 text: 'Source: Happy-Water'
