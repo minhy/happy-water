@@ -40,6 +40,6 @@
 <span class="checkok">Order successfully.<br>Thank you for ordering at Happy Water.<br></span>
 <span style="color:##505050">Your order ID: </span><b style="font-size:18px;">#URL.orderID#</b>
 <hr>
-<span>Sent the order information to email <b>#qGetEmail.email#</b>. If not found, please looking for in Spam or Junk Folder.</span>
+<span>We sent the order information to your email <b>#qGetEmail.email#</b>. If not found, please looking for in Spam or Junk Folder.</span>
 
 </cfoutput>

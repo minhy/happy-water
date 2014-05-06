@@ -219,7 +219,7 @@
 			arrayClear(session.shoppingcart);
 		</cfscript>
 		<cfif #ArrayLen(session.shoppingcart)# eq 0>
-			<cflocation url="#buildUrl('product.thanks')#/?orderID=#od.GENERATED_KEY#&userID=#SESSION.userID#">
+			<cflocation url="#buildUrl('product.thanks')#?orderID=#od.GENERATED_KEY#&userID=#SESSION.userID#">
 		</cfif>
 </cfif>
 
