@@ -40,59 +40,46 @@
 		</cfif>
 </cfif>
 </cfif>
-
-
 <cfoutput>
+<div class="header-title">
+  <h1>Login</h1>
+</div>
+<form id="registration-form" class="form-horizontal" action ="" method ="post" enctype="multipart/form-data" >
+  <div class="row clearfix">
+    <div class="col-md-12 column">
+      <div class="row clearfix">
 
-<link href="#getContextRoot()#/home/css/form.css" rel="stylesheet">
-<link rel="stylesheet" href="#getContextRoot()#/home/css/jquery-ui.css">
+        <div class="col-md-2 column">
+          Email Address
+        </div>
+        <div class="col-md-10 column">
+          <input type="text" class="input-xlarge" name="email" id="email" value="#FORM.email#" style ="height:inherit">
+          <p style="color:red;width:280px;height:0px"><b>#Login.check.text#</b></p>
+        </div>
 
+        <div class="col-md-2 column">
+          Password        
+        </div>
+        <div class="col-md-10 column">
+          <input type="password" class="input-xlarge" name="pass" style ="height:inherit" >
+        </div>
+
+        <div class="col-md-2 column">
+        
+        </div>
+        <div class="col-md-10 column">
+          <input type="checkbox" class="checkbox" name="remember" style ="height:inherit; float:left" value ="true" ><p style="float: left; line-height:200%">Remember me?</p>
+        </div>
+
+        <div class="col-md-2 column">
+        
+        </div>
+        <div class="col-md-10 column">
+          <button type="submit" class="btn btn-success btn-large">Login</button>
+          <a href="#getContextRoot()#/index.cfm/forgot">forgot password?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
 </cfoutput>
-
-      <form id="registration-form" class="form-horizontal" action ="" method ="post" enctype="multipart/form-data" > <!-- style ="background-color:#eeeeee" -->
-       <cfoutput>
-        
-          <br/>
-          
-         <fieldset>
-
-         	<legend ><h1>Login</h1></legend>
-          <div class="form-control-group">
-            <label class="control-label" for="email">Email Address</label>
-            <div class="controls">
-              <input type="text" class="input-xlarge" name="email" id="email" value="#FORM.email#" style ="height:inherit">
-              <p style="color:red;width:280px;height:0px"><b>#Login.check.text#</b></p>
-            </div>
-          </div>
-
-        
-          <div class="form-control-group">
-            <label class="control-label" for="name">Password</label>
-            <div class="controls">
-              <input type="password" class="input-xlarge" name="pass" style ="height:inherit" >
-            </div>
-          </div>
-          
-           <div class="form-control-group">
-            
-            <div class="controls">
-              <input type="checkbox" class="checkbox" name="remember" style ="height:inherit" value ="true" > Remember me?
-            </div>
-
-          </div>         
-
-          <div class="form-control-group" style="padding-left:300px">
-            <label class="control-label" for="forgot">
-              <a href="#getContextRoot()#/index.cfm/forgot">forgot password?</a>
-            </label>
-          </div>
-
-          <div class="form-actions">
-            <button type="submit" class="btn btn-success btn-large">Login</button>
-          
-          </div>
-
-      </fieldset>
-  </cfoutput>
-      </form>
-
