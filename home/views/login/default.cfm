@@ -1,14 +1,9 @@
-
-
 <cfparam name="FORM.remember" default=false>
 <cfparam name="FORM.email" default="">
 <cfparam name="FORM.pass"  default="">
 <cfparam name="Login.check.text"  default="">
 
-
-<!--- <cfdump eval = form> --->
 <cfif CGI.REQUEST_METHOD EQ 'POST'>
-
 
 <cfquery name="qCheckUser"  result="result">
 	SELECT * FROM user
@@ -32,20 +27,7 @@
               <cfset SESSION.userID     = #qCheckUser.userID#>
               <cfset SESSION.Level      = #qCheckUser.level#>
               <cfset SESSION.name       = #qCheckUser.firstName#>
-              
-              <!--- <cfif #FORM.remember# EQ true >
-                <cfcookie name="SESSION.isLoggedIn" value="true">
-              </cfif>
-              --->
-              
-               <cflocation url="#getContextRoot()#/index.cfm" addtoken="false">
-        
-			<!--
-			Set admin SESSION here
-			SESSION.Admin = result.level
-			SESSION.User  = result.userID
-			direct to admin page
-			-->
+              <cflocation url="#getContextRoot()#/index.cfm" addtoken="false">
 		<cfelse>
         
               <cfset SESSION.isLoggedIn = true>
@@ -53,21 +35,8 @@
               <cfset SESSION.userID     = #qCheckUser.userID#>
               <cfset SESSION.Level      = #qCheckUser.level#>
               <cfset SESSION.name       = #qCheckUser.firstName#>
+    <cflocation url="#getContextRoot()#/index.cfm" addtoken="false"> 
 
-            <!---   <cfif #FORM.remember# EQ "true" >
-                <cfcookie name="SESSION.isLoggedIn" value="true">
-              </cfif> --->
-              
-
-
-              <cflocation url="#getContextRoot()#/index.cfm" addtoken="false"> 
-        <!--- </cflock> --->
-           
-			<!--
-			Set user set user session
-			Session.User = result.userID
-			direct to home page
-			-->
 		</cfif>
 </cfif>
 </cfif>
