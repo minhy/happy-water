@@ -251,7 +251,7 @@ group BY product.productID) as demo
                 <cfif #profit.atotal# EQ "">
                 0,
                 <cfelse>   
-                #profit.atotal#, 
+                #round(#profit.atotal#)#, 
                 </cfif>
                 </cfloop>
 
@@ -322,7 +322,7 @@ group BY product.productID) as demo
                     <img title="User" src="#getContextRoot()#/images/dashboard/user.png"  />#qUser.RECORDCOUNT#
                 </div>
                 <div class="statis">
-                    <img title="Profit" src="#getContextRoot()#/images/dashboard/dollar.png" />#qProfit.profit#
+                    <img title="Profit" src="#getContextRoot()#/images/dashboard/dollar.png" />#Round(#qProfit.profit#)#
                 </div>
                 <div class="statis">
                     <img title="Product" src="#getContextRoot()#/images/dashboard/shopping.png" />#qProduct.RECORDCOUNT#
