@@ -91,7 +91,7 @@ $(document).ready(function() {
 		</cflock>
 
 		<!-- Get all user -->
-		<cfquery name="qGetUsers" datasource="happy_water">
+		<cfquery name="qGetUsers">
 			SELECT userId, firstname, lastname, address, dateofbirth, email, level
 			FROM user
 		</cfquery>
