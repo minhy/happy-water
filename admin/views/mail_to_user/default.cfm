@@ -16,14 +16,9 @@
             #content#
           </cfoutput>
         </cfmail>
-
         <script type="text/javascript">
         alert('Send email to user success!!')
-
         </script>
-
 		<cflocation url="#getContextRoot()#/index.cfm/admin:user" addtoken="false"/>
-
 	</cfif>
-
 </cfoutput>

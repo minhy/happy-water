@@ -91,7 +91,7 @@ $(document).ready(function() {
 		</cflock>
 
 		<!-- Get all user -->
-		<cfquery name="getUsers" datasource="happy_water">
+		<cfquery name="qGetUsers" datasource="happy_water">
 			SELECT userId, firstname, lastname, address, dateofbirth, email, level
 			FROM user
 		</cfquery>
@@ -111,35 +111,35 @@ $(document).ready(function() {
 				</tr>
 			</thead>
 			<tbody>
-	 			<cfloop query="getUsers">
-					<tr id="#getUsers.userID#" class="trr">
-						<td>#getUsers.userID#</td>
-						<td>#getUsers.firstname#</td>
-						<td>#getUsers.lastname#</td>
-						<td>#dateFormat(getUsers.dateofbirth, "short")#</td>
+	 			<cfloop query="qGetUsers">
+					<tr id="#qGetUsers.userID#" class="trr">
+						<td>#qGetUsers.userID#</td>
+						<td>#qGetUsers.firstname#</td>
+						<td>#qGetUsers.lastname#</td>
+						<td>#dateFormat(qGetUsers.dateofbirth, "short")#</td>
 						<td>
-							#getUsers.email#
+							#qGetUsers.email#
 							<a href="##login-box" class="login-window">
-							<button type="button" style="float:right;border-color:white" class="btn btn-default" onclick = assgin('#getUsers.email#')><span class="glyphicon glyphicon-envelope"></span></button>
+							<button type="button" style="float:right;border-color:white" class="btn btn-default" onclick = assgin('#qGetUsers.email#')><span class="glyphicon glyphicon-envelope"></span></button>
 							</a>
 						</td>
-						<td>#getUsers.address#</td>
+						<td>#qGetUsers.address#</td>
 						<td class="col-md-2 column">
 						<div class="btn-group btn-group-xs">
 								<cfif Session.Admin EQ 1 OR Session.Admin EQ 2>	
-									<cfif #getUsers.level# EQ 3>
-										<button type="button" class="btn btn-default" onclick = action('#getUsers.userID#','bans')><span class="glyphicon glyphicon-ban-circle"></span>Bans</button>
+									<cfif #qGetUsers.level# EQ 3>
+										<button type="button" class="btn btn-default" onclick = action('#qGetUsers.userID#','bans')><span class="glyphicon glyphicon-ban-circle"></span>Bans</button>
 										
-										<button type="button" class="btn btn-default" onclick = action('#getUsers.userID#','setadmin')><span class="glyphicon glyphicon-ok-circle"></span>Set Admin</button>
+										<button type="button" class="btn btn-default" onclick = action('#qGetUsers.userID#','setadmin')><span class="glyphicon glyphicon-ok-circle"></span>Set Admin</button>
 
-									<cfelseif #getUsers.level# EQ 0>	
-										<button type="button" class="btn btn-default" onclick = action('#getUsers.userID#','unbans')><span class="glyphicon glyphicon-user"></span>Unbans</button>					
+									<cfelseif #qGetUsers.level# EQ 0>	
+										<button type="button" class="btn btn-default" onclick = action('#qGetUsers.userID#','unbans')><span class="glyphicon glyphicon-user"></span>Unbans</button>					
 									</cfif>
 								</cfif>
 								<cfif Session.Admin EQ 1>
-									<cfif #getUsers.level# EQ 2>
-										<button type="button" class="btn btn-default" onclick = action('#getUsers.userID#','bans')><span class="glyphicon glyphicon-ban-circle"></span>Bans</button>
-										<button type="button" class="btn btn-default" onclick = action('#getUsers.userID#','unbans')><span class="glyphicon glyphicon-remove-circle"></span>Remove Admin</button>	
+									<cfif #qGetUsers.level# EQ 2>
+										<button type="button" class="btn btn-default" onclick = action('#qGetUsers.userID#','bans')><span class="glyphicon glyphicon-ban-circle"></span>Bans</button>
+										<button type="button" class="btn btn-default" onclick = action('#qGetUsers.userID#','unbans')><span class="glyphicon glyphicon-remove-circle"></span>Remove Admin</button>	
 									</cfif>
 								</cfif>
 							</div>
