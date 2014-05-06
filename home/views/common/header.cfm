@@ -18,7 +18,7 @@
 							<cfif SESSION.isLoggedIn EQ true>
 						
 					
-                        <a href="##" class="dropdown-toggle" data-toggle="dropdown">Hi!#SESSION.name# <b class="caret"></b></a>
+                        <a href="##" class="dropdown-toggle" data-toggle="dropdown">Hi! #SESSION.name# <b class="caret"></b></a>
                         <ul class="dropdown-menu">
                             
                         	<cfif SESSION.isAdmin EQ true>
@@ -74,7 +74,7 @@
 			var count = 0;
 			$.ajax({
 			              type: "get",
-			              url: "http://#CGI.SERVER_NAME#:#CGI.SERVER_PORT#/home/remote/shoppingcartservices.cfc?",
+			              url: "#getContextRoot()#/home/remote/shoppingcartservices.cfc?",
 			              data: {
 			              	method:"countProduct"
 			              },
@@ -88,7 +88,7 @@
 			  	function deleteProduct(productId){
 			$.ajax({
 			              type: "get",
-			              url: "http://#CGI.SERVER_NAME#:#CGI.SERVER_PORT#/home/remote/shoppingcartservices.cfc?WSDL",
+			              url: "#getContextRoot()#/home/remote/shoppingcartservices.cfc?WSDL",
 			              data: {
 			                  method: "removeProduct",
 			                  id: productId
@@ -117,7 +117,7 @@
 			
 			    $.ajax({
 			               type: "get",
-			               url: "http://#CGI.SERVER_NAME#:#CGI.SERVER_PORT#/home/remote/shoppingcartservices.cfc?WSDL",
+			               url: "#getContextRoot()#/home/remote/shoppingcartservices.cfc?WSDL",
 			               data: {
 			                   method: "updateQuantity",
 			                   productID: productID,
@@ -132,7 +132,7 @@
 			function showShoppingCart(){
 				$.ajax({
 			               type: "get",
-			               url: "http://#CGI.SERVER_NAME#:#CGI.SERVER_PORT#/home/remote/shoppingcartservices.cfc?WSDL",
+			               url: "#getContextRoot()#/home/remote/shoppingcartservices.cfc?WSDL",
 			               data: {
 			                   method: "showShoppingCart"
 			               },
@@ -173,9 +173,11 @@
 
 				function btnBuyOnClick(productID){
 					var quantity = $("[name='nQuantity" + productID + "']").val();
+
+
 					$.ajax({
 				               type: "get",
-				               url: "http://#CGI.SERVER_NAME#:#CGI.SERVER_PORT#/home/remote/shoppingcartservices.cfc?",
+				               url: "#getContextRoot()#/home/remote/shoppingcartservices.cfc?",
 				               data: {
 				               	method:"updateShoppingCart",
 				                   productID: productID,

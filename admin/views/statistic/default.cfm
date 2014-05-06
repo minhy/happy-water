@@ -384,12 +384,13 @@ $(document).ready(function(){
                         </div>
                     </div>
                     <div class="tab-pane active" id="panel-111111">
+                        <br>
                         <form method="Post">
                             <label for="from">From</label>
                             <input type="text" id="startDate" name="startDate">
                             <label for="to">to</label>
                             <input type="text" id="endDate" name="endDate">
-                            <input type ="Submit" value="submit">
+                            <input type ="Submit" value="Submit">
                         </form>
                         <div id="optionalRevenue" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
                     </div>
