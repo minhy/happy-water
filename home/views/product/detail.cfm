@@ -11,14 +11,14 @@
 		from product
 		where productID != <cfqueryparam value="#url.productID#" cfsqltype="cf_sql_integer">
 		ORDER BY RAND()
-		limit 4
+		limit 6
 	</cfquery>
 	<!-- Master Page -->
 	<legend><h1 style="color: ##0088cc;">Product Details: #qGetProductByID.productName#</h1></legend>
 	<div class="row clearfix">
 		<div class="col-md-8 showimg">
 			<div>
-				<img src="#qGetProductByID.image#" width="100%" height="300"/>
+				<img src="#qGetProductByID.image#" width="100%" height="600"/>
 			</div>
 			<p class="alert alert-info" style="word-wrap: break-word;">
 				#qGetProductByID.text#
