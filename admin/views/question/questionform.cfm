@@ -73,13 +73,14 @@
 					</cfquery>
 			
 			<cftransaction action="commit"/>
+				<cflocation url="#buildUrl('question')#" />
 				<cfcatch>
 					<cftransaction action="rollback"/>
-						
+					<cfset Validation.Valid = false>
+					<cfdump eval=cfcatch />
 				</cfcatch>
-				</cftry>
+			</cftry>
 			</cftransaction>
-		 <cflocation url="#buildUrl('question')#" />
 	</cfif>
 	</cfcase>
 
@@ -127,14 +128,16 @@
 				</cfif>
 				where question_id=<cfqueryparam sqltype="integer" value="#FORM.id#"/>
 		</cfquery>		
-			<cftransaction action="commit"/>
+				<cftransaction action="commit"/>
+				<cflocation url="#buildUrl('question')#" />
 				<cfcatch>
 					<cftransaction action="rollback"/>
-						<cfdump eval=cfcatch />
+					<cfset Validation.Valid = false>
+					<cfdump eval=cfcatch />
 				</cfcatch>
 			</cftry>
 		</cftransaction>
-		 <cflocation url="#buildUrl('question')#" />
+		 
 		 </cfif>
 	</cfcase>
 </cfswitch>
@@ -149,6 +152,13 @@
 	<cfparam name="Validation.Valid" 	default="true"/>
 
 <h3 class="header-title"><a href="#buildUrl('question')#"><span class="glyphicon glyphicon-circle-arrow-left"></span></a> Add Question</h3><hr>
+<div class="row clearfix">
+	<cfif NOT Validation.Valid>
+		<div class="alert alert-dange">
+			<h3>Oops! Could not save new question</h3>
+		</div>
+	</cfif>
+</div>
 <form action="" method="post" enctype="multipart/form-data">
 <input type="hidden" name="id" value="#FORM.id#"/>
 <div class="row clearfix">
