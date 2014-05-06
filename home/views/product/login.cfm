@@ -8,7 +8,7 @@
 <cfif CGI.REQUEST_METHOD EQ 'POST'>
 
 
-<cfquery name="check_login" datasource="happy_water" result="result">
+<cfquery name="check_login" result="result">
 	SELECT * FROM user
 	WHERE email = <cfqueryparam cfsqltype="string" value="#FORM.email#">
 		AND password = <cfqueryparam cfsqltype="string" value="#Hash(#FORM.pass#, "SHA")#">
