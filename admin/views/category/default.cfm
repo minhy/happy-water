@@ -20,7 +20,7 @@
         </cftry>
     </cfoutput>
 <head>
-<script language="javascript">
+<script type="javascript">
     $(document).ready( function () {
         $('#table_id').dataTable({
             "sPaginationType": "full_numbers"
@@ -34,7 +34,7 @@ function checkMe() {
         return true;
     } 
 }
-function chuyentrang(status, id, url){
+function forward(status, id, url){
             switch(status)
             {
                 case 1:
@@ -53,14 +53,14 @@ function chuyentrang(status, id, url){
 </script>
 </head>
 
-<cfquery name="qCategory">
+<cfquery name="qGetCategory">
     SELECT * FROM category
 </cfquery>
 <cfoutput>
 <body>
 <legend><h1>Category Management</h1></legend>
 <div class="alert alert-info">
-    <button type="button" class="btn btn-default" onclick="chuyentrang(1,'#qCategory.categoryID#', '#buildUrl('category.form')#');"><span class="glyphicon glyphicon-plus"></span> Add new Category</button>
+    <button type="button" class="btn btn-default" onclick="forward(1,'#qGetCategory.categoryID#', '#buildUrl('category.form')#');"><span class="glyphicon glyphicon-plus"></span> Add new Category</button>
 </div>
  <table id="table_id" class="display">
  		<thead>
@@ -77,36 +77,36 @@ function chuyentrang(status, id, url){
             </tr>
         </thead>
         <tbody>
- <cfloop query="qCategory">
-                <cfquery name="qParent">      
+ <cfloop query="qGetCategory">
+                <cfquery name="qGetParentCategory">      
                     SELECT *
                     FROM category
-                    WHERE categoryID = <cfqueryparam sqltype="integer" value="#qCategory.parentID#"/>
+                    WHERE categoryID = <cfqueryparam sqltype="integer" value="#qGetCategory.parentID#"/>
                 </cfquery>
-                <cfif #qCategory.IsActive# equal "1">
+                <cfif #qGetCategory.IsActive# equal "1">
                     <cfset a="yes">
                 <cfelse>
                     <cfset a="no">
                 </cfif>
-                <!--- <cfif #qCategory.status# equal "1">
+                <!--- <cfif #qGetCategory.status# equal "1">
                     <cfset b="yes">
                 <cfelse>
                     <cfset b="no">
                 </cfif> --->
-                <tr id="#qCategory.categoryID#">
-                    <td class="col-md-1 column">#qCategory.categoryID#</td>
-                    <td>#qCategory.categoryName#</td>
-                    <td class="col-md-3 column">#qCategory.description#</td>
-                    <td class="col-md-1 column">#qParent.categoryName#
+                <tr id="#qGetCategory.categoryID#">
+                    <td class="col-md-1 column">#qGetCategory.categoryID#</td>
+                    <td>#qGetCategory.categoryName#</td>
+                    <td class="col-md-3 column">#qGetCategory.description#</td>
+                    <td class="col-md-1 column">#qGetParentCategory.categoryName#
                     </td>
-                    <td><img src="#getContextRoot()##qCategory.image#" width="80" height="80"/></td>                   
+                    <td><img src="#getContextRoot()##qGetCategory.image#" width="80" height="80"/></td>                   
                     <td class="col-md-1 column">#a#</td>
-                    <!--- <td class="col-md-2 column">#qCategory.tag#</td> --->
+                    <!--- <td class="col-md-2 column">#qGetCategory.tag#</td> --->
                     <td class="col-md-2 column">
                         <div class="btn-group btn-group-xs">
-                            <!--- <button type="button" class="btn btn-default" onclick="chuyentrang(1,'#qCategory.categoryID#', '#buildUrl('category.form')#');"><span class="glyphicon glyphicon-plus"></span> Add</button> --->
-                            <button type="button" class="btn btn-default" onclick="chuyentrang(2,'#qCategory.categoryID#', '#buildUrl('category.form')#');"><span class="glyphicon glyphicon-edit"></span>  Edit</button>
-                            <button class="btn btn-danger" type="button" onclick="chuyentrang(3,'#qCategory.categoryID#', '#buildUrl('category.default')#');"
+                            <!--- <button type="button" class="btn btn-default" onclick="forward(1,'#qGetCategory.categoryID#', '#buildUrl('category.form')#');"><span class="glyphicon glyphicon-plus"></span> Add</button> --->
+                            <button type="button" class="btn btn-default" onclick="forward(2,'#qGetCategory.categoryID#', '#buildUrl('category.form')#');"><span class="glyphicon glyphicon-edit"></span>  Edit</button>
+                            <button class="btn btn-danger" type="button" onclick="forward(3,'#qGetCategory.categoryID#', '#buildUrl('category.default')#');"
                             ><span class="glyphicon glyphicon-remove"></span> Delete</button>
                         </div>
                     </td>
