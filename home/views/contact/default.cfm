@@ -94,7 +94,8 @@
 	<cfparam name="Validation.isInvalid" 	default="false"/>
 <cfoutput>
 <div class="header-title">
-	<h1>Contact</h1>
+	<h1>Contact us</h1>
+	<hr>
 </div>
 <div class="row clearfix">
 	<div class="col-md-7">

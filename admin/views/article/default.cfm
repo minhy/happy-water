@@ -7,13 +7,13 @@
 			    }
 			}
 
-				$(document).ready( function () {
-		    $('#table_id').dataTable({
-		    	"bJQueryUI": true,
-                "sPaginationType": "full_numbers"
-		    });
-		    
-		} );
+				// $(document).ready( function () {
+				//     $('#table_id').dataTable({
+				//     	"bJQueryUI": true,
+		  		//      "sPaginationType": "full_numbers"
+				//     });
+				    
+				// } );
 		</script>
 <cfoutput>
 <cfquery name="qGetArticle">
@@ -23,7 +23,7 @@
 </cfquery>
 <cfset stt=1>
 
-<h3 class="header-title">Article Management</h3>
+<h3 class="header-title">Article Management</h3><hr>
 <form action="#CGI.SCRIPT_NAME#" method="post">
 	<div class="row clearfix">
 		<div class="col-md-12">
@@ -44,6 +44,9 @@
 						Title
 					</th>
 					<th>
+						Active
+					</th>
+					<th>
 						Tag
 					</th>
 					<th>
@@ -59,6 +62,12 @@
 						</td>
 						<td style="width: 60%">
 							#qGetArticle.article_title#
+						</td>
+						<td style="text-align: center">
+	                        <cfif #qGetArticle.article_isactive# eq 1>
+	                            Yes
+	                        <cfelse> No
+	                        </cfif>
 						</td>
 						<td style="text-align: center">
 							#qGetArticle.categoryName#

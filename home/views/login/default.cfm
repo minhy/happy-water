@@ -10,10 +10,11 @@
 <cfif CGI.REQUEST_METHOD EQ 'POST'>
 
 
-<cfquery name="check_login" datasource="happy_water" result="result">
+<cfquery name="qCheckUser"  result="result">
 	SELECT * FROM user
 	WHERE email = <cfqueryparam cfsqltype="string" value="#FORM.email#">
 		AND password = <cfqueryparam cfsqltype="string" value="#Hash(#FORM.pass#, "SHA")#">
+    limit 0,1
 </cfquery>
 
 <cfif #result.RECORDCOUNT# EQ 0>
@@ -21,17 +22,16 @@
 	<cfelse>
 		<script>
 			alert('login successfull');
-			<cfoutput>EARERAEREARE</cfoutput>
 		</script>
-		<cfif  #check_login.level[1]# EQ 0>
+		<cfif  #qCheckUser.level# EQ 0>
 			<cfset Login.check.text ="user has been banned">
-		<cfelseif #check_login.level[1]# EQ 1 OR #check_login.level[1]# EQ 2>
+		<cfelseif #qCheckUser.level# EQ 1 OR #qCheckUser.level# EQ 2>
         
               <cfset SESSION.isLoggedIn = true>
               <cfset SESSION.isAdmin    = true>
-              <cfset SESSION.userID     = #check_login.userID[1]#>
-              <cfset SESSION.Level      = #check_login.level[1]#>
-              <cfset SESSION.name       = #check_login.firstName[1]#>
+              <cfset SESSION.userID     = #qCheckUser.userID#>
+              <cfset SESSION.Level      = #qCheckUser.level#>
+              <cfset SESSION.name       = #qCheckUser.firstName#>
               
               <!--- <cfif #FORM.remember# EQ true >
                 <cfcookie name="SESSION.isLoggedIn" value="true">
@@ -42,17 +42,17 @@
         
 			<!--
 			Set admin SESSION here
-			SESSION.Admin = result.level[1]
-			SESSION.User  = result.userID[1]
+			SESSION.Admin = result.level
+			SESSION.User  = result.userID
 			direct to admin page
 			-->
 		<cfelse>
         
               <cfset SESSION.isLoggedIn = true>
               <cfset SESSION.isAdmin    = false>
-              <cfset SESSION.userID     = #check_login.userID[1]#>
-              <cfset SESSION.Level      = #check_login.level[1]#>
-              <cfset SESSION.name       = #check_login.firstName[1]#>
+              <cfset SESSION.userID     = #qCheckUser.userID#>
+              <cfset SESSION.Level      = #qCheckUser.level#>
+              <cfset SESSION.name       = #qCheckUser.firstName#>
 
             <!---   <cfif #FORM.remember# EQ "true" >
                 <cfcookie name="SESSION.isLoggedIn" value="true">
@@ -65,7 +65,7 @@
            
 			<!--
 			Set user set user session
-			Session.User = result.userID[1]
+			Session.User = result.userID
 			direct to home page
 			-->
 		</cfif>

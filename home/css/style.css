@@ -54,6 +54,7 @@ a:hover {
 .logo {
   background: url(../images/logo.png) no-repeat;
   height: 40px;
+  width: 100px;
 }
 .header a {
   color: #FFF;
@@ -230,4 +231,18 @@ img.categories{
 .kh_category-name {
   width: 365px !important;
   padding: 5px;
+}
+
+label.valid {
+  width: 24px;
+  height: 24px;
+  background: url(img/valid.png) center center no-repeat;
+  display: inline-block;
+  text-indent: -9999px;
+}
+label.error {
+  font-weight: bold;
+  color: red;
+  padding: 2px 8px;
+  margin-top: 2px;
 }

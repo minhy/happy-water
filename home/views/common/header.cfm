@@ -171,7 +171,6 @@
 			           });
 				}
 
-
 				function btnBuyOnClick(productID){
 					var quantity = $("[name='nQuantity" + productID + "']").val();
 

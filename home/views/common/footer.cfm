@@ -4,6 +4,7 @@
 			HAPPY WATER - ALL RIGHTS RESERVED
 		</div>
 	</div>
+	<!-- Modal -->
 	<form name="fShopCart" method="POST" action="#getContextRoot()#/index.cfm/product/chectOut">
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 			<div class="modal-dialog modal-lg">

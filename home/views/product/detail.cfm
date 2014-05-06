@@ -1,13 +1,13 @@
 <cfoutput>
 	<cfparam name="URL.productID" default="0">
 	<cfquery name="qGetProductByID" datasource="happy_water">
-		select *
+		select *, price*(100-discount)/100 as promotionprice
 		from product
 		where productID = 
 		<cfqueryparam cfsqltype="cf_sql_integer" value="#URL.productID#">
 	</cfquery>
 	<cfquery name="qGetNewProduct" datasource="happy_water">
-		select *
+		select *, price*(100-discount)/100 as promotionprice
 		from product
 		where productID != <cfqueryparam value="#url.productID#" cfsqltype="cf_sql_integer">
 		ORDER BY RAND()
@@ -39,7 +39,7 @@
 				<div class="productDetails" style="width:100%; margin-bottom:10px;">
 					<div style="width:100%;">
 						Name: #qGetProductByID.productName#<br>
-						<span>Price: #dollarformat(qGetProductByID.price*(100-qGetProductByID.discount)/100)#</span>
+						<span>Price: #dollarformat(qGetProductByID.promotionprice)#</span>
 						
 					</div>
 				</div>
@@ -72,12 +72,12 @@
 								</td>
 								<td>
 									<a href="productDetail.cfm?productID=#qGetNewProduct.productID#"><span style="margin-right: 5px;">#qGetNewProduct.productName#</span></a>
-									<br>#dollarformat(qGetNewProduct.price*(100-qGetProductByID.discount)/100)#
+									<br>#dollarformat(qGetNewProduct.promotionprice)#
 								</td>
 								<td>
-									<div class="input-group" style="margin-right:5px; display:inline-block; width:105px; float:right;">
+									<div class="input-group" style="margin-right:5px; display:inline-block; width:115px; float:right;">
 								<input type="number" name="nQuantity#qGetNewProduct.productID#"
-									value="1" min="1" max="99" class="form-control" style="width:50px">
+									value="1" min="1" max="99" class="form-control" style="width:60px">
 								<span class="input-group-btn">
 								<button class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetNewProduct.productID#)">Buy!</button>
 								</span>
@@ -90,28 +90,4 @@
 		</div>
 	</div>
 	<!-- END Master Page -->
-	<!-- Modal -->
-	<script type="text/javascript">
-		function btnBuyOnClick(productID){
-			var quantity = $("[name='nQuantity" + productID + "']").val();
-			$.ajax({
-		               type: "get",
-		               url: "http://#CGI.SERVER_NAME#:#CGI.SERVER_PORT#/home/remote/shoppingcartservices.cfc?",
-		               data: {
-		               	method:"updateShoppingCart",
-		                   productID: productID,
-		                   quantity:quantity
-		               },
-		               dataType: "json",
-		               success: function(data){
-		               	if(data == true){
-		               		countProduct();
-		               		alert("Succsess");
-		               	}
-		               	else
-		               		alert("failed");
-		               }
-		           });
-		}
-	</script>
 </cfoutput>

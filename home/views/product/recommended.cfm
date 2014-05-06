@@ -36,25 +36,51 @@
 	<div class="row clearfix">
 		<cfloop query="qRecommended">
 			<div class="col-md-4">
-				<a href="#buildUrl('product.detail')#/?productID=#qRecommended.productID#" class="category-startpage">
-				<img class="categories" src="#qRecommended.image#" width="300" height="300">
-				<p class="bginfo">#qRecommended.description#</p>
-				<div class="category-name">#qRecommended.productName#</div>
+				<img class="categories" src="#qRecommended.image#" width="200" height="200">
+				<p class="bginfo kh_bginfo">
+					<cfif #len(qRecommended.description)# gt 200>
+						#left(qRecommended.description, 200)# ...	
+						<cfelse>
+							#qRecommended.description#
+					</cfif>
+						<br>
+						<br>
+						<br>
+						<br>
+						<input type="number" name="nQuantity#qRecommended.productID#"
+						value="1" min="1" max="99" class="quantity form-control" style="width:60px">
+						<button style="float:left" class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qRecommended.productID#)">Buy!</button>
+				</p>
+				<a href="#buildUrl('product.detail')#/?productID=#qRecommended.productID#">
+				<div class="category-name kh_category-name">
+					#qRecommended.productName#<br> 
+					<span style="float:left;margin-left:5px;">#dollarformat(qRecommended.price*(100-qRecommended.discount)/100)#</span>
+					<br>
+					<cfif #qRecommended.discount# neq 0>
+						<span style="float:left;margin-right:5px; text-decoration: line-through;">#dollarformat(qRecommended.price)#</span>
+					
+						<span style="font-size:20px; float:right;margin-right:5px;">Discount: #qRecommended.discount#%</span>
+					</cfif>
+				</div>						
 				</a>
 			</div>
 		</cfloop>
 	</div>
 	<div class="row clearfix">
 		<div class="col-md-12" align="center">
-			<ul class="pagination">
-			  <li><a href="?page=#URL.page-1#" onclick="return checkPrev()">&laquo;</a></li>
-			  <cfloop from="1" to="#sumpage#" index="i">			
-				<li>
-					<a href="?page=#i#">#i#</a>
-				</li>
-			  </cfloop>
-			  <li><a href="?page=#URL.page+1#" onclick="return checkNext(#sumpage#)">&raquo;</a></li>
-			</ul>
+			<cfif #qSumRecord.dem# eq 0>
+				No product
+			<cfelse>
+				<ul class="pagination" style="float: none">
+				  <li><a href="?page=#URL.page-1#" onclick="return checkPrev()">&laquo;</a></li>
+				  <cfloop from="1" to="#sumpage#" index="i">			
+					<li>
+						<a href="?page=#i#">#i#</a>
+					</li>
+				  </cfloop>
+				  <li><a href="?page=#URL.page+1#" onclick="return checkNext(#sumpage#)">&raquo;</a></li>
+				</ul>
+			</cfif>
 		</div>
 	</div>
 </cfoutput>

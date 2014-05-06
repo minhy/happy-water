@@ -45,9 +45,15 @@
 				<a href="#cr_page#?page=#URL.page-1#" onclick="return checkPrev()">Prev</a>
 			</li>
 			<cfloop from="1" to="#sum_column#" index="i">			
-			<li>
-				<a href="#cr_page#?page=#i#">#i#</a>
-			</li>
+				<cfif i eq url.page>
+					<li class="active">
+						<a href="#cr_page#?page=#i#">#i#</a>
+					</li>
+				<cfelse>
+					<li>
+						<a href="#cr_page#?page=#i#">#i#</a>
+					</li>
+				</cfif>
 			</cfloop>
 			<li >
 				<a href="#cr_page#?page=#URL.page+1#" onclick="return checkNext(#sum_column#)">Next</a>

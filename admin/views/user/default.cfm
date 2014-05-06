@@ -8,7 +8,6 @@ function assgin( id){
 		// $("#username").text(id);
 	}
 
-
 $(document).ready(function() {
 
     $('a.login-window').click(function() {

@@ -5,9 +5,10 @@
 <cfparam name="check.mail.exist" default="&nbsp;"/>
 
 <cfif CGI.REQUEST_METHOD EQ 'POST'>
-    <cfquery name="reset" datasource="happy_water" result="result">
+    <cfquery name="qGetUser"  result="result">
     	SELECT * FROM user
     	WHERE email = <cfqueryparam cfsqltype="string" value="#FORM.email#">
+      limit 0,1
     </cfquery>
     <cfif #result.RECORDCOUNT# EQ 0>
         <cfset check.mail.exist = "No account with that e-mail address exists."/>
@@ -21,15 +22,16 @@
                 subject="Reset password"
                 }
         />
-        <cfmail port="465" useSSL="true" attributeCollection="#mailAttributes#">
+    
+         <cfmail port="465" useSSL="true" attributeCollection="#mailAttributes#">
           <cfoutput>
-            Hi, #reset.firstName[1]#
+            Hi, #qGetUser.firstName#
             Someone recently requested a password change for your account.If
             this was you, you can set a new password by click link below :
-            http://rasia:8888#getContextRoot()#/index.cfm/home:reset_password/?email=#reset.email[1]#&reset=#reset.password[1]#
+            http://#CGI.HTTP_HOST##getContextRoot()#/index.cfm/home:reset_password/?email=#qGetUser.email#&reset=#qGetUser.password#
             
           </cfoutput>
-        </cfmail>
+        </cfmail> 
 
         <script type="text/javascript">
         alert('We have just sent email to help reset your password please check your inbox or spam')

@@ -1,56 +1,57 @@
 <cfparam name="productID" default="0">
-    <cfoutput>
-        <cftry>
-            <cfif #productID# neq 0>
-                <cfquery name="qDelete">
-                    delete from product
-                    where productID = <cfqueryparam value="#url.productID#" cfsqltype="cf_sql_integer">
-                </cfquery>
-                <script type="text/javascript">
-                    alert("This product was deleted !!!");
-                    window.location.href= "#buildUrl('product.default')#";
-                </script>
-            </cfif>
-            <cfcatch>
-                <script type="text/javascript">
-                    alert("Can't delete this product");
-                    window.location.href= "#buildUrl('product.default')#";
-                </script>
-            </cfcatch>    
-        </cftry>
-    </cfoutput>
-        
-    <cfquery name="qShowAll">
-    SELECT *
-    FROM product
-    </cfquery>    
+<cfoutput>
+    <cftry>
+        <cfif #productID# neq 0>
+            <cfquery name="qDelete">
+                delete from product
+                where productID = <cfqueryparam value="#url.productID#" cfsqltype="cf_sql_integer">
+            </cfquery>
+            <script type="text/javascript">
+                alert("This product was deleted !!!");
+                window.location.href= "#buildUrl('product.default')#";
+            </script>
+        </cfif>
+        <cfcatch>
+            <script type="text/javascript">
+                alert("Can't delete this product");
+                window.location.href= "#buildUrl('product.default')#";
+            </script>
+        </cfcatch>    
+    </cftry>
+</cfoutput>
     
+<cfquery name="qShowAll">
+SELECT *
+FROM product
+</cfquery>    
 
-    <script type="text/javascript">
-        $(document).ready( function () {
-            $('#table_id').dataTable({
-                "sPaginationType": "full_numbers"
-            });
-        } );
 
-        function chuyentrang(status, id, url){
-            switch(status)
-            {
-                case 1:
-                    window.location.href= url + "?productID=0";
-                    break;
-                case 2:
+<script type="text/javascript">
+    // $(document).ready( function () {
+    //     $('#table_id').dataTable({
+    //         "bJQueryUI": true,
+    //         "sPaginationType": "full_numbers"
+    //     });
+    // } );
+
+    function chuyentrang(status, id, url){
+        switch(status)
+        {
+            case 1:
+                window.location.href= url + "?productID=0";
+                break;
+            case 2:
+                window.location.href= url +"?productID="+ id;
+                break;
+            case 3:
+                if(confirm("Are you sure ???") == true){
                     window.location.href= url +"?productID="+ id;
-                    break;
-                case 3:
-                    if(confirm("Are you sure ???") == true){
-                        window.location.href= url +"?productID="+ id;
-                    }
-                    break;
-            }
+                }
+                break;
         }
+    }
 
-    </script>
+</script>
 <cfoutput>
     <br>
     <legend><h1>Product Management</h1></legend>
@@ -112,7 +113,7 @@
                         #brandName.brandName#
                     </td>
                     <td class="col-md-3 column">
-                        <div class="btn-group btn-group-sm">
+                        <div class="btn-group btn-group-xs">
                            
                             <button type="button" class="btn btn-default" onclick="chuyentrang(2,'#qShowAll.productID#', '#buildUrl('product.editor')#');"><span class="glyphicon glyphicon-edit"></span>  Edit</button>
                             <button class="btn btn-danger" type="button" onclick="chuyentrang(3,'#qShowAll.productID#', '#buildUrl('product.default')#');"><span class="glyphicon glyphicon-remove"></span> Delete</button>

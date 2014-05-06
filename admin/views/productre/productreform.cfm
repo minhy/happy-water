@@ -1,7 +1,12 @@
 <script type="text/javascript">
 		$(document).ready(function () {
 		    $('#product_group_add').dataTable({
-                "sPaginationType": "full_numbers"
+                "bJQueryUI": true,
+                "sPaginationType": "full_numbers",
+                    "aoColumnDefs" : [ {
+                    'bSortable' : false,
+                    'aTargets' : [ 4 ]
+                } ]
     		});
     		    
             $('.SelectAll').click( function(){
@@ -56,7 +61,7 @@
                         <th>Name</th>
                         <th>Description</th>
                         <th>Price</th>
-                        <th><input type="checkbox" class="SelectAll" /></th>
+                        <th id="select-all"><input type="checkbox" class="SelectAll" /></th>
                     </tr>
                 </thead>
                 <tbody>

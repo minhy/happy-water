@@ -63,12 +63,12 @@
 		<cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
 			<cfset Validation.status.text = "Please select one."/>
 			<cfset Validation.status.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.IsActive') OR NOT ListFind('0,1',FORM.IsActive)>
 			<cfset Validation.IsActive.text = "Please select one."/>
 			<cfset Validation.IsActive.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
 		<cfif Validation.Valid>
 			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
@@ -124,12 +124,12 @@
 		<cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
 			<cfset Validation.status.text = "Please select one."/>
 			<cfset Validation.status.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.IsActive') OR NOT ListFind('0,1',FORM.IsActive)>
 			<cfset Validation.IsActive.text = "Please select one."/>
 			<cfset Validation.IsActive.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
 
 		<cfif Validation.Valid>
@@ -224,7 +224,7 @@
 							#Validation.description.text#
 						</div>
 						<div class="form-group">
-							 <textarea type="text" required="yes" class="form-control" id="description" name="description">#FORM.description#</textarea>
+							 <textarea type="text" required="yes" class="form-control" id="description" name="description" style="margin: 0px -13.4375px 0px 0px; width: 770px; height: 130px;">#FORM.description#</textarea>
 						</div>
 					</div>
 				</div>

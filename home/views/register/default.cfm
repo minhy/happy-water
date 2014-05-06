@@ -13,21 +13,21 @@
 
 <cfparam name="FORM.address" default=""/>
 <cfparam name="FORM.confirm_password" default=""/>
-<cfparam name="nameofphoto" default="default.jpg"/>
+<cfparam name="nameofphoto" default=""/>
 <cfparam name="Validation.email.text" default="&nbsp;"/>
 <cfparam name="Validation.date.text" default="&nbsp;"/>
 
   
 <cfif CGI.REQUEST_METHOD EQ 'POST'>
 
-<cfquery name="id_image" datasource="happy_water">
+<cfquery name="qGetUserID" >
   SELECT userID
   FROM user
   ORDER BY userID Desc
   LIMIT 0,1
 </cfquery>
   
- <cfset name_image =  #id_image.userID[1]+1#/> 
+ <cfset name_image =  #qGetUserID.userID+1#/> 
 
 <cfif FORM.photo is not "">
   
@@ -36,7 +36,7 @@
           fileField = "photo" 
           nameConflict = "MakeUnique"/>
     
-    <cfset #nameofphoto# = #name_image# &"."& #cffile.clientfileext#/>
+<cfset nameofphoto = #name_image# &"."& #cffile.clientfileext#/>
                 
   <cffile 
   action="rename" 
@@ -47,9 +47,7 @@
 </cfif>
 
 
-
-
-<cfquery name="count" datasource="happy_water" result="Result">
+<cfquery name="qCountUser"  result="Result">
   SELECT * 
     FROM user
       WHERE email = <cfqueryparam cfsqltype="string" value="#FORM.email#"/>
@@ -62,7 +60,7 @@
     <cfelse>
     <cftransaction isolation="serializable" action="begin">
       <cftry>
-        <cfquery name="insertdatabase" datasource="happy_water">
+        <cfquery name="qInsertUser">
           INSERT INTO user(firstName,lastName,address,dateofbirth,email,level,avatar,password,RegisterDate)
           Values (
             <cfqueryparam sqltype="string" value="#FORM.firstname#"/>,
@@ -71,7 +69,12 @@
             <cfqueryparam sqltype="string" value="#dateformat(#createDate("#FORM.year#","#FORM.month#","#FORM.day#")#, "yyyy-mm-dd")#"/>,
             <cfqueryparam sqltype="string" value="#FORM.email#"/>,
             '3',
-            <cfoutput>'#nameofphoto#'</cfoutput>,
+            <cfif nameofphoto eq ''>
+              <cfoutput>'#name_image#.jpg'</cfoutput>,
+              <cfelse>
+              <cfoutput>'#nameofphoto#'</cfoutput>,
+            </cfif>
+
             <cfqueryparam sqltype="string" value="#Hash(#FORM.password#, "SHA")#"/>,
             <cfqueryparam sqltype="string" value="#dateformat(#now()#, "yyyy-mm-dd")#"/>
             );
@@ -85,19 +88,10 @@
 
     </cftransaction>    
 
-    <script type="text/javascript">alert('registeration successfull')</script>
-    <cfset FORM.firstname =""/>
-    <cfset FORM.lastname =""/>
-    <cfset FORM.email =""/>
-    <cfset FORM.password =""/>
-    <cfset FORM.date =""/>
-    <cfset FORM.address =""/>
-    <cfset FORM.confirm_password =""/>
-    <cfset nameofphoto ="default.jpg"/>
-    <cfset Validation.email.text ="&nbsp;"/>
-
-
-
+    <script type="text/javascript">
+    alert('registeration successfull');
+    window.location.href='index.cfm/home:login';
+    </script>
 </cfif>
 </cfif>
 
