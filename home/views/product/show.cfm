@@ -16,14 +16,14 @@
 			limit #URL.idpage#,9
 		</cfquery>  
 
-		<cfquery name="qSumColumn1" datasource="happy_water">
+		<cfquery name="qSumColumn1" >
 			SELECT Count(productID) as dem
 			FROM product
 			WHERE productDate BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE() and status = 1 and IsActive = 1
 			ORDER BY productID
 		</cfquery> 
 
-		<cfquery name="qGetByNew" datasource="happy_water">
+		<cfquery name="qGetByNew" >
 			SELECT * 
 			FROM product 
 			WHERE productDate BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE() and status = 1 and IsActive = 1

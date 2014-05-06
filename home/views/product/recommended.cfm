@@ -7,7 +7,7 @@
 <cfoutput>
 	<cfparam name="URL.page" default="1">
 	<cfset URL.idpage = (URL.page -1)*9 />
-	<cfquery name="qSumRecord" datasource="happy_water">
+	<cfquery name="qSumRecord" >
 		select Count(`product`.`productID`) as dem 
 		from `product_re`, `product`, `user`
 		where `product`.`productID` = `product_re`.`productid`
@@ -16,7 +16,7 @@
 
 	</cfquery> 
 
-	<cfquery name="qRecommended" datasource="happy_water">
+	<cfquery name="qRecommended" >
 		select `product`.* 
 		from `product_re`, `product`, `user`
 		where `product`.`productID` = `product_re`.`productid`
