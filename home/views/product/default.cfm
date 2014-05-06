@@ -23,7 +23,7 @@
 		<div class="row clearfix">
 		<cfloop query="qGetAll">
 			<div class="col-md-4" style="margin-bottom:10px">
-				<img class="categories" src="#qGetAll.image#" width="200" height="200">
+				<img class="categories" src="#getContextRoot()##qGetAll.image#" width="200" height="200">
 				<p class="bginfo kh_bginfo">
 					<cfif #len(qGetAll.description)# gt 200>
 						#left(qGetAll.description, 200)# ...	

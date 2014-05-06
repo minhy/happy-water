@@ -19,7 +19,7 @@
 	<cfelse>
 		<script>
 			alert('login successfull');
-			<cfoutput>EARERAEREARE</cfoutput>
+
 		</script>
 		<cfif  #check_login.level[1]# EQ 0>
 			<cfset Login.check.text ="user has been banned">
