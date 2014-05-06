@@ -319,16 +319,16 @@ group BY product.productID) as demo
         </div>
         <div class="col-md-3 column">
                 <div class="statis">
-                <img title="User" src="#getContextRoot()#/images/dashboard/user.png"  />#qUser.RECORDCOUNT#
+                    <img title="User" src="#getContextRoot()#/images/dashboard/user.png"  />#qUser.RECORDCOUNT#
                 </div>
                 <div class="statis">
-                <img title="Profit" src="#getContextRoot()#/images/dashboard/dollar.png" />#qProfit.profit#
+                    <img title="Profit" src="#getContextRoot()#/images/dashboard/dollar.png" />#qProfit.profit#
                 </div>
                 <div class="statis">
-                <img title="Product" src="#getContextRoot()#/images/dashboard/shopping.png" />#qProduct.RECORDCOUNT#
+                    <img title="Product" src="#getContextRoot()#/images/dashboard/shopping.png" />#qProduct.RECORDCOUNT#
                 </div>
                 <div class="statis">
-                <img title="Article" src="#getContextRoot()#/images/dashboard/article.png" />#qArticle.RECORDCOUNT#
+                    <img title="Article" src="#getContextRoot()#/images/dashboard/article.png" />#qArticle.RECORDCOUNT#
                 </div>
             </div>
     </div>
