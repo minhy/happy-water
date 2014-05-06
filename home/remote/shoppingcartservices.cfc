@@ -77,7 +77,6 @@
 	    output="false"
 	    returnformat="JSON">
 		<cfreturn session.shoppingcart>
-		<cfreturn list>
 	</cffunction>
 
 	<cffunction name="removeProduct"
