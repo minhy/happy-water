@@ -1,6 +1,3 @@
-
-
-
 <cfparam name="FORM.email" default=""/>
 <cfparam name="check.mail.exist" default="&nbsp;"/>
 
@@ -46,46 +43,32 @@
 
 
 <cfoutput>
+<div class="header-title">
+  <h1>Reset password</h1>
+</div>
+<form id="registration-form" class="form-horizontal" action ="" method ="post" enctype="multipart/form-data" >
+<div class="row clearfix">
+  <div class="col-md-12 column">
+    <font-size=+2>
+    <p>Forgot your password? &nbsp;&nbsp;&nbsp;Enter your email address to reset your password.</p>
+    </font-size>
+    <div class="row clearfix">
+      <div class="col-md-2 column">
+        Email Address
+      </div>
+      <div class="col-md-10 column">
+        <input type="text" class="input-xlarge" name="email" id="email" value="#FORM.email#" style ="height:inherit">
+        <p style="color:red;width:280px;height:0px"><b>#check.mail.exist#</b></p>
+      </div>
 
-<link href="#getContextRoot()#/home/css/form.css" rel="stylesheet">
-<link rel="stylesheet" href="#getContextRoot()#/home/css/jquery-ui.css">
-
-</cfoutput>
-
-
-
-
-      
-      <form id="registration-form" class="form-horizontal" action ="" method ="post" enctype="multipart/form-data" >
-       <cfoutput>
-        
-          <br/>
-          
-         <fieldset>
-
-         	<legend><h1>Reset password</h1></legend>
-          <font-size=+2>
-          <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Forgot your password? &nbsp;&nbsp;&nbsp;Enter your email address to reset your password.</p>
-          </font-size>
-          <div class="form-control-group">
-            <label class="control-label" for="email">Email Address</label>
-            <div class="controls">
-              <input type="text" class="input-xlarge" name="email" id="email" value="#FORM.email#" style ="height:inherit">
-              <p style="color:red;width:280px;height:0px"><b>#check.mail.exist#</b></p>
-            </div>
-          </div>
-
-          <div class="form-actions">
-            <button type="submit" class="btn btn-success btn-large">Reset</button>
-          
-          </div>
-
-      </fieldset>
+      <div class="col-md-2 column">
+      </div>
+      <div class="col-md-10 column">
+        <button type="submit" class="btn btn-success btn-large">Reset</button>
+      </div>
+    </div>
+  </div>
+</div>
+</form>
   </cfoutput>
-      </form>
-    
-<!-- .container --> 
-
-</body>
-
 

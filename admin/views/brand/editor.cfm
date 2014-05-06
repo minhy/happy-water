@@ -29,8 +29,8 @@
 	<cfcase value="show">
 		<cfparam name="FORM.brandName" type="string" default=""/>
 		<cfparam name="FORM.description" type="string" default=""/>
-		<cfparam name="FORM.status" type="string" default="0"/>
-		<cfparam name="FORM.IsActive" type="string" default="0"/>
+		<cfparam name="FORM.status" type="boolean" default="0"/>
+		<cfparam name="FORM.IsActive" type="boolean" default="0"/>
 	</cfcase>
 	<cfcase value="edit">
 		
@@ -50,6 +50,7 @@
 	</cfcase>
 
 	<cfcase value="insert">
+
 		<cfif NOT IsDefined('FORM.brandName') OR Len(Trim(FORM.brandName)) GT 255 OR Len(Trim(FORM.brandName)) EQ 0>
 			<cfset Validation.brandName.text = "Please provide a brand name with maximal 255 characters and not null."/>
 			<cfset Validation.brandName.class = InvalidClass/>
@@ -60,7 +61,7 @@
 			<cfset Validation.description.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
 		</cfif>
-		<cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
+		<!--- <cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
 			<cfset Validation.status.text = "Please select one."/>
 			<cfset Validation.status.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
@@ -69,7 +70,7 @@
 			<cfset Validation.IsActive.text = "Please select one."/>
 			<cfset Validation.IsActive.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
-		</cfif>
+		</cfif> --->
 		<cfif Validation.Valid>
 			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
 			<cftransaction isolation="serializable" action="begin">
@@ -111,6 +112,7 @@
 	</cfcase>
 
 	<cfcase value="update">
+		
 		<cfif NOT IsDefined('FORM.brandName') OR Len(Trim(FORM.brandName)) GT 255 OR Len(Trim(FORM.brandName)) EQ 0>
 			<cfset Validation.brandName.text = "Please provide a brand name with maximal 255 characters and not null."/>
 			<cfset Validation.brandName.class = InvalidClass/>
@@ -121,7 +123,7 @@
 			<cfset Validation.description.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
 		</cfif>
-		<cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
+		<!--- <cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
 			<cfset Validation.status.text = "Please select one."/>
 			<cfset Validation.status.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
@@ -130,13 +132,12 @@
 			<cfset Validation.IsActive.text = "Please select one."/>
 			<cfset Validation.IsActive.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
-		</cfif>
+		</cfif> --->
 
 		<cfif Validation.Valid>
 			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
 			<cftransaction isolation="serializable" action="begin">
 				<cftry>
-					
 					<cfquery name="update_brand">
 
 						UPDATE brand
@@ -201,30 +202,30 @@
 									#Validation.status.text#
 								</div>
 								<div class="form-group">
-								        <input type="checkbox" id="status" name="status" value="#FORM.status#" <cfif FORM.status> checked</cfif>> New
+								        <input type="checkbox" id="status" name="status" value="1" <cfif FORM.status> checked</cfif>/> New
 								</div>
 							</div>
 							<div class="col-md-6 column">
 								<!--- Is Active --->
-								<label for="IsActive">Is Active</label>
+								<label for="IsActive">Active</label>
 								<div class="#Validation.IsActive.class#">
 									#Validation.IsActive.text#
 								</div>
 								<div class="form-group">
-								        <input type="checkbox" id="IsActive" name="IsActive" value="#FORM.IsActive#" <cfif FORM.IsActive> checked</cfif>> Selling
+								        <input type="checkbox" id="IsActive" name="IsActive" value="1" <cfif FORM.IsActive> checked</cfif>/> Selling
 								</div>
 							</div>
 						</div>
 					</div>
 	
-					<div class="col-md-8 column" style="border-right: 1px solid brown;">
+					<div class="col-md-8 column">
 						<!--- Description --->
 						<label for="description">Description</label>
 						<div class="#Validation.description.class#">
 							#Validation.description.text#
 						</div>
 						<div class="form-group">
-							 <textarea type="text" required="yes" class="form-control" id="description" name="description" style="margin: 0px -13.4375px 0px 0px; width: 770px; height: 130px;">#FORM.description#</textarea>
+							 <textarea type="text" required="yes" class="form-control" id="description" name="description" style="margin: 0px -13.4375px 0px 0px; width: 100%; height: 130px;">#FORM.description#</textarea>
 						</div>
 					</div>
 				</div>
