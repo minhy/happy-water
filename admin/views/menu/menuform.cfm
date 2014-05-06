@@ -8,7 +8,7 @@
         }
         else if(isNaN(pri) || pri<0 )
         {
-        	alert("priority is number");
+        	alert("Priority is number");
         	return false;
         }
         else if(par=="")
@@ -17,7 +17,7 @@
         }
         else if(isNaN(par) || par<0 )
         {
-        	alert("parentid is number");
+        	alert("Parentid is number");
         	return false;
         }
         return true;
@@ -28,7 +28,7 @@
 <cfparam name="URL.id"	type="integer" default="0">
 <cfparam name="menu_id" type="integer" default="1">
 
-	<cfset Validation.isInvalid = false/>
+	<cfset Validation.Valid = true/>
 	<cfset InvalidClass = " invalid"/>
 
 <cfif CGI.REQUEST_METHOD EQ 'get' AND URL.id EQ 0>
@@ -60,22 +60,22 @@
 		<cfif NOT IsDefined('FORM.tag') OR Len(Trim(FORM.tag)) EQ 0>
 		<cfset Validation.tag.text = "Please input tag."/>
 		<cfset Validation.tag.class = InvalidClass/>
-		<cfset Validation.isInvalid = true/>
+		<cfset Validation.Valid = false/>
 	</cfif>
 
 	<cfif NOT IsDefined('FORM.title') OR Len(Trim(FORM.title)) EQ 0>
 		<cfset Validation.title.text = "Please input title."/>
 		<cfset Validation.title.class = InvalidClass/>
-		<cfset Validation.isInvalid = true/>
+		<cfset Validation.Valid = false/>
 	</cfif>
 
 	<cfif NOT IsDefined('FORM.link') OR Len(Trim(FORM.link)) EQ 0>
 		<cfset Validation.link.text = "Please input link."/>
 		<cfset Validation.link.class = InvalidClass/>
-		<cfset Validation.isInvalid = true/>
+		<cfset Validation.Valid = false/>
 	</cfif>
 
-	<cfif NOT IsDefined('FORM.priority') OR Len(Trim(FORM.priority)) EQ 0>
+	<!--- <cfif NOT IsDefined('FORM.priority') OR Len(Trim(FORM.priority)) EQ 0>
 		<!--- <cfset Validation.priority.text = "Please input priority."/> --->
 		<cfset Validation.priority.class = InvalidClass/>
 	</cfif>
@@ -84,8 +84,8 @@
 		<!--- <cfset Validation.parentid.text = "Please input parentid."/> --->
 		<cfset Validation.parentid.class = InvalidClass/>
 
-	</cfif>
-	<cfif NOT  Validation.isInvalid>
+	</cfif> --->
+	<cfif Validation.Valid>
 			<cftransaction isolation="serializable" action="begin">
 				<cftry>
 					<cfquery name="InsertContact" result="Result" >
@@ -101,7 +101,11 @@
 						(
 						 <cfqueryparam sqltype="varchar" value="#FORM.title#"/>,
 						 <cfqueryparam sqltype="varchar" value="#FORM.link#"/>,
-						 <cfqueryparam sqltype="integer" value="#FORM.active#"/>,
+						 <cfif  NOT IsDefined('FORM.active')>
+							<cfqueryparam sqltype="tinyint" value="0"/>,
+						 <cfelse>
+							<cfqueryparam sqltype="tinyint" value="#FORM.active#"/>,
+						 </cfif>
 						 <cfqueryparam sqltype="varchar" value="#FORM.tag#"/>,
 						 <cfqueryparam sqltype="integer" value="#FORM.priority#"/>,
 						 <cfqueryparam sqltype="integer" value="#FORM.parentid#"/>
@@ -109,13 +113,14 @@
 					</cfquery>
 			
 			<cftransaction action="commit"/>
+		 	<cflocation url="#buildUrl('menu')#" />
 				<cfcatch>
 					<cftransaction action="rollback"/>
-						
+					<cfset Validation.Valid = false/>
+					<cfdump eval=cfcatch />
 				</cfcatch>
 				</cftry>
 			</cftransaction>
-		 <cflocation url="#buildUrl('menu')#" />
 	</cfif>
 	</cfcase>
 	<cfcase value="edit">
@@ -127,27 +132,28 @@
 		<cfset form.link=qGetMenuByID.menu_link/>
 		<cfset form.priority=qGetMenuByID.menu_priority/>
 		<cfset form.parentid=qGetMenuByID.menu_parentid/>
+		
 	</cfcase>
 	<cfcase value="update">
 		<cfif NOT IsDefined('FORM.tag') OR Len(Trim(FORM.tag)) EQ 0>
 		<cfset Validation.tag.text = "Please input tag."/>
 		<cfset Validation.tag.class = InvalidClass/>
-		<cfset Validation.isInvalid = true/>
+		<cfset Validation.Valid = false/>
 	</cfif>
 
 	<cfif NOT IsDefined('FORM.title') OR Len(Trim(FORM.title)) EQ 0>
 		<cfset Validation.title.text = "Please input title."/>
 		<cfset Validation.title.class = InvalidClass/>
-		<cfset Validation.isInvalid = true/>
+		<cfset Validation.Valid = false/>
 	</cfif>
 
 	<cfif NOT IsDefined('FORM.link') OR Len(Trim(FORM.link)) EQ 0>
 		<cfset Validation.link.text = "Please input link."/>
 		<cfset Validation.link.class = InvalidClass/>
-		<cfset Validation.isInvalid = true/>
+		<cfset Validation.Valid = false/>
 	</cfif>
 
-	<cfif NOT IsDefined('FORM.priority') OR Len(Trim(FORM.priority)) EQ 0>
+	<!--- <cfif NOT IsDefined('FORM.priority') OR Len(Trim(FORM.priority)) EQ 0>
 		<!--- <cfset Validation.priority.text = "Please input priority."/> --->
 		<cfset Validation.priority.class = InvalidClass/>
 	</cfif>
@@ -155,9 +161,9 @@
 	<cfif NOT IsDefined('FORM.parentid') OR Len(Trim(FORM.parentid)) EQ 0>
 		<!--- <cfset Validation.parentid.text = "Please input parentid."/> --->
 		<cfset Validation.parentid.class = InvalidClass/>
-	</cfif>
+	</cfif> --->
 
-	<cfif NOT  Validation.isInvalid>
+	<cfif Validation.Valid>
 
 		<cftransaction isolation="serializable" action="begin">
 			<cftry>
@@ -165,20 +171,25 @@
 			update menu set 
 				menu_name=<cfqueryparam sqltype="varchar" value="#FORM.title#"/>,
 				menu_link=<cfqueryparam sqltype="varchar" value="#FORM.link#"/>,
-				menu_isactive=<cfqueryparam sqltype="integer" value="#FORM.active#"/>,
+				<cfif  NOT IsDefined('FORM.active')>
+					menu_isactive = 0,
+				<cfelse>
+					menu_isactive = <cfqueryparam sqltype="tinyint" value="#FORM.active#"/>,
+				</cfif>
 				menu_tag=<cfqueryparam sqltype="varchar" value="#FORM.tag#"/>,
 				menu_priority=<cfqueryparam sqltype="integer" value="#FORM.priority#"/>,
 				menu_parentid=<cfqueryparam sqltype="integer" value="#FORM.parentid#"/>
 				where menu_id=<cfqueryparam sqltype="integer" value="#FORM.id#"/>
 		</cfquery>		
 			<cftransaction action="commit"/>
+		 	<cflocation url="#buildUrl('menu')#" />
 				<cfcatch>
 					<cftransaction action="rollback"/>
-						<cfdump eval=cfcatch />
+					<cfset Validation.Valid = false/>
+					<cfdump eval=cfcatch />
 				</cfcatch>
 			</cftry>
 		</cftransaction>>
-		 <cflocation url="#buildUrl('menu')#" />
 		 </cfif>
 	</cfcase>
 </cfswitch>
@@ -186,89 +197,105 @@
 	<cfparam name="Validation.link.text"     default="&nbsp;"/>
 	<cfparam name="Validation.active.text"     default="&nbsp;"/>
 	<cfparam name="Validation.tag.text" 		default="&nbsp;"/>
-<!--- 	<cfparam name="Validation.menu_priority.text" 		default="&nbsp;"/>
-	<cfparam name="Validation.menu_parentid.text" 		default="&nbsp;"/> --->
+	<cfparam name="Validation.priority.text" 		default="&nbsp;"/>
+	<cfparam name="Validation.parentid.text" 		default="&nbsp;"/>
 
 	<cfparam name="Validation.tag.class" 		default=""/>
 	<cfparam name="Validation.title.class"		default=""/>
 	<cfparam name="Validation.active.class" 		default=""/>
 	<cfparam name="Validation.link.class" 		default=""/>
-	<cfparam name="Validation.menu_priority.class"		default=""/>
-	<cfparam name="Validation.menu_parentid.class" 		default=""/>
-	<cfparam name="Validation.isInvalid" 	default="false"/>
+	<cfparam name="Validation.priority.class"		default=""/>
+	<cfparam name="Validation.parentid.class" 		default=""/>
+	<cfparam name="Validation.Valid" 	default="false"/>
 
-<h3 class="header-title"><a href="#buildUrl('menu')#"><span class="glyphicon glyphicon-circle-arrow-left"></span></a> Add Menu</h3>
+<h3 class="header-title"><a href="#buildUrl('menu')#"><span class="glyphicon glyphicon-circle-arrow-left"></span></a> Menu - Update</h3><hr>
+<div class="row clearfix">
+	<cfif NOT Validation.Valid>
+		<div class="alert alert-dange">
+			<h3>Oops! Could not save new menu</h3>
+		</div>
+	</cfif>
+</div>
 <form action="" method="post" enctype="multipart/form-data">
 <input type="hidden" name="id" value="#FORM.id#"/>
-<div class="row clearfix">
-	<div class="col-md-2">
-		Title:
-	</div>
-	<div class="col-md-10 form#Validation.title.class#">
-		<input type="text" name="title" value="#FORM.title#" size="50"/>
-		<p>#Validation.title.text#</p>
-	</div>
+	<div class="row clearfix">
+			<div class="col-md-12 column">
+				<div class="row clearfix">
+					<div class="col-md-6 column" style="border-right: 1px solid brown;">
+						<!--- Title --->
+						<label for="title">Title</label>
+						<div class="form#Validation.title.class#">
+							#Validation.title.text#
+						</div>
+						<div class="form-group">
+							 <input type="text" name="title" value="#FORM.title#" class="form-control"/>
+						</div>
 
-	<div class="col-md-2">
-		Link:
-	</div>
-	<div class="col-md-10 form#Validation.link.class#">
-		<input type="text" name="link" value="#FORM.link#" size="50"/>
-		<p>#Validation.link.text#</p>
-	</div>
+						<!--- Link --->
+						<label for="link">Link</label>
+						<div class="form#Validation.link.class#">
+							#Validation.link.text#
+						</div>
+						<div class="form-group">
+						        <input type="text" name="link" value="#FORM.link#" class="form-control"/>
+						</div>
 
-	<div class="col-md-2">
-		Menu tag:
-	</div>
-	<div class="col-md-10 form#Validation.tag.class#">
-		<select name="tag" id ="tag">
-			  	<cfloop query="qGetMenu">
-			  		<cfif #qGetMenu.menu_tag# eq #qGetMenuByID.menu_tag#>
-						<cfset selected="selected"/>
-					<cfelse>
-						<cfset selected=""/>
-					</cfif>
-				  	<option 		  	
-				  	value="#qGetMenu.menu_tag#" #selected#>#qGetMenu.menu_tag#
-					</option>
-				</cfloop>
-		</select>
-		<p>#Validation.tag.text#</p>
-	</div>
+						<!--- Menu tag --->
+						<label for="tag">Menu tag</label>
+						<div class="form#Validation.tag.class#">
+							#Validation.tag.text#
+						</div>
+						<div class="form-group">
+					       <select name="tag" id ="tag" class="form-control">
+							  	<cfloop query="qGetMenu">
+							  		<cfif #qGetMenu.menu_tag# eq #qGetMenuByID.menu_tag#>
+										<cfset selected="selected"/>
+									<cfelse>
+										<cfset selected=""/>
+									</cfif>
+								  	<option 		  	
+								  	value="#qGetMenu.menu_tag#" #selected#>#qGetMenu.menu_tag#
+									</option>
+								</cfloop>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6 column" style="border-right: 1px solid brown;">
+						<!--- Priority --->
+						<label for="priority">Priority</label>
+						<div class="form#Validation.priority.class#">
+						</div>
+						<div class="form-group">
+							 <input type="text" name="priority" value="#FORM.priority#" id="priority" class="form-control"/>
+						</div>
 
-	<div class="col-md-2">
-		Priority:
-	</div>
-	<div class="col-md-10 form#Validation.menu_priority.class#">
-		<input type="text" name="priority" value="#FORM.priority#" size="50" id="priority"/>
-		<p></p>
-	</div>
+						<!--- Parentid --->
+						<label for="parentid">Parentid</label>
+						<div class="form#Validation.parentid.class#">
+						</div>
+						<div class="form-group">
+						        <input type="text" name="parentid" value="#FORM.parentid#" id="parentid"class="form-control"/>
+						</div>
 
-	<div class="col-md-2">
-		Parentid:
-	</div>
-	<div class="col-md-10 form#Validation.menu_parentid.class#">
-		<input type="text" name="parentid" value="#FORM.parentid#" size="50" id="parentid"/>
-		<p></p>
-	</div>
+						<!--- Active --->
+						<label for="active">Active</label>
+						<div class="form#Validation.active.class#">
+							#Validation.active.text#
+						</div>
+						<div class="form-group">
+						        <input type="checkbox" name="active" value="1"<cfif FORM.active> checked</cfif>/> Yes
+						</div>
 
-	<div class="col-md-2">
-		Active:
-	</div>
-	<div class="col-md-10 form#Validation.active.class#">
-		<input type="radio" name="active" value="1"<cfif FORM.active> checked</cfif>/> Yes<br>
-		<input type="radio" name="active" value="0"<cfif NOT FORM.active> checked</cfif>/> No<br>
-		<p>#Validation.active.text#</p>
-	</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
-	<div class="col-md-2">
-	</div>
-	<div class="col-md-10">
-        <div class="btn-group">
-            <button type="submit" class="btnSubmit btn btn-default" onclick="return kt()">Submit</button>
-        </div>
-	</div>
+		<div class="div_center">
+			<div class="alert alert-info">
+				<button type="submit" class="btn btn-default btn_center">Submit</button>
+			</div>
+		</div>
 </div>
-
 </form>
 </cfoutput>

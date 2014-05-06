@@ -1,15 +1,17 @@
+<script>
+    addEventListener('load', prettyPrint, false);
+    $(document).ready(function(){
+    $('pre').addClass('prettyprint linenums');
+      });
+</script> 
 
-
-
-
-
+<cfoutput>
 <cfparam name="FORM.password" default=""/>
 <cfparam name="FORM.old_pass" default=""/>
 <cfparam name="Validation.oldpass.text" default="&nbsp;"/>
 
-<cfoutput>
 <cfif CGI.REQUEST_METHOD EQ 'POST'>
-    <cfquery name="count" datasource="happy_water" result="Result">
+    <cfquery name="qCountUser"  result="Result">
       SELECT * 
         FROM user
           WHERE   userID   = <cfqueryparam cfsqltype="string" value="#Session.UserID#"/>
@@ -21,7 +23,7 @@
     <cfelse>
       <cftransaction isolation="serializable" action="begin">
       <cftry>
-        <cfquery name="insertdatabase" datasource="happy_water">
+        <cfquery name="UpdateUser" >
           UPDATE user
           SET
           password   =  <cfqueryparam sqltype="string" value="#Hash(#FORM.password#, "SHA")#"/>
@@ -41,74 +43,54 @@
     </cftransaction>
     </cfif>  
 </cfif>
+<div class="header-title">
+  <h1>Change Password </h1>
+</div>
+<form id="registration-form" class="form-horizontal" action ="" method ="post" enctype="multipart/form-data">
+  <div class="row clearfix">
+    <div class="col-md-12 column">
+      <div class="row clearfix">
 
+        <div class="col-md-2 column">
+         Old password
+        </div>
+        <div class="col-md-10 column">
+          <div class="controls">
+            <input type="password" class="input-xlarge" name="old_pass" id="old_pass" style ="height:inherit">
+            <p style="color:red;width:280px;height:0px"><b>#Validation.oldpass.text#</b></p>
+          </div>
+        </div>
+          
+        <div class="col-md-2 column">
+         New Password
+        </div>
+        <div class="col-md-10 column">
+          <div class="controls">
+            <input type="password" class="input-xlarge" name="password" id="password" style ="height:inherit">
+            <p></p>
+          </div>
+        </div>
+          
+        <div class="col-md-2 column">
+          Retype New Password
+        </div>
+        <div class="col-md-10 column">
+          <div class="controls">
+            <input type="password" class="input-xlarge" name="confirm_password" id="confirm_password" style="height:inherit">
+            <p></p>
+          </div>
+        </div>
 
+        <div class="col-md-2 column">
 
+        </div>
+        <div class="col-md-10 column">
+          <button type="submit" class="btn btn-success btn-large">Change</button>
+        </div>
 
-<link href="#getContextRoot()#/home/css/form.css" rel="stylesheet">
-<link rel="stylesheet" href="#getContextRoot()#/home/css/jquery-ui.css">
-
+      </div>
+    </div>
+  </div>
+</form>
 </cfoutput>
 
-
-
-      
-      <form id="registration-form" class="form-horizontal" action ="" method ="post" enctype="multipart/form-data">
-       <cfoutput>
-          <h1 style="padding-left:150px">Change Password </h1>
-          <br/>
-          
-
-          <div class="form-control-group">
-            <label class="control-label" for="name">Old password</label>
-            <div class="controls">
-              <input type="password" class="input-xlarge" name="old_pass" id="old_pass" style ="height:inherit">
-              <p style="color:red;width:280px;height:0px"><b>#Validation.oldpass.text#</b></p>
-            </div>
-          </div>
-          
-
-         <div class="form-control-group">
-            <label class="control-label" for="name">New Password</label>
-            <div class="controls">
-              <input type="password" class="input-xlarge" name="password" id="password" style ="height:inherit">
-            </div>
-          </div>
-          
-          <div class="form-control-group">
-            <label class="control-label" for="name"> Retype New Password</label>
-            <div class="controls">
-              <input type="password" class="input-xlarge" name="confirm_password" id="confirm_password" style="height:inherit">
-            </div>
-          </div>
-
- 
-          <div class="form-actions" style="padding-left:160px">
-            <button type="submit" class="btn btn-success btn-large">Change</button>
-          </div>
-
-
-          
-  </cfoutput>
-      </form>
-   
-<!-- .container --> 
-
-<cfoutput>
-
-<script src="#getContextRoot()#/home/js/jquery-1.7.1.min.js"></script> 
-
-<script src="#getContextRoot()#/home/js/jquery.validate.js"></script> 
-
-<script src="#getContextRoot()#/home/js/script.js"></script> 
-<script>
-    addEventListener('load', prettyPrint, false);
-    $(document).ready(function(){
-    $('pre').addClass('prettyprint linenums');
-      });
-    </script> 
-
-</body>
-</cfoutput>
- 
-</html>

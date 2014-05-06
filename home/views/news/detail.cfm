@@ -29,7 +29,7 @@
 	<div class="alert alert-info">
 		<p><span class="glyphicon glyphicon-thumbs-up"></span> RELATED ARTICLES:</p>
 		<cfloop query= qGetArticleAll>
-				<p><a href="article_detail?id=#qGetArticleAll.article_id#"><span class="glyphicon glyphicon-stop"></span> #qGetArticleAll.article_title#</a></p>
+				<p><a href="detail?id=#qGetArticleAll.article_id#"><span class="glyphicon glyphicon-stop"></span> #qGetArticleAll.article_title#</a></p>
 		</cfloop>
 	</div>
 </cfoutput>

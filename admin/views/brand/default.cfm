@@ -27,11 +27,12 @@
     
 
     <script type="text/javascript">
-        $(document).ready( function () {
-            $('#table_id').dataTable({
-                "sPaginationType": "full_numbers"
-            });
-        } );
+        // $(document).ready( function () {
+        //     $('#table_id').dataTable({
+        //         "bJQueryUI": true,
+        //         "sPaginationType": "full_numbers"
+        //     });
+        // } );
 
         function chuyentrang(status, id, url){
             switch(status)
@@ -88,7 +89,7 @@
                         </cfif>
                     </td>
                     <td class="col-md-3 column">
-                        <div class="btn-group btn-group-sm">
+                        <div class="btn-group btn-group-xs">
                            
                             <button type="button" class="btn btn-default" onclick="chuyentrang(2,'#qShowAll.brandID#', '#buildUrl('brand.editor')#');"><span class="glyphicon glyphicon-edit"></span>  Edit</button>
                             <button class="btn btn-danger" type="button" onclick="chuyentrang(3,'#qShowAll.brandID#', '#buildUrl('brand.default')#');");"><span class="glyphicon glyphicon-remove"></span> Delete</button>
