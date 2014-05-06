@@ -17,7 +17,63 @@
 		</cfquery>  
 
 
+<<<<<<< HEAD
+		<div class="row clearfix">
+			<div class="col-md-12" align="center">
+				<div class="row clearfix">
+					<cfloop query="qGetAll">
+						<div class="col-md-4" style="margin-bottom:10px;">
+							<img class="categories" src="#getContextRoot()##qGetAll.image#" width="200" height="200">
+							<p class="bginfo kh_bginfo">
+								<cfif #len(qGetAll.description)# gt 200>
+									#left(qGetAll.description, 200)# ...	
+									<cfelse>
+										#qGetAll.description#
+								</cfif>
+									<br>
+									<br>
+									<br>
+									<br>
+									<input type="number" name="nQuantity#qGetAll.productID#"
+									value="1" min="1" max="99" class="quantity form-control">
+									<button style="float:left" class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetAll.productID#)">Buy!</button>
+							</p>
+							<a href="#buildUrl('product.detail')#/?productID=#qGetAll.productID#">
+							<div class="category-name kh_category-name">
+								#qGetAll.productName#<br> 
+								<span style="float:left;margin-left:5px;">#dollarformat(qGetAll.price*(100-qGetAll.discount)/100)#</span>
+								<br>
+								<cfif #qGetAll.discount# neq 0>
+									<span style="float:left;margin-right:5px; text-decoration: line-through;">#dollarformat(qGetAll.price)#</span>
+								
+									<span style="font-size:20px; float:right;margin-right:5px;">Discount: #qGetAll.discount#%</span>
+								</cfif>
+							</div>						
+							</a>
+						</div>
+					</cfloop>
+				</div>
+				<div class="row clearfix">
+					<div class="col-md-12" align="center">
+						<ul class="pagination" style="float: none;">
+						  <li><a href="?select=all&page=#URL.page-1#" onclick="return checkPrev()">&laquo;</a></li>
+						  <cfloop from="1" to="#sumpage#" index="i">			
+							<li>
+								<a href="?select=all&page=#i#">#i#</a>
+							</li>
+						  </cfloop>
+						  <li><a href="?select=all&page=#URL.page+1#" onclick="return checkNext(#sumpage#)">&raquo;</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</cfif>
+	<cfif select eq "new">
+		<cfquery name="qSumRecord" datasource="happy_water">
+=======
 		<cfquery name="qSumColumn1" datasource="happy_water">
+>>>>>>> bc91e69476ba7befdab7e5ea7a0903cf03c5d524
 			SELECT Count(productID) as dem
 			FROM product
 			WHERE productDate BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE() and status = 1 and IsActive = 1
