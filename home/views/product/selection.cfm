@@ -33,5 +33,6 @@
 		    </ul>
 		    </div>
 		</div>
+	</div>
 </div>
 </cfoutput>
