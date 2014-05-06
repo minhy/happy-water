@@ -1,13 +1,11 @@
 <cfparam name="Form.username" default="aaaaa"/>
 
-
 <script type="text/javascript">
 
 function assgin( id){
-		$("#username").val(id);
-		// $("#username").text(id);
-	}
-
+	$("#username").val(id);
+	// $("#username").text(id);
+}
 
 $(document).ready(function() {
 
@@ -33,9 +31,7 @@ $(document).ready(function() {
         $('#mask').fadeIn(300);
         
         return false;
-    });
-    
-        
+    });        
   
     // When clicking on the button close or the mask layer the popup closed
     $('a.closest, #mask').bind('click', function() { 
@@ -49,34 +45,32 @@ $(document).ready(function() {
 
 </script>
 
-
-<div id="login-box" class="login-popup">
-						<cfoutput>
-                            <a href="##" class="closest"><img src="#getContextRoot()#/admin/images/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
-                        
-                            <form method="post" class="signin" action="#getContextRoot()#/index.cfm/admin:mail_to_user">
-                                <fieldset class="textbox">
-                                    <label class="username">
-                                    <span>Mail to :</span>
-                                    <input  id="username" name="username" value="" type="text" autocomplete="on" placeholder="Username">
-                                    </label>
-                
-                                    <label class="password">
-                                    <span>Content</span>
-                                    
-                                    <textarea id="content" name="content" rows="4" cols="35" ></textarea>
-
-                                    </label>
-                
-                                    <input type="submit" name="Submit" value="Send">
-                                    
-                
-                                </fieldset>
-                            </form>
-                        </cfoutput>
-
-</div>
 <cfoutput>
+<div id="login-box" class="login-popup">
+
+    <a href="##" class="closest"><img src="#getContextRoot()#/admin/images/close_pop.png" class="btn_close" title="Close Window" alt="Close" /></a>
+
+    <form method="post" class="signin" action="#getContextRoot()#/index.cfm/admin:mail_to_user">
+        <fieldset class="textbox">
+            <label class="username">
+            <span>Mail to :</span>
+            <input  id="username" name="username" value="" type="text" autocomplete="on" placeholder="Username">
+            </label>
+
+            <label class="password">
+            <span>Content</span>
+            
+            <textarea id="content" name="content" rows="4" cols="35" ></textarea>
+
+            </label>
+
+            <input type="submit" name="Submit" value="Send">
+            
+
+        </fieldset>
+    </form>
+</div>
+
 <div class="container wrap main">
 	<section class="main-container">
 		<style>
