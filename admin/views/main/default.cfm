@@ -49,7 +49,7 @@
                 zoomType: 'xy'
             },
             title: {
-                text: 'Statistic user and profit in last month'
+                text: 'Statistic user and profit in last          month'
             },
             subtitle: {
                 text: 'Source: Happy-Water'
@@ -160,7 +160,7 @@ group BY product.productID) as demo
                 zoomType: 'xy'
             },
             title: {
-                text: 'Statistic user and profit in current month'
+                text: 'Statistic user and profit in this month'
             },
             subtitle: {
                 text: 'Source: Happy-Water'
