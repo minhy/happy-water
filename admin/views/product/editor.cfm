@@ -53,8 +53,8 @@
 		<cfparam name="FORM.price" type="float" default="0"/>
 		<cfparam name="FORM.originalprice" type="float" default="0"/>
 		<cfparam name="FORM.discount" type="numeric" default="0"/>
-		<cfparam name="FORM.status" type="boolean" default="0"/>
-		<cfparam name="FORM.IsActive" type="boolean" default="0"/>
+		<cfparam name="FORM.status" type="numeric" default="0"/>
+		<cfparam name="FORM.IsActive" type="numeric" default="0"/>
 		<cfparam name="FORM.categoryID" type="string" default="0"/>
 		<cfparam name="FORM.brandID" type="string" default="0"/>
 		<cfparam name="FORM.text" type="string" default=""/>
@@ -69,18 +69,18 @@
 			WHERE productID = <cfqueryparam sqltype="integer" value="#URL.productID#"/>
 
 		</cfquery>
-		<cfset FORM.productID = edit_product.productID/>
-		<cfset FORM.productName = edit_product.productName/>
-		<cfset FORM.description = edit_product.description/>
-		<cfset FORM.price = edit_product.price/>
-		<cfset FORM.originalprice = edit_product.originalprice/>
-		<cfset FORM.discount = edit_product.discount/>
-		<cfset FORM.status = edit_product.status/>
-		<cfset FORM.IsActive = edit_product.IsActive/>
-		<cfset FORM.categoryID = edit_product.categoryID/>
-		<cfset FORM.brandID = edit_product.brandID/>
-		<cfset FORM.text = edit_product.text/>
-		<cfset FORM.image =edit_product.image/>
+		<cfset form.productID = edit_product.productID/>
+		<cfset form.productName = edit_product.productName/>
+		<cfset form.description = edit_product.description/>
+		<cfset form.price = edit_product.price/>
+		<cfset form.originalprice = edit_product.originalprice/>
+		<cfset form.discount = edit_product.discount/>
+		<cfset form.status = edit_product.status/>
+		<cfset form.IsActive = edit_product.IsActive/>
+		<cfset form.categoryID = edit_product.categoryID/>
+		<cfset form.brandID = edit_product.brandID/>
+		<cfset form.text = edit_product.text/>
+		<cfset form.image =edit_product.image/>
 
 	</cfcase>
 
@@ -135,17 +135,18 @@
 		    <cfset Validation.image.text = "The file must an image."/>
 			<cfset Validation.image.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
-		</cfif> ---><!--- 
-		<cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
+		</cfif> --->
+		<!--- <cfif NOT IsDefined('FORM.status')>
 			<cfset Validation.status.text = "Please select one."/>
 			<cfset Validation.status.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
 		</cfif>
-		<cfif NOT IsDefined('FORM.IsActive') OR NOT ListFind('0,1',FORM.IsActive)>
+		<cfif NOT IsDefined('FORM.IsActive')>
 			<cfset Validation.IsActive.text = "Please select one."/>
 			<cfset Validation.IsActive.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
 		</cfif> --->
+
 		<cfif Validation.Valid>
 			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
 			<cfset text = ReReplaceNoCase(#FORM.text#, '<[^>]*>', '', "ALL")>
@@ -244,12 +245,12 @@
 			<cfset Validation.brandID.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
 		</cfif>
-		<!--- <cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
+		<!--- <cfif NOT  StructKeyExists(FORM,"status")>
 			<cfset Validation.status.text = "Please select one."/>
 			<cfset Validation.status.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
 		</cfif>
-		<cfif NOT IsDefined('FORM.IsActive') OR NOT ListFind('0,1',FORM.IsActive)>
+		<cfif NOT IsDefined('FORM.IsActive')>
 			<cfset Validation.IsActive.text = "Please select one."/>
 			<cfset Validation.IsActive.class = InvalidClass/>
 			<cfset Validation.Valid = false/>
@@ -399,7 +400,7 @@
 								#Validation.status.text#
 							</div>
 							<div class="form-group">
-						        <input type="checkbox" id="status" name="status" value="#FORM.status#" <cfif FORM.status> checked</cfif>> In stock
+						        <input type="checkbox" id="status" name="status" value="1" <cfif FORM.status> checked</cfif>> In stock
 							</div>
 						</div>
 						<div class="col-md-6 column">
@@ -409,7 +410,7 @@
 								#Validation.IsActive.text#
 							</div>
 							<div class="form-group">
-						        <input type="checkbox" id="IsActive" name="IsActive" value="#FORM.IsActive#" <cfif FORM.IsActive> checked</cfif>> Selling
+						        <input type="checkbox" id="IsActive" name="IsActive" value="1" <cfif FORM.IsActive> checked</cfif>> Selling
 							</div>
 						</div>
 					</div>

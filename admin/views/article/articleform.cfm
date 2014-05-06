@@ -89,7 +89,7 @@
 						(<cfqueryparam sqltype="varchar" value="#FORM.title#"/>,
 						 <cfqueryparam sqltype="longvarchar" value="#FORM.content#"/>,
 						 <cfqueryparam sqltype="varchar" value="images/upload/#reupload.clientfile#"/>,
-						 <cfqueryparam sqltype="varchar" value="#FORM.description#"/>,
+						 <cfqueryparam sqltype="longvarchar" value="#FORM.description#"/>,
 						 <cfqueryparam sqltype="integer" value="#userid#"/>,
 						 <cfif  NOT IsDefined('FORM.active')>
 							<cfqueryparam sqltype="tinyint" value="0"/>,
@@ -106,6 +106,7 @@
 				<cfcatch>
 					<cftransaction action="rollback"/>
 					<cfset Validation.Valid = false/>	
+					<cfdump var="#cfcatch#"/><cfabort>
 				</cfcatch>
 				</cftry>
 			</cftransaction>
@@ -150,7 +151,6 @@
 		</cfif>
 
 		<cfif  Validation.Valid>
-
 			<cftransaction isolation="serializable" action="begin">
 				<cftry>
 			<cfquery name="qUpdateArticle">
@@ -161,7 +161,7 @@
 					article_editdate =<cfqueryparam sqltype="date" value="#now()#"/>,
 					tag=<cfqueryparam sqltype="varchar" value="#FORM.tag#"/>,
 					<cfif  NOT IsDefined('FORM.active')>
-						article_isactive = 0,
+						article_isactive = 0
 					<cfelse>
 						article_isactive = <cfqueryparam sqltype="tinyint" value="#FORM.active#"/>
 					</cfif>
@@ -244,7 +244,7 @@
 					</div>
 					<div class="form-group">
 							 <div class="clearfix">
-								 <select name="tag" id ="tag" class="form-control" >
+								 <select name="tag" class="form-control" >
 								  	<cfloop query="qGetCategory">
 								  		<cfif #qGetCategory.tag# eq #URL.tag#>
 											<cfset selected="selected"/>
