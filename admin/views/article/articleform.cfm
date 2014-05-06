@@ -32,7 +32,15 @@
 		<cfparam name="Form.tag"		default=""/>
 	</cfcase>
 	<cfcase value="insert">
-		<cfif NOT IsDefined('FORM.title') OR Len(Trim(FORM.title)) EQ 0>
+	<cfif isDefined("form.photo") >
+		<cfif FORM.photo is not ""> 
+		  <cffile action = "upload" result="reupload"
+         fileField = "photo" 
+         destination = "/images/upload/"
+         nameConflict = "MakeUnique">
+		 </cfif>
+	</cfif>	
+	<cfif NOT IsDefined('FORM.title') OR Len(Trim(FORM.title)) EQ 0>
 		<cfset Validation.title.text = "Please input title."/>
 		<cfset Validation.title.class = InvalidClass/>
 		<cfset Validation.Valid = false/>
@@ -65,17 +73,6 @@
 	<cfif Validation.Valid>
 			<cftransaction isolation="serializable" action="begin">
 				<cftry>
-					<cfif isDefined("form.photo") >
-						<cfif FORM.photo is not ""> 
-						  <cffile action = "upload" result="reupload"
-				         fileField = "photo" 
-				         destination = "/images/upload/"
-				         nameConflict = "MakeUnique">
-        				 </cfif>
-					</cfif>
-
-				
-
 					<cfquery name="InsertContact" result="Result" >
 						INSERT INTO article
 						(article_title,
@@ -91,7 +88,7 @@
 						VALUES
 						(<cfqueryparam sqltype="varchar" value="#FORM.title#"/>,
 						 <cfqueryparam sqltype="longvarchar" value="#FORM.content#"/>,
-						 <cfqueryparam sqltype="varchar" value="images/upload/#reupload.serverfile#"/>,
+						 <cfqueryparam sqltype="varchar" value="images/upload/#reupload.clientfile#"/>,
 						 <cfqueryparam sqltype="varchar" value="#FORM.description#"/>,
 						 <cfqueryparam sqltype="integer" value="#userid#"/>,
 						 <cfif  NOT IsDefined('FORM.active')>
@@ -105,13 +102,13 @@
 					</cfquery>
 			
 			<cftransaction action="commit"/>
+			<cflocation url="#buildUrl('article')#" />
 				<cfcatch>
 					<cftransaction action="rollback"/>
-						
+					<cfset Validation.Valid = false/>	
 				</cfcatch>
 				</cftry>
 			</cftransaction>
-		<cflocation url="#buildUrl('article')#" />
 	</cfif>
 	</cfcase>
 	<cfcase value="edit">
@@ -126,67 +123,67 @@
 		<cfset form.photo = qGetArticleByID.article_img/>
 	</cfcase>
 	<cfcase value="update">
+		<cfif isDefined("form.photo") >
+			<cfif FORM.photo is not ""> 
+			  <cffile action = "upload" result="reupload"
+		         fileField = "photo" 
+		         destination = "/images/upload/"
+		         nameConflict = "MakeUnique">
+			 </cfif>
+		</cfif>
 		<cfif NOT IsDefined('FORM.title') OR Len(Trim(FORM.title)) EQ 0>
-		<cfset Validation.title.text = "Please input title."/>
-		<cfset Validation.title.class = InvalidClass/>
-		<cfset Validation.Valid = false/>
-	</cfif>
+			<cfset Validation.title.text = "Please input title."/>
+			<cfset Validation.title.class = InvalidClass/>
+			<cfset Validation.Valid = false/>
+		</cfif>
 
-	<cfif NOT IsDefined('FORM.description') OR Len(Trim(FORM.description)) EQ 0>
-		<cfset Validation.description.text = "Please input description."/>
-		<cfset Validation.description.class = InvalidClass/>
-		<cfset Validation.Valid = false/>
-	</cfif>
+		<cfif NOT IsDefined('FORM.description') OR Len(Trim(FORM.description)) EQ 0>
+			<cfset Validation.description.text = "Please input description."/>
+			<cfset Validation.description.class = InvalidClass/>
+			<cfset Validation.Valid = false/>
+		</cfif>
 
-	<cfif NOT IsDefined('FORM.content') OR Len(Trim(FORM.content)) EQ 0>
-		<cfset Validation.content.text = "Please input content."/>
-		<cfset Validation.content.class = InvalidClass/>
-		<cfset Validation.Valid = false/>
-	</cfif>
+		<cfif NOT IsDefined('FORM.content') OR Len(Trim(FORM.content)) EQ 0>
+			<cfset Validation.content.text = "Please input content."/>
+			<cfset Validation.content.class = InvalidClass/>
+			<cfset Validation.Valid = false/>
+		</cfif>
 
-	<cfif  Validation.Valid>
+		<cfif  Validation.Valid>
 
-		<cftransaction isolation="serializable" action="begin">
-			<cftry>
-					
-				<cfif isDefined("form.photo") >
+			<cftransaction isolation="serializable" action="begin">
+				<cftry>
+			<cfquery name="qUpdateArticle">
+				update article set 
+					article_title=<cfqueryparam sqltype="varchar" value="#FORM.title#"/>,
+					article_content=<cfqueryparam sqltype="varchar" value="#FORM.content#"/>,
+					article_description=<cfqueryparam sqltype="varchar" value="#FORM.description#"/>,
+					article_editdate =<cfqueryparam sqltype="date" value="#now()#"/>,
+					tag=<cfqueryparam sqltype="varchar" value="#FORM.tag#"/>,
+					<cfif  NOT IsDefined('FORM.active')>
+						article_isactive = 0,
+					<cfelse>
+						article_isactive = <cfqueryparam sqltype="tinyint" value="#FORM.active#"/>
+					</cfif>
 					<cfif FORM.photo is not ""> 
-					  <cffile action = "upload" result="reupload"
-			         fileField = "photo" 
-			         destination = "/images/upload/"
-			         nameConflict = "MakeUnique">
-					 </cfif>
-				</cfif>
-		<cfquery name="qUpdateArticle">
-			update article set 
-				article_title=<cfqueryparam sqltype="varchar" value="#FORM.title#"/>,
-				article_content=<cfqueryparam sqltype="varchar" value="#FORM.content#"/>,
-				article_description=<cfqueryparam sqltype="varchar" value="#FORM.description#"/>,
-				article_editdate =<cfqueryparam sqltype="date" value="#now()#"/>,
-				tag=<cfqueryparam sqltype="varchar" value="#FORM.tag#"/>,
-				<cfif  NOT IsDefined('FORM.active')>
-					article_isactive = 0,
-				<cfelse>
-					article_isactive = <cfqueryparam sqltype="tinyint" value="#FORM.active#"/>,
-				</cfif>
-				<cfif FORM.photo is not ""> 
-					,article_img=<cfqueryparam sqltype="varchar" value="images/upload/#reupload.serverfile#"/>
-				</cfif>
-				where article_id=<cfqueryparam sqltype="integer" value="#FORM.id#"/>
-		</cfquery>		
-			<cftransaction action="commit"/>
-				<cfcatch>
-					<cftransaction action="rollback"/>
-						
-				</cfcatch>
-			</cftry>
-		</cftransaction>>
-		<cflocation url="#buildUrl('article')#" />
-		 </cfif>
+						,article_img=<cfqueryparam sqltype="varchar" value="images/upload/#reupload.clientfile#"/>
+					</cfif>
+					where article_id=<cfqueryparam sqltype="integer" value="#FORM.id#"/>
+			</cfquery>		
+				<cftransaction action="commit"/>
+				<cflocation url="#buildUrl('article')#" />
+					<cfcatch>
+						<cftransaction action="rollback"/>
+						<cfset Validation.Valid = false/>
+						<cfdump var="#cfcatch#"/><cfabort>
+					</cfcatch>
+				</cftry>
+			</cftransaction>>
+			 </cfif>
 	</cfcase>
 </cfswitch>
 	
-
+	
 	<cfparam name="Validation.title.text" 		default="&nbsp;"/>
 	<cfparam name="Validation.content.text"     	default="&nbsp;"/>
 	<cfparam name="Validation.photo.text" 	default="&nbsp;"/>
@@ -202,9 +199,37 @@
 	<cfparam name="Validation.tag.class" 		default=""/>
 	<cfparam name="Validation.Valid" 	default="false"/>
 
+<script type="text/javascript" language="javascript">
+		$("document").ready(function(){
+			function readURL(input) {
 
+			    if (input.files && input.files[0]) {
+			        var reader = new FileReader();
+
+			        reader.onload = function (e) {
+			            $('##currentImage').attr('src', e.target.result);
+			        };
+
+			        reader.readAsDataURL(input.files[0]);
+			    }
+			};
+			 
+			$("##photo").change(function() {
+	    		 readURL(this);
+            });
+
+		});
+
+</script>
 		
 <h3 class="header-title"><a href="#buildUrl('article')#"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>Article Update</h3><hr>
+<div class="row clearfix">
+	<cfif NOT Validation.Valid>
+		<div class="alert alert-dange">
+			<h3>Oops! Could not save new artile</h3>
+		</div>
+	</cfif>
+</div>
 <form action="" method="post" enctype="multipart/form-data">
 <div class="row clearfix">
 		<div class="col-md-12 column">
@@ -273,7 +298,7 @@
 						#Validation.photo.text#
 					</div>
 					<div class="form-group">
-						<input type="file" name="photo"  size="50"/>
+						<input type="file" name="photo" id="photo" size="50"/>
 					</div>
 					<label for="photo">Current image</label>
 					<div class="form-group">

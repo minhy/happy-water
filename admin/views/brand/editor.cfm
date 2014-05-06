@@ -1,5 +1,5 @@
 
-<cfparam name="FORM.brandID"	type="integer" default="0"/>
+<cfparam name="FORM.brandID" type="integer" default="0"/>
 <cfparam name="URL.brandID"	type="integer" default="0">
 
 <cfif CGI.REQUEST_METHOD EQ 'get' AND URL.brandID EQ 0>
@@ -63,12 +63,12 @@
 		<cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
 			<cfset Validation.status.text = "Please select one."/>
 			<cfset Validation.status.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.IsActive') OR NOT ListFind('0,1',FORM.IsActive)>
 			<cfset Validation.IsActive.text = "Please select one."/>
 			<cfset Validation.IsActive.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
 		<cfif Validation.Valid>
 			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
@@ -124,12 +124,12 @@
 		<cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
 			<cfset Validation.status.text = "Please select one."/>
 			<cfset Validation.status.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.IsActive') OR NOT ListFind('0,1',FORM.IsActive)>
 			<cfset Validation.IsActive.text = "Please select one."/>
 			<cfset Validation.IsActive.class = InvalidClass/>
-			<cfset Validation.isInvalid = true/>
+			<cfset Validation.Valid = false/>
 		</cfif>
 
 		<cfif Validation.Valid>

@@ -10,7 +10,7 @@
 				// $(document).ready( function () {
 				//     $('#table_id').dataTable({
 				//     	"bJQueryUI": true,
-		  //               "sPaginationType": "full_numbers"
+		  		//      "sPaginationType": "full_numbers"
 				//     });
 				    
 				// } );
@@ -23,7 +23,7 @@
 </cfquery>
 <cfset stt=1>
 
-<h3 class="header-title">Article Management</h3>
+<h3 class="header-title">Article Management</h3><hr>
 <form action="#CGI.SCRIPT_NAME#" method="post">
 	<div class="row clearfix">
 		<div class="col-md-12">

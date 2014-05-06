@@ -25,7 +25,6 @@
     <script type="text/javascript" charset="utf-8" src="#getContextRoot()#/admin/js/jquery.dataTables.js"></script>
 	<script type="text/javascript" src="#getContextRoot()#/admin/js/scripts.js"></script>
 	<script type="text/javascript" src="#getContextRoot()#/admin/js/highcharts.js"></script>
-	<script type="text/javascript" src="#getContextRoot()#/admin/js/datapicker.js"></script>
 	<script language="javascript" src="#getContextRoot()#/admin/ckeditor/ckeditor.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(document).ready( function () {

@@ -8,7 +8,6 @@
 	  <meta name="description" content="">
 	  <meta name="author" content="">
 		<link href="#getContextRoot()#/home/css/bootstrap.min.css" rel="stylesheet">
-		<link href="#getContextRoot()#/home/css/bootstrap-responsive.min.css" rel="stylesheet">
 		<link href="#getContextRoot()#/home/css/style.css" rel="stylesheet">
 		<link href="#getContextRoot()#/home/css/jquery-ui.css" rel="stylesheet">
 		<script type="text/javascript" src="#getContextRoot()#/home/js/jquery.min.js"></script>
