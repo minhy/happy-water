@@ -4,16 +4,16 @@
     SELECT monthname(orderDate) as amonth,
          year(orderDate) as ayear,
          SUM(total) as total
-    FROM `happy_water`.`order`
+    FROM `order`
     WHERE orderdate BETWEEN DATE_SUB(CURDATE(), INTERVAL 12 MONTH) AND CURDATE()
     GROUP BY amonth, ayear
     ORDER BY orderDate
 </cfquery>
 
 <!--- Get the top 5 users have highest sum of value in order  --->
-<cfquery name="getUsers">
+<cfquery name="qGetUsers">
     SELECT u.userId, u.firstname, u.lastname, u.address, u.dateofbirth, u.email, SUM(o.total) as total
-    FROM happy_water.`user` u INNER JOIN happy_water.`order` o ON u.userId=o.userId
+    FROM `user` u INNER JOIN `order` o ON u.userId=o.userId
     GROUP BY u.userId
     ORDER BY total DESC LIMIT 5
 </cfquery>
@@ -27,7 +27,7 @@
         monthname(orderDate) as amonth,
         year(orderDate) as ayear,
         SUM(total) as total
-    FROM `happy_water`.`order`
+    FROM `order`
     WHERE orderdate BETWEEN <cfqueryparam cfsqltype="string" value="#DateFormat(FORM.StartDate, "yyyy-mm-dd")#"> AND <cfqueryparam cfsqltype="string" value="#DateFormat(FORM.EndDate, "yyyy-mm-dd")#">
     GROUP BY aday, amonth, ayear
     ORDER BY orderDate
@@ -368,15 +368,15 @@ $(document).ready(function(){
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <cfloop query="getUsers">
-                                        <tr id="#getUsers.userID#" class="trr">
-                                            <td>#getUsers.userID#</td>
-                                            <td>#getUsers.firstname#</td>
-                                            <td>#getUsers.lastname#</td>
-                                            <td>#dateFormat(getUsers.dateofbirth, "short")#</td>
-                                            <td>#getUsers.email#</td>
-                                            <td>#getUsers.address#</td>
-                                            <td>#getUsers.total# &dollar; </td>
+                                    <cfloop query="qGetUsers">
+                                        <tr id="#qGetUsers.userID#" class="trr">
+                                            <td>#qGetUsers.userID#</td>
+                                            <td>#qGetUsers.firstname#</td>
+                                            <td>#qGetUsers.lastname#</td>
+                                            <td>#dateFormat(qGetUsers.dateofbirth, "short")#</td>
+                                            <td>#qGetUsers.email#</td>
+                                            <td>#qGetUsers.address#</td>
+                                            <td>#qGetUsers.total# &dollar; </td>
                                         </tr>
                                     </cfloop>
                                 </tbody>
