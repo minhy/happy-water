@@ -10,13 +10,11 @@
 		<link href="#getContextRoot()#/home/css/bootstrap.min.css" rel="stylesheet">
 		<link href="#getContextRoot()#/home/css/style.css" rel="stylesheet">
 		<link href="#getContextRoot()#/home/css/jquery-ui.css" rel="stylesheet">
-		<script type="text/javascript" src="#getContextRoot()#/home/js/jquery.js"></script>
 		<script type="text/javascript" src="#getContextRoot()#/home/js/jquery.min.js"></script>
 		<script type="text/javascript" src="#getContextRoot()#/home/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="#getContextRoot()#/home/js/scripts.js"></script>
 		<script type="text/javascript" src="#getContextRoot()#/home/js/jquery-1.7.1.min.js"></script> 
-		<script type="text/javascript" src="#getContextRoot()#/home/js/jquery.validate.js"></script>
-
+		<script type="text/javascript" src="#getContextRoot()#/home/js/jquery.validate.js"></script> 
 	</head>
 <body>    
 	#view( "common/header" )#

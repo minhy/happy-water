@@ -1,11 +1,10 @@
 <script language="javascript">
 			function checkDelete() {
-			    // if (confirm("Are you sure you want delete it?")) {
-			    //     return true;
-			    // } else {
-			    //     return false;
-			    // }
-			    return confirm("Are you sure you want delete it?");
+			    if (confirm("Are you sure you want delete it?")) {
+			        return true;
+			    } else {
+			        return false;
+			    }
 			}
 
 				// $(document).ready( function () {

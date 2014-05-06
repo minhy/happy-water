@@ -29,7 +29,7 @@
 				<cfloop query="qGetByNew">
 			<div class="col-md-4" style="margin-bottom:10px;">
 		
-				<img class="categories" src="#qGetByNew.image#" width="200" height="200">
+				<img class="categories" src="#getContextRoot()##qGetByNew.image#" width="200" height="200">
 				<p class="bginfo kh_bginfo">
 					<cfif #len(qGetByNew.description)# gt 200>
 								#left(qGetByNew.description, 200)# ...	

@@ -1,21 +1,5 @@
-<script type="text/javascript">
-function chkEmailUnique(theEmail){
-  $.getJSON("../home/controllers/checkmail.cfc", {
-   method: 'chkEmail',
-   email: theEmail,
-   returnformat: 'json'
-   }, 
+<!---  --->
 
-   function(isEmailUnique){  
-   if (isEmailUnique == true) {
-   $("#theErrorDivID").html('Please select a new Email');
-   }
-   else {
-   $("#theErrorDivID").html('');
-   }
-   });
-};
-</script>
 <cfparam name="FORM.firstname" default=""/>
 <cfparam name="FORM.lastname" default=""/>
 <cfparam name="FORM.email" default=""/>
@@ -24,6 +8,8 @@ function chkEmailUnique(theEmail){
 <cfparam name="FORM.month" default="1"/>
 <cfparam name="FORM.day" default="1"/>
 <cfparam name="FORM.year" default="1920"/>
+
+
 
 <cfparam name="FORM.address" default=""/>
 <cfparam name="FORM.confirm_password" default=""/>
@@ -108,6 +94,7 @@ function chkEmailUnique(theEmail){
     </script>
 </cfif>
 </cfif>
+
 <cfoutput>
 <link href="#getContextRoot()#/home/css/form.css" rel="stylesheet">
 <link rel="stylesheet" href="#getContextRoot()#/home/css/jquery-ui.css">
@@ -141,11 +128,9 @@ function chkEmailUnique(theEmail){
           <div class="form-control-group">
             <label class="control-label" for="email">Email Address</label>
             <div class="controls">
-              <input type="text" class="input-xlarge" name="email" id="email" value="#FORM.email#" onchange="return chkEmailUnique(this.value);" style ="height:inherit;">
-                  <p id="theErrorDivID" style="color:red;"></p>
-                  <p style="color:red;width:280px;height:0px"><b>#Validation.email.text#</b></p>
+              <input type="text" class="input-xlarge" name="email" id="email" value="#FORM.email#" style ="height:inherit">
+              <p style="color:red;width:280px;height:0px"><b>#Validation.email.text#</b></p>
             </div>
-            
           </div>
 
           <div class="form-control-group">

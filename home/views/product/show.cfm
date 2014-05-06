@@ -70,7 +70,7 @@
 			<div class="row clearfix">
 		<cfloop query="querryGet">
 			<div class="col-md-4" style="margin-bottom:10px">
-				<img class="categories" src="#querryGet.image#" width="200" height="200">
+				<img class="categories" src="#getContextRoot()##querryGet.image#" width="200" height="200">
 				<p class="bginfo kh_bginfo">
 					<cfif #len(querryGet.description)# gt 200>
 						#left(querryGet.description, 200)# ...	
