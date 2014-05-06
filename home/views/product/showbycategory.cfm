@@ -2,7 +2,7 @@
 	<cfparam name="URL.categoryID" default="0">
 	<cfparam name="URL.page" default="1">
 	<cfset URL.idpage = (URL.page -1)*9 />
-	<cfquery name="qSumRecord" datasource="happy_water">
+	<cfquery name="qSumRecord" >
 		SELECT Count(productID) as dem
 		FROM product
 		WHERE categoryID = #URL.categoryID#  and status = 1 and IsActive = 1
@@ -10,7 +10,7 @@
 
 	</cfquery> 
 
-	<cfquery name="qGetByCategory" datasource="happy_water">
+	<cfquery name="qGetByCategory" >
 		SELECT * 
 		FROM product 
 		WHERE categoryID = #URL.categoryID# and status = 1 and IsActive = 1
