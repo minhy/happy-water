@@ -43,40 +43,54 @@
     </cftransaction>
     </cfif>  
 </cfif>
-<link href="#getContextRoot()#/home/css/bootstrap.min1.css" rel="stylesheet">
-
+<div class="header-title">
+  <h1>Change Password </h1>
+</div>
 <form id="registration-form" class="form-horizontal" action ="" method ="post" enctype="multipart/form-data">
-    <h1 style="padding-left:150px">Change Password </h1>
-    <br/>
-    
+  <div class="row clearfix">
+    <div class="col-md-12 column">
+      <div class="row clearfix">
 
-    <div class="form-control-group">
-      <label class="control-label" for="name">Old password</label>
-      <div class="controls">
-        <input type="password" class="input-xlarge" name="old_pass" id="old_pass" style ="height:inherit">
-        <p style="color:red;width:280px;height:0px"><b>#Validation.oldpass.text#</b></p>
+        <div class="col-md-2 column">
+         Old password
+        </div>
+        <div class="col-md-10 column">
+          <div class="controls">
+            <input type="password" class="input-xlarge" name="old_pass" id="old_pass" style ="height:inherit">
+            <p style="color:red;width:280px;height:0px"><b>#Validation.oldpass.text#</b></p>
+          </div>
+        </div>
+          
+        <div class="col-md-2 column">
+         New Password
+        </div>
+        <div class="col-md-10 column">
+          <div class="controls">
+            <input type="password" class="input-xlarge" name="password" id="password" style ="height:inherit">
+            <p></p>
+          </div>
+        </div>
+          
+        <div class="col-md-2 column">
+          Retype New Password
+        </div>
+        <div class="col-md-10 column">
+          <div class="controls">
+            <input type="password" class="input-xlarge" name="confirm_password" id="confirm_password" style="height:inherit">
+            <p></p>
+          </div>
+        </div>
+
+        <div class="col-md-2 column">
+
+        </div>
+        <div class="col-md-10 column">
+          <button type="submit" class="btn btn-success btn-large">Change</button>
+        </div>
+
       </div>
     </div>
-    
-
-   <div class="form-control-group">
-      <label class="control-label" for="name">New Password</label>
-      <div class="controls">
-        <input type="password" class="input-xlarge" name="password" id="password" style ="height:inherit">
-      </div>
-    </div>
-    
-    <div class="form-control-group">
-      <label class="control-label" for="name"> Retype New Password</label>
-      <div class="controls">
-        <input type="password" class="input-xlarge" name="confirm_password" id="confirm_password" style="height:inherit">
-      </div>
-    </div>
-
-
-    <div class="form-actions" style="padding-left:160px">
-      <button type="submit" class="btn btn-success btn-large">Change</button>
-    </div>
+  </div>
 </form>
 </cfoutput>
 
