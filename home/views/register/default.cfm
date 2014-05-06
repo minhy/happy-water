@@ -1,5 +1,21 @@
-<!---  --->
+<script type="text/javascript">
+function chkEmailUnique(theEmail){
+  $.getJSON("../home/controllers/checkmail.cfc", {
+   method: 'chkEmail',
+   email: theEmail,
+   returnformat: 'json'
+   }, 
 
+   function(isEmailUnique){  
+   if (isEmailUnique == true) {
+   $("#theErrorDivID").html('Please select a new Email');
+   }
+   else {
+   $("#theErrorDivID").html('');
+   }
+   });
+};
+</script>
 <cfparam name="FORM.firstname" default=""/>
 <cfparam name="FORM.lastname" default=""/>
 <cfparam name="FORM.email" default=""/>
@@ -128,8 +144,9 @@
           <div class="form-control-group">
             <label class="control-label" for="email">Email Address</label>
             <div class="controls">
-              <input type="text" class="input-xlarge" name="email" id="email" value="#FORM.email#" style ="height:inherit">
+              <input type="text" class="input-xlarge" name="email" id="email" value="#FORM.email#" style ="height:inherit" onchange="return chkEmailUnique(this.value);">
               <p style="color:red;width:280px;height:0px"><b>#Validation.email.text#</b></p>
+              <p id="theErrorDivID"></p>
             </div>
           </div>
 

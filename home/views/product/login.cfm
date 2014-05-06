@@ -8,7 +8,7 @@
 <cfif CGI.REQUEST_METHOD EQ 'POST'>
 
 
-<cfquery name="check_login" datasource="happy_water" result="result">
+<cfquery name="check_login" result="result">
 	SELECT * FROM user
 	WHERE email = <cfqueryparam cfsqltype="string" value="#FORM.email#">
 		AND password = <cfqueryparam cfsqltype="string" value="#Hash(#FORM.pass#, "SHA")#">
@@ -19,7 +19,7 @@
 	<cfelse>
 		<script>
 			alert('login successfull');
-			<cfoutput>EARERAEREARE</cfoutput>
+
 		</script>
 		<cfif  #check_login.level[1]# EQ 0>
 			<cfset Login.check.text ="user has been banned">

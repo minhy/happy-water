@@ -35,7 +35,7 @@
 </style>
 <cfoutput>
 <span>
-	<img src="/home/images/check.png">
+	<img src="#getContextRoot()#/home/images/check.png">
 </span>
 <span class="checkok">Order successfully.<br>Thank you for ordering at Happy Water.<br></span>
 <span style="color:##505050">Your order ID: </span><b style="font-size:18px;">#URL.orderID#</b>

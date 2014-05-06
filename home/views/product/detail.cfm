@@ -1,12 +1,12 @@
 <cfoutput>
 	<cfparam name="URL.productID" default="0">
-	<cfquery name="qGetProductByID" datasource="happy_water">
+	<cfquery name="qGetProductByID" >
 		select *, price*(100-discount)/100 as promotionprice
 		from product
 		where productID = 
 		<cfqueryparam cfsqltype="cf_sql_integer" value="#URL.productID#">
 	</cfquery>
-	<cfquery name="qGetNewProduct" datasource="happy_water">
+	<cfquery name="qGetNewProduct" >
 		select *, price*(100-discount)/100 as promotionprice
 		from product
 		where productID != <cfqueryparam value="#url.productID#" cfsqltype="cf_sql_integer">

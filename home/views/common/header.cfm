@@ -60,8 +60,23 @@
 		</div>
 		<script type="text/javascript">
 
+			var bCheckout;
+
 			$( document ).ready(function() {
 				countProduct();
+
+				$("##aCheckout").click(function(){
+					if(!bCheckout)
+				    {
+				    	alert('Your cart has no product ! Please choose product before you can check out !');
+				    	return false;
+				    }
+				    else {
+				    	window.location = "#buildUrl('product.checkout')#";
+				      $('##checkout').submit();
+				      return true;
+				    }
+				});
 			});
 
 			var numberProduct = 0;
@@ -111,6 +126,12 @@
 			      total += Number($("##hdTotal" + j).val());
 			      //alert(total);
 			    }
+
+			    if (total == 0)
+			    	bCheckout = false;
+			    else
+			    	bCheckout = true;
+
 			    total = formatUSD(Number(total));
 			    $("##bTotal").html("Total:&nbsp;&nbsp;" + total);
 			    $("##hdTotalPrice").val(total);    
@@ -167,6 +188,11 @@
 								    + "<td>&nbsp;</td>"
 								    + "</tr>";
 					    	$("##tbody").html(s);
+
+					    	if(totalprice == 0)
+					    		bCheckout = false;
+					    	else
+					    		bCheckout = true;
 					   }
 			           });
 				}
@@ -194,6 +220,8 @@
 				               }
 				           });
 				}
+
+
 		</script>
 	</header>
 </cfoutput>

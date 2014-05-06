@@ -1,43 +1,52 @@
 <cfoutput>
 	<cfparam name="URL.page" default="1">
 	<cfset URL.idpage = (URL.page -1)*9 />
+	<cfquery name="qSumRecord">
+		select Count(productID) as dem
+		from product where status = 1 and IsActive = 1
+		order by productID
 
-	<cfset local.products = rc.products>
-	<cfset local.sumrecord = rc.sumrecord>
+	</cfquery> 
 
-	<cfset sumpage = ceiling(sumrecord.dem/9)>
+	<cfquery name="qGetAll">
+		select *
+		from product where status = 1 and IsActive = 1
+		limit #URL.idpage#,9
+	</cfquery>  
+
+	<cfset sumpage = ceiling(qSumRecord.dem/9)>
 
 	<legend ><h1 style="color: ##0088cc;">Products</h1></legend>
 
 	<cfinclude template="selection.cfm">
 
 		<div class="row clearfix">
-		<cfloop query="products">
+		<cfloop query="qGetAll">
 			<div class="col-md-4" style="margin-bottom:10px">
-				<img class="categories" src="#products.image#" width="200" height="200">
+				<img class="categories" src="#getContextRoot()##qGetAll.image#" width="200" height="200">
 				<p class="bginfo kh_bginfo">
-					<cfif #len(products.description)# gt 200>
-						#left(products.description, 200)# ...	
+					<cfif #len(qGetAll.description)# gt 200>
+						#left(qGetAll.description, 200)# ...	
 						<cfelse>
-							#products.description#
+							#qGetAll.description#
 					</cfif>
 						<br>
 						<br>
 						<br>
 						<br>
-						<input type="number" name="nQuantity#products.productID#"
+						<input type="number" name="nQuantity#qGetAll.productID#"
 						value="1" min="1" max="99" class="quantity form-control" style="width:60px">
-						<button style="float:left" class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#products.productID#)">Buy!</button>
+						<button style="float:left" class="btn btn-primary" type="button" name="btnBuyNow" onclick="btnBuyOnClick(#qGetAll.productID#)">Buy!</button>
 				</p>
-				<a href="#buildUrl('product.detail')#/?productID=#products.productID#">
+				<a href="#buildUrl('product.detail')#/?productID=#qGetAll.productID#">
 				<div class="category-name kh_category-name">
-					#products.productName#<br> 
-					<span style="float:left;margin-left:5px;">#dollarformat(products.price*(100-products.discount)/100)#</span>
+					#qGetAll.productName#<br> 
+					<span style="float:left;margin-left:5px;">#dollarformat(qGetAll.price*(100-qGetAll.discount)/100)#</span>
 					<br>
-					<cfif #products.discount# neq 0>
-						<span style="float:left;margin-right:5px; text-decoration: line-through;">#dollarformat(products.price)#</span>
+					<cfif #qGetAll.discount# neq 0>
+						<span style="float:left;margin-right:5px; text-decoration: line-through;">#dollarformat(qGetAll.price)#</span>
 					
-						<span style="font-size:20px; float:right;margin-right:5px;">Discount: #products.discount#%</span>
+						<span style="font-size:20px; float:right;margin-right:5px;">Discount: #qGetAll.discount#%</span>
 					</cfif>
 				</div>						
 				</a>
@@ -46,7 +55,7 @@
 	</div>
 	<div class="row clearfix">
 		<div class="col-md-12" align="center">
-			<cfif #sumrecord.dem# eq 0>
+			<cfif #qSumRecord.dem# eq 0>
 				No product
 			<cfelse>
 				<ul class="pagination" style="float: none">

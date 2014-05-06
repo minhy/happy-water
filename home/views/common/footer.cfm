@@ -48,7 +48,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<a href="<cfoutput>#buildUrl('product.checkout')#</cfoutput>" class="btn btn-primary">Go to check out page !</a>
+						<a id="aCheckout" href="#<cfoutput>#buildUrl('product.checkout')#</cfoutput>#" class="btn btn-primary">Go to check out page !</a>
 					</div>
 				</div>
 			</div>

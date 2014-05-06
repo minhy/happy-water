@@ -1,7 +1,7 @@
 <cfoutput>
 	<cfparam name="URL.page" default="1">
 	<cfset URL.idpage = (URL.page -1)*9 />
-	<cfquery name="qSumRecord" datasource="happy_water">
+	<cfquery name="qSumRecord" >
 		SELECT Count(productID) as dem
 		FROM product
 		WHERE productDate BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE() and status = 1 and IsActive = 1
@@ -9,7 +9,7 @@
 
 	</cfquery> 
 
-	<cfquery name="qGetByNew" datasource="happy_water">
+	<cfquery name="qGetByNew" >
 		SELECT * 
 		FROM product 
 		WHERE productDate BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE() and status = 1 and IsActive = 1
@@ -29,7 +29,7 @@
 				<cfloop query="qGetByNew">
 			<div class="col-md-4" style="margin-bottom:10px;">
 		
-				<img class="categories" src="#qGetByNew.image#" width="200" height="200">
+				<img class="categories" src="#getContextRoot()##qGetByNew.image#" width="200" height="200">
 				<p class="bginfo kh_bginfo">
 					<cfif #len(qGetByNew.description)# gt 200>
 								#left(qGetByNew.description, 200)# ...	

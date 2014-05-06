@@ -3,7 +3,7 @@
 <cfparam name="FORM.id"	type="integer" default="0"/>
 <cfparam name="URL.id"	type="integer" default="0">
 <cfparam name="question_id" type="integer" default="1">
-	<cfset Validation.isInvalid = false/>
+	<cfset Validation.Valid = true/>
 	<cfset InvalidClass = " invalid"/>
 
 
@@ -30,19 +30,28 @@
 		<cfparam name="Form.Answer"		default="Yes"/>
 	</cfcase>
 	<cfcase value="insert">
-		<cfif NOT IsDefined('FORM.level') OR Len(Trim(FORM.level)) EQ 0>
+
+
+<!--- 	<cfif NOT IsDefined('FORM.level') OR Len(Trim(FORM.level)) EQ 0>
 		<cfset Validation.level.text = "Please input level."/>
 		<cfset Validation.level.class = InvalidClass/>
-		<cfset Validation.isInvalid = true/>
+		<cfset Validation.Valid = false/>
 	</cfif>
 
+			/**
+		  * @author Huan
+		  * @edit by Phu 
+		  * @date May 05, 2014 
+		  * @time 18:04:05  
+		  */
+ --->
 	<cfif NOT IsDefined('FORM.description') OR Len(Trim(FORM.description)) EQ 0>
 		<cfset Validation.description.text = "Please input description."/>
 		<cfset Validation.description.class = InvalidClass/>
-		<cfset Validation.isInvalid = true/>
+		<cfset Validation.Valid = false/>
 	</cfif>
 
-	<cfif NOT  Validation.isInvalid>
+	<cfif  Validation.Valid>
 			<cftransaction isolation="serializable" action="begin">
 				<cftry>
 					<cfquery name="InsertContact" result="Result" >
@@ -55,7 +64,11 @@
 						(
 						 <cfqueryparam sqltype="varchar" value="#FORM.description#"/>,
 						 <cfqueryparam sqltype="varchar" value="#FORM.level#"/>,
-						 <cfqueryparam sqltype="integer" value="#FORM.Answer#"/>
+						 <cfif  NOT IsDefined('FORM.Answer')>
+							<cfqueryparam sqltype="integer" value="0"/>,
+						 <cfelse>
+							<cfqueryparam sqltype="integer" value="#FORM.Answer#"/>
+						 </cfif>
 						 )
 					</cfquery>
 			
@@ -69,27 +82,37 @@
 		 <cflocation url="#buildUrl('question')#" />
 	</cfif>
 	</cfcase>
-	<cfcase value="edit">
 
+	<cfcase value="edit">
 		<cfset form.level=qGetQuestionByID.question_level/>
 		<cfset form.id=qGetQuestionByID.question_id/>
 		<cfset form.description=qGetQuestionByID.question_name/>
 		<cfset form.Answer=qGetQuestionByID.question_TF/>
 	</cfcase>
+
 	<cfcase value="update">
-		<cfif NOT IsDefined('FORM.level') OR Len(Trim(FORM.level)) EQ 0>
+<cfdump eval=FORM>
+
+
+<!--- 		<cfif NOT IsDefined('FORM.level') OR Len(Trim(FORM.level)) EQ 0>
 		<cfset Validation.level.text = "Please input level."/>
 		<cfset Validation.level.class = InvalidClass/>
-		<cfset Validation.isInvalid = true/>
-	</cfif>
-
+		<cfset Validation.Valid = false/>
+	</cfif> 
+			/**
+		  * @author Huan
+		  * @edit by Phu 
+		  * @date May 05, 2014 
+		  * @time 18:05:05  
+		  */
+ --->
 	<cfif NOT IsDefined('FORM.description') OR Len(Trim(FORM.description)) EQ 0>
 		<cfset Validation.description.text = "Please input description."/>
 		<cfset Validation.description.class = InvalidClass/>
-		<cfset Validation.isInvalid = true/>
+		<cfset Validation.Valid = false/>
 	</cfif>
 
-	<cfif NOT  Validation.isInvalid>
+	<cfif  Validation.Valid>
 
 		<cftransaction isolation="serializable" action="begin">
 			<cftry>
@@ -97,7 +120,11 @@
 			update question set 
 				question_level=<cfqueryparam sqltype="varchar" value="#FORM.level#"/>,
 				question_name=<cfqueryparam sqltype="varchar" value="#FORM.description#"/>,
-				question_TF=<cfqueryparam sqltype="integer" value="#FORM.Answer#"/>
+				<cfif  NOT IsDefined('FORM.ANSWER')>
+					question_TF=<cfqueryparam sqltype="integer" value="0"/>,
+				<cfelse>
+					question_TF=<cfqueryparam sqltype="integer" value="#FORM.Answer#"/>
+				</cfif>
 				where question_id=<cfqueryparam sqltype="integer" value="#FORM.id#"/>
 		</cfquery>		
 			<cftransaction action="commit"/>
@@ -106,7 +133,7 @@
 						<cfdump eval=cfcatch />
 				</cfcatch>
 			</cftry>
-		</cftransaction>>
+		</cftransaction>
 		 <cflocation url="#buildUrl('question')#" />
 		 </cfif>
 	</cfcase>
@@ -119,9 +146,9 @@
 	<cfparam name="Validation.level.class" 		default=""/>
 	<cfparam name="Validation.description.class"		default=""/>
 	<cfparam name="Validation.Answer.class" 		default=""/>
-	<cfparam name="Validation.isInvalid" 	default="false"/>
+	<cfparam name="Validation.Valid" 	default="true"/>
 
-<h3 class="header-title"><a href="#buildUrl('question')#"><span class="glyphicon glyphicon-circle-arrow-left"></span></a> Add Question</h3>
+<h3 class="header-title"><a href="#buildUrl('question')#"><span class="glyphicon glyphicon-circle-arrow-left"></span></a> Add Question</h3><hr>
 <form action="" method="post" enctype="multipart/form-data">
 <input type="hidden" name="id" value="#FORM.id#"/>
 <div class="row clearfix">
@@ -156,19 +183,36 @@
     	Answer:
     </div>
     <div class="col-md-10 form#Validation.Answer.class#">
-		<input type="radio" name="Answer" value="1"<cfif FORM.Answer> checked</cfif>/> True<br>
-		<input type="radio" name="Answer" value="0"<cfif NOT FORM.Answer> checked</cfif>/> False<br>
+
+
+		<input type="checkbox" name="Answer" value="1"<cfif FORM.Answer> checked</cfif>/> Yes
+	<!---<input type="radio" name="Answer" value="1"<cfif FORM.Answer> checked</cfif>/> True<br>
+		<input type="radio" name="Answer" value="0"<cfif NOT FORM.Answer> checked</cfif>/> False<br> --->
+		<!---
+				/**
+		  * @author Huan
+		  * @edit by Phu 
+		  * @date May 06, 2014 
+		  * @time 11:05:05  
+		  */--->
+
+
 		<p>#Validation.Answer.text#</p>
     </div>
-
-    <div class="col-md-2">
-    </div>
-    <div class="col-md-10">
-        <div class="btn-group">
-            <button type="submit" class="btnSubmit btn btn-default">Submit</button>
-        </div>
-    </div>
 </div>
+
+
+ <!--- Submit button --->
+    <div class="div_center">
+		<div class="alert alert-info">
+			<button type="submit" class="btn btn-default btn_center">Submit</button>
+		</div>
+	</div>
+<!---   <div class="col-md-10">
+    <div class="btn-group">
+        <button type="submit" class="btnSubmit btn btn-default">Submit</button>
+    </div>
+</div> --->
 
 </form>
 

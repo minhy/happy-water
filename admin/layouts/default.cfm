@@ -33,6 +33,14 @@
 	            "sPaginationType": "full_numbers"
 	        });
 	    } );
+
+	    			function checkDelete() {
+			    if (confirm("Are you sure you want delete it?")) {
+			        return true;
+			    } else {
+			        return false;
+			    }
+			}
 	</script>
 </head>
 
