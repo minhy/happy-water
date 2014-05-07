@@ -1,19 +1,15 @@
 <script language="javascript">
 			function checkDelete() {
-			    if (confirm("Are you sure you want delete it?")) {
-			        return true;
-			    } else {
-			        return false;
-			    }
+			    return confirm("Are you sure you want delete it?");
 			}
 
-				// $(document).ready( function () {
-				//     $('#table_id').dataTable({
-				//     	"bJQueryUI": true,
-		  		//      "sPaginationType": "full_numbers"
-				//     });
+				$(document).ready( function () {
+				    $('#table_id').dataTable({
+				    	"bJQueryUI": true,
+		  		     "sPaginationType": "full_numbers"
+				    });
 				    
-				// } );
+				} );
 		</script>
 <cfoutput>
 <cfquery name="qGetArticle">
