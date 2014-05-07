@@ -42,7 +42,7 @@
 </cfif>
 </cfif>
 <cfoutput>
-  <link href="#getContextRoot()#/home/css/form.css" rel="stylesheet">
+  
 <div class="header-title">
   <h1>Login</h1>
 </div>
@@ -54,16 +54,17 @@
         <div class="col-md-2 column">
           Email Address
         </div>
+
         <div class="col-md-10 column">
-          <input type="text" class="input-xlarge" name="email" id="email" value="#FORM.email#" style ="height:inherit">
+          <input type="text" class="form-control" name="email" id="email" value="#FORM.email#" style ="height:inherit;width:250px;float:left">
           <p style="color:red;width:280px;height:0px"><b>#Login.check.text#</b></p>
         </div>
-
+        <div class="col-md-12 column"> </br></div>
         <div class="col-md-2 column">
           Password        
         </div>
         <div class="col-md-10 column">
-          <input type="password" class="input-xlarge" name="pass" style ="height:inherit" >
+          <input type="password" class="form-control" name="pass" style ="height:inherit;width:250px" >
         </div>
 
         <div class="col-md-2 column">

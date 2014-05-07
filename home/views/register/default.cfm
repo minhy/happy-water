@@ -129,7 +129,7 @@ function chkEmailUnique(theEmail){
           <div class="form-control-group">
             <label class="control-label" for="name">FirstName</label>
             <div class="controls">
-              <input type="text" class="input-xlarge" name="firstname" id="firstname" value ="#FORM.firstname#" style ="height:inherit">
+              <input type="text" class="form-control" name="firstname" id="firstname" value ="#FORM.firstname#" style ="height:inherit;width:250px;float:left">
             </div>
           </div>
           
@@ -137,14 +137,14 @@ function chkEmailUnique(theEmail){
           <div class="form-control-group">
             <label class="control-label" for="name">Lastname</label>
             <div class="controls">
-              <input type="text" class="input-xlarge" name="lastname" id="lastname" value ="#FORM.lastname#" style ="height:inherit">
+              <input type="text" class="form-control" name="lastname" id="lastname" value ="#FORM.lastname#" style ="height:inherit;width:250px;float:left">
             </div>
           </div>
 
           <div class="form-control-group">
             <label class="control-label" for="email">Email Address</label>
             <div class="controls">
-              <input type="text" class="input-xlarge" name="email" id="email" value="#FORM.email#" style ="height:inherit" onchange="return chkEmailUnique(this.value);">
+              <input type="text" class="input-xlarge" name="email" id="email" value="#FORM.email#" style ="height:inherit;width:250px;float:left" onchange="return chkEmailUnique(this.value);">
               <p style="color:red;width:280px;height:0px"><b>#Validation.email.text#</b></p>
               <p id="theErrorDivID"></p>
             </div>
@@ -185,7 +185,7 @@ function chkEmailUnique(theEmail){
           <div class="form-control-group">
             <label class="control-label" for="name">Password</label>
             <div class="controls">
-              <input type="password" class="input-xlarge" name="password" id="password" style ="height:inherit">
+              <input type="password" class="form-control" name="password" id="password" style ="height:inherit;float:left;width:250px">
 
             </div>
           </div>
@@ -193,7 +193,7 @@ function chkEmailUnique(theEmail){
           <div class="form-control-group">
             <label class="control-label" for="name"> Retype Password</label>
             <div class="controls">
-              <input type="password" class="input-xlarge" name="confirm_password" id="confirm_password" style="height:inherit">
+              <input type="password" class="form-control" name="confirm_password" id="confirm_password" style="height:inherit;float:left;width:250px">
             </div>
           </div>
           
@@ -207,7 +207,7 @@ function chkEmailUnique(theEmail){
           <div class="form-control-group">
             <label class="control-label" for="message">Your Address</label>
             <div class="controls">
-              <textarea class="input-xlarge" name="address" id="address" rows="3" value="#FORM.address#">#FORM.address#</textarea>
+              <textarea class="form-control" name="address" id="address" rows="3" value="#FORM.address#" style="float:left;width:250px">#FORM.address#</textarea>
             </div>
           </div>
           

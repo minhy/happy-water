@@ -57,31 +57,32 @@
         </div>
         <div class="col-md-10 column">
           <div class="controls">
-            <input type="password" class="input-xlarge" name="old_pass" id="old_pass" style ="height:inherit;">
+            <input type="password" class="form-control"  name="old_pass" id="old_pass" style ="height:inherit;width:250px">
             <p style="color:red;width:280px;height:0px"><b>#Validation.oldpass.text#</b></p>
           </div>
         </div>
-          
+          <div class="col-md-12 column"> </div>
         <div class="col-md-2 column">
          New Password
         </div>
         <div class="col-md-10 column">
           <div class="controls">
-            <input type="password" class="input-xlarge" name="password" id="password" style ="height:inherit">
+            <input type="password" class="form-control" name="password" id="password" style ="height:inherit;width:250px;float:left">
             <p></p>
           </div>
         </div>
-          
+          <div class="col-md-12 column"> <br> </div>
         <div class="col-md-2 column">
           Retype New Password
         </div>
         <div class="col-md-10 column">
           <div class="controls">
-            <input type="password" class="input-xlarge" name="confirm_password" id="confirm_password" style="height:inherit">
+            <input type="password" class="form-control" name="confirm_password" id="confirm_password" style="height:inherit;width:250px;float:left">
             <p></p>
           </div>
         </div>
 
+        <div class="col-md-12 column"> <br> </div>
         <div class="col-md-2 column">
 
         </div>

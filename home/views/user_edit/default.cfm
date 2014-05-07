@@ -80,25 +80,25 @@
             <input class="form-control" name="email" id="disabledInput" type="text" placeholder="#FORM.email#" style ="height:inherit;width:228px" disabled width="220px">
             <p></p>
           </div>
-
+          <div class="col-md-12 column"> <br></div>
           <div class="col-md-4 column">
             FirstName
           </div>
 
           <div class="col-md-8 column">
-            <input type="text" class="input-xlarge" name="firstname" id="firstname" value ="#FORM.firstname#" style ="height:inherit ;width:228px">
+            <input type="text" class="form-control" name="firstname" id="firstname" value ="#FORM.firstname#" style ="height:inherit ;width:228px;float:left">
             <p></p>
           </div>
-
+           <div class="col-md-12 column"> <br></div>
           <div class="col-md-4 column">
             Lastname
           </div>
 
           <div class="col-md-8 column">
-            <input type="text" class="input-xlarge" name="lastname" id="lastname" value ="#FORM.lastname#" style ="height:inherit ;width:228px" >
+            <input type="text" class="form-control" name="lastname" id="lastname" value ="#FORM.lastname#" style ="height:inherit ;width:228px;float:left" >
             <p></p>
           </div>
-
+           <div class="col-md-12 column"> <br></div>
           <div class="col-md-4 column">
             DateOfBirth
           </div>
@@ -153,10 +153,10 @@
           </div>
 
           <div class="col-md-8 column">
-            <textarea class="input-xlarge" name="address" rows="3">#FORM.address#</textarea>
+            <textarea class="input-xlarge" name="address" rows="3" Style="float:left">#FORM.address#</textarea>
             <p></p>
           </div>
-
+           <div class="col-md-12 column"> <br></div>
           <div class="col-md-4 column">
           </div>
 
