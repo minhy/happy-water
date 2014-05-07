@@ -328,7 +328,7 @@
 							filebrowserUploadUrl : '../../admin/cffm/cffm.cfm?action=QuickUpload&editorType=cke&EDITOR_RESOURCE_TYPE=file',
 							filebrowserImageUploadUrl : '../../admin/cffm/cffm.cfm?action=QuickUpload&editorType=cke&EDITOR_RESOURCE_TYPE=image',
 							filebrowserFlashUploadUrl : '../../admin/cffm/cffm.cfm?action=QuickUpload&editorType=cke&EDITOR_RESOURCE_TYPE=flash',
-							toolbar : 'MyToolbar2'
+							toolbar : 'MyToolbar'
 						});
 				</script>
 			</div>

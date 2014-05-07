@@ -37,26 +37,35 @@ CKEDITOR.editorConfig = function( config ) {
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 
 	config.toolbar = 'MyToolbar';
-	config.toolbar = 'MyToolbar2';
-    config.toolbar_MyToolbar =
-    [
-        ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
-        ['Image','Flash','Table','HorizontalRule'],
-        '/',
-        ['Styles','Format'],
-        ['Link','Unlink','Anchor']
-    ];
-		
-    config.toolbar_MyToolbar2 =
-    [
-        ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Scayt','RemoveFormat'],
-        ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
-        '/',
-        ['Styles','Format'],
-        ['Bold','Italic','Strike'],
-        ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
-        ['Link','Unlink','Anchor'],
-        ['Maximize'],
-        ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv']
-    ];
+    // config.toolbar_MyToolbar =
+    // [
+    //     ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Scayt','RemoveFormat'],
+    //     ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+    //     '/',
+    //     ['Styles','Format'],
+    //     ['Bold','Italic','Strike'],
+    //     ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+    //     ['Link','Unlink','Anchor'],
+    //     ['Maximize'],
+    //     ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv']
+    // ];
+
+config.toolbar_MyToolbar = [
+	{ name: 'document', groups: [ 'mode', 'document', 'doctools' ], items: [ 'Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates' ] },
+	{ name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ] },
+	{ name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ], items: [ 'Find', 'Replace', '-', 'SelectAll', '-', 'Scayt' ] },
+	{ name: 'forms', items: [ 'Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton', 'HiddenField' ] },
+	'/',
+	{ name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ], items: [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat' ] },
+	{ name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ], items: [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language' ] },
+	{ name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] },
+	{ name: 'insert', items: [ 'Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe' ] },
+	'/',
+	{ name: 'styles', items: [ 'Styles', 'Format', 'Font', 'FontSize' ] },
+	{ name: 'colors', items: [ 'TextColor', 'BGColor' ] },
+	{ name: 'tools', items: [ 'Maximize', 'ShowBlocks' ] },
+	{ name: 'others', items: [ '-' ] },
+	{ name: 'about', items: [ 'About' ] }
+];
+
 };
