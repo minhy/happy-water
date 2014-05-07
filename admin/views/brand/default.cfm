@@ -1,5 +1,21 @@
+<cfoutput>
 <cfparam name="brandID" default="0">
-    <cfoutput>
+<cfset LOCAL.listbrand = rc.listbrand>
+<cfif isDefined("rc.bDeleted")>
+    <cfif rc.bDeleted>
+        <script type="text/javascript">
+            alert("This brand was deleted !!!");
+            window.location.href= "#buildUrl('brand.default')#";
+        </script>
+    <cfelse>
+        <script type="text/javascript">
+            alert("Can't delete this brand");
+            window.location.href= "#buildUrl('brand.default')#";
+        </script>
+    </cfif>
+</cfif>
+</cfoutput>
+   <!---  <
         <cftry>
             <cfif #brandID# neq 0>
                 <cfquery name="qDelete">
@@ -18,12 +34,14 @@
                 </script>
             </cfcatch>    
         </cftry>
-    </cfoutput>
+     --->
         
-    <cfquery name="qShowAll">
+<!---     <cfquery name="qShowAll">
     SELECT *
     FROM brand
     </cfquery>    
+     --->
+
     
 
     <script type="text/javascript">
@@ -56,7 +74,7 @@
     <br>
     <legend><h1>Brand Management</h1></legend>
     <div class="alert alert-info">
-        <button type="button" class="btn btn-default" onclick="chuyentrang(1,'#qShowAll.brandID#', '#buildUrl('brand.editor')#');"><span class="glyphicon glyphicon-plus"></span> Add new brand</button>
+        <button type="button" class="btn btn-default" onclick="chuyentrang(1,'#listbrand.brandID#', '#buildUrl('brand.editor')#');"><span class="glyphicon glyphicon-plus"></span> Add new brand</button>
     </div>
     <br>
     <table id="table_id" class="display">
@@ -71,19 +89,19 @@
             </tr>
         </thead>
         <tbody>
-            <cfloop query="qShowAll">
-                <tr id="#qShowAll.brandID#">
-                    <td class="col-md-2 column">#qShowAll.brandID#</td>
-                    <td class="col-md-2 column">#qShowAll.brandName#</td>
-                    <td class="col-md-3 column">#qShowAll.description#</td>
+            <cfloop query="listbrand">
+                <tr id="#listbrand.brandID#">
+                    <td class="col-md-2 column">#listbrand.brandID#</td>
+                    <td class="col-md-2 column">#listbrand.brandName#</td>
+                    <td class="col-md-3 column">#listbrand.description#</td>
                     <td class="col-md-1 column">
-                        <cfif #qShowAll.IsActive# eq 1>
+                        <cfif #listbrand.IsActive# eq 1>
                             Yes
                         <cfelse> No
                         </cfif>
                     </td>
                     <td class="col-md-1 column">
-                        <cfif #qShowAll.status# eq 1>
+                        <cfif #listbrand.status# eq 1>
                             New
                         <cfelse> Old
                         </cfif>
@@ -91,8 +109,8 @@
                     <td class="col-md-3 column">
                         <div class="btn-group btn-group-xs">
                            
-                            <button type="button" class="btn btn-default" onclick="chuyentrang(2,'#qShowAll.brandID#', '#buildUrl('brand.editor')#');"><span class="glyphicon glyphicon-edit"></span>  Edit</button>
-                            <button class="btn btn-danger" type="button" onclick="chuyentrang(3,'#qShowAll.brandID#', '#buildUrl('brand.default')#');"><span class="glyphicon glyphicon-remove"></span> Delete</button>
+                            <button type="button" class="btn btn-default" onclick="chuyentrang(2,'#listbrand.brandID#', '#buildUrl('brand.editor')#');"><span class="glyphicon glyphicon-edit"></span>  Edit</button>
+                            <button class="btn btn-danger" type="button" onclick="chuyentrang(3,'#listbrand.brandID#', '#buildUrl('brand.default')#');"><span class="glyphicon glyphicon-remove"></span> Delete</button>
                         </div>
                     </td>
                 </tr>   
