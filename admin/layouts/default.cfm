@@ -27,14 +27,8 @@
 	<script type="text/javascript" src="#getContextRoot()#/admin/js/highcharts.js"></script>
 	<script language="javascript" src="#getContextRoot()#/admin/ckeditor/ckeditor.js" type="text/javascript"></script>
 	<script type="text/javascript">
-		$(document).ready( function () {
-	        $('##table_id').dataTable({
-	            "bJQueryUI": true,
-	            "sPaginationType": "full_numbers"
-	        });
-	    } );
-
-	    			function checkDelete() {
+		
+			function checkDelete() {
 			    if (confirm("Are you sure you want delete it?")) {
 			        return true;
 			    } else {

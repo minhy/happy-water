@@ -3,7 +3,7 @@
 <cfparam name="FORM.id"	type="integer" default="0"/>
 <cfparam name="URL.id"	type="integer" default="0">
 <cfparam name="question_id" type="integer" default="1">
-	<cfset Validation.Valid = true/>
+	<cfset Validation.isValid = true/>
 	<cfset InvalidClass = " invalid"/>
 
 
@@ -35,7 +35,7 @@
 <!--- 	<cfif NOT IsDefined('FORM.level') OR Len(Trim(FORM.level)) EQ 0>
 		<cfset Validation.level.text = "Please input level."/>
 		<cfset Validation.level.class = InvalidClass/>
-		<cfset Validation.Valid = false/>
+		<cfset Validation.isValid = false/>
 	</cfif>
 
 			/**
@@ -48,10 +48,10 @@
 	<cfif NOT IsDefined('FORM.description') OR Len(Trim(FORM.description)) EQ 0>
 		<cfset Validation.description.text = "Please input description."/>
 		<cfset Validation.description.class = InvalidClass/>
-		<cfset Validation.Valid = false/>
+		<cfset Validation.isValid = false/>
 	</cfif>
 
-	<cfif  Validation.Valid>
+	<cfif  Validation.isValid>
 			<cftransaction isolation="serializable" action="begin">
 				<cftry>
 					<cfquery name="InsertContact" result="Result" >
@@ -76,7 +76,7 @@
 				<cflocation url="#buildUrl('question')#" />
 				<cfcatch>
 					<cftransaction action="rollback"/>
-					<cfset Validation.Valid = false>
+					<cfset Validation.isValid = false>
 					<cfdump eval=cfcatch />
 				</cfcatch>
 			</cftry>
@@ -98,7 +98,7 @@
 <!--- 		<cfif NOT IsDefined('FORM.level') OR Len(Trim(FORM.level)) EQ 0>
 		<cfset Validation.level.text = "Please input level."/>
 		<cfset Validation.level.class = InvalidClass/>
-		<cfset Validation.Valid = false/>
+		<cfset Validation.isValid = false/>
 	</cfif> 
 			/**
 		  * @author Huan
@@ -110,10 +110,10 @@
 	<cfif NOT IsDefined('FORM.description') OR Len(Trim(FORM.description)) EQ 0>
 		<cfset Validation.description.text = "Please input description."/>
 		<cfset Validation.description.class = InvalidClass/>
-		<cfset Validation.Valid = false/>
+		<cfset Validation.isValid = false/>
 	</cfif>
 
-	<cfif  Validation.Valid>
+	<cfif  Validation.isValid>
 
 		<cftransaction isolation="serializable" action="begin">
 			<cftry>
@@ -132,7 +132,7 @@
 				<cflocation url="#buildUrl('question')#" />
 				<cfcatch>
 					<cftransaction action="rollback"/>
-					<cfset Validation.Valid = false>
+					<cfset Validation.isValid = false>
 					<cfdump eval=cfcatch />
 				</cfcatch>
 			</cftry>
@@ -149,11 +149,11 @@
 	<cfparam name="Validation.level.class" 		default=""/>
 	<cfparam name="Validation.description.class"		default=""/>
 	<cfparam name="Validation.Answer.class" 		default=""/>
-	<cfparam name="Validation.Valid" 	default="true"/>
+	<cfparam name="Validation.isValid" 	default="true"/>
 
 <h3 class="header-title"><a href="#buildUrl('question')#"><span class="glyphicon glyphicon-circle-arrow-left"></span></a> Add Question</h3><hr>
 <div class="row clearfix">
-	<cfif NOT Validation.Valid>
+	<cfif NOT Validation.isValid>
 		<div class="alert alert-dange">
 			<h3>Oops! Could not save new question</h3>
 		</div>
