@@ -287,7 +287,7 @@
 						#Validation.description.text#
 					</div>
 					<div class="form-group">
-						 <textarea "textarea" name="Description"  class="form-control" id="Description" value="" style="margin: 0px -2.65625px 0px 0px; height: 120px; width: 367px;">#FORM.description#</textarea>
+						 <textarea "textarea" name="Description"  class="form-control" id="Description" value="" style="margin: 0px -2.65625px 0px 0px; height: 120px; width: 100%;">#FORM.description#</textarea>
 					</div>
 				</div>
 				<div class="col-md-4 column" style="border-left: 1px solid brown;">
