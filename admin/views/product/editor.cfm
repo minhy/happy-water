@@ -471,7 +471,19 @@
 			<label for="text">Text</label>
 			<div class="form-group">
 				 <textarea type="text" class="form-control" id="text" name="text">#FORM.text#</textarea>
-				 <script type="text/javascript">CKEDITOR.replace( 'text'); </script>
+				 <script type="text/javascript">
+				 	CKEDITOR.replace( 'text',
+						{
+							filebrowserBrowseUrl : '../../admin/ckfinder/ckfinder.html',
+							filebrowserImageBrowseUrl : '../../admin/ckfinder/ckfinder.html?type=Images',
+							filebrowserFlashBrowseUrl : '../../admin/ckfinder/ckfinder.html?type=Flash',
+							filebrowserUploadUrl : '../../admin/ckfinder/core/connector/cfm/connector.cfm?command=QuickUpload&type=Files',
+							filebrowserImageUploadUrl : '../../admin/ckfinder/core/connector/cfm/connector.cfm?command=QuickUpload&type=Images',
+							filebrowserFlashUploadUrl : '../../admin/ckfinder/core/connector/cfm/connector.cfm?command=QuickUpload&type=Flash',
+							filebrowserWindowWidth : '1000',
+						 	filebrowserWindowHeight : '700'
+						});
+				 </script>
 			</div>
 		</div>
 	</div>
