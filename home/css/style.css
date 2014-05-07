@@ -239,6 +239,7 @@ label.valid {
   background: url(img/valid.png) center center no-repeat;
   display: inline-block;
   text-indent: -9999px;
+  float : left;
 }
 label.error {
   font-weight: bold;

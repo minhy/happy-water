@@ -43,7 +43,7 @@
 
 
 <cfoutput>
-  <link href="#getContextRoot()#/home/css/form.css" rel="stylesheet">
+  
 <div class="header-title">
   <h1>Reset password</h1>
 </div>
@@ -58,7 +58,7 @@
         Email Address
       </div>
       <div class="col-md-10 column">
-        <input type="text" class="input-xlarge" name="email" id="email" value="#FORM.email#" style ="height:inherit">
+        <input type="text" class="form-control" name="email" id="email" value="#FORM.email#" style ="height:inherit;width:250px;flaot:left">
         <p style="color:red;width:280px;height:0px"><b>#check.mail.exist#</b></p>
       </div>
 
