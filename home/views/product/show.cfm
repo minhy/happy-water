@@ -4,63 +4,9 @@
 	<cfparam name="URL.select" type="string" default="all">
 	
 
-		<cfquery name="qSumColumn">
-			select Count(productID) as dem
-			from product where status = 1 and IsActive = 1
-			order by productID
-		</cfquery> 
 
-		<cfquery name="qGetAll">
-			select *
-			from product where status = 1 and IsActive = 1
-			limit #URL.idpage#,9
-		</cfquery>  
-
-		<cfquery name="qSumColumn1" >
-			SELECT Count(productID) as dem
-			FROM product
-			WHERE productDate BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE() and status = 1 and IsActive = 1
-			ORDER BY productID
-		</cfquery> 
-
-		<cfquery name="qGetByNew" >
-			SELECT * 
-			FROM product 
-			WHERE productDate BETWEEN DATE_SUB(CURDATE(), INTERVAL 7 DAY) AND CURDATE() and status = 1 and IsActive = 1
-			ORDER BY productDate DESC
-			LIMIT #URL.idpage#,9
-		</cfquery>  
-
-		<cfquery name="qSumColumn2">
-			SELECT Count(productID) as dem 
-			FROM product
-			WHERE discount <> 0  and status = 1 and IsActive = 1
-			ORDER BY discount DESC 
-		</cfquery> 
-
-		<cfquery name="qGetByTopdeal">
-			SELECT * 
-			FROM product
-			WHERE discount <> 0 and status = 1 and IsActive = 1
-			ORDER BY discount DESC 
-			LIMIT #URL.idpage#,9
-		</cfquery>  
-
-		<cfif URL.select eq "all">
-		
-			<cfset sumpage = ceiling(qSumColumn.dem/9)>
-			<cfset querryGet=qGetAll>
-
-		<cfelseif URL.select eq "new">
-
-			<cfset sumpage = ceiling(qSumColumn1.dem/9)>
-			<cfset querryGet=qGetByNew>
-
-		<cfelse >
-			<cfset sumpage = ceiling(qSumColumn2.dem/9)>
-			<cfset querryGet=qGetByTopdeal>
-		</cfif>
-
+		<cfset LOCAL.sumpage = rc.sumpage>
+		<cfset LOCAL.querryGet = rc.querryGet>
 
 
 		<legend ><h1 style="color: ##0088cc;">All Products</h1></legend>
