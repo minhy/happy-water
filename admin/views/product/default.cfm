@@ -27,12 +27,12 @@ FROM product
 
 
 <script type="text/javascript">
-    // $(document).ready( function () {
-    //     $('#table_id').dataTable({
-    //         "bJQueryUI": true,
-    //         "sPaginationType": "full_numbers"
-    //     });
-    // } );
+    $(document).ready( function () {
+        $('#table_id').dataTable({
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers"
+        });
+    } );
 
     function chuyentrang(status, id, url){
         switch(status)

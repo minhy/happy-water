@@ -28,7 +28,7 @@
 <cfparam name="URL.id"	type="integer" default="0">
 <cfparam name="menu_id" type="integer" default="1">
 
-	<cfset Validation.Valid = true/>
+	<cfset Validation.isValid = true/>
 	<cfset InvalidClass = " invalid"/>
 
 <cfif CGI.REQUEST_METHOD EQ 'get' AND URL.id EQ 0>
@@ -60,19 +60,19 @@
 		<cfif NOT IsDefined('FORM.tag') OR Len(Trim(FORM.tag)) EQ 0>
 		<cfset Validation.tag.text = "Please input tag."/>
 		<cfset Validation.tag.class = InvalidClass/>
-		<cfset Validation.Valid = false/>
+		<cfset Validation.isValid = false/>
 	</cfif>
 
 	<cfif NOT IsDefined('FORM.title') OR Len(Trim(FORM.title)) EQ 0>
 		<cfset Validation.title.text = "Please input title."/>
 		<cfset Validation.title.class = InvalidClass/>
-		<cfset Validation.Valid = false/>
+		<cfset Validation.isValid = false/>
 	</cfif>
 
 	<cfif NOT IsDefined('FORM.link') OR Len(Trim(FORM.link)) EQ 0>
 		<cfset Validation.link.text = "Please input link."/>
 		<cfset Validation.link.class = InvalidClass/>
-		<cfset Validation.Valid = false/>
+		<cfset Validation.isValid = false/>
 	</cfif>
 
 	<!--- <cfif NOT IsDefined('FORM.priority') OR Len(Trim(FORM.priority)) EQ 0>
@@ -85,7 +85,7 @@
 		<cfset Validation.parentid.class = InvalidClass/>
 
 	</cfif> --->
-	<cfif Validation.Valid>
+	<cfif Validation.isValid>
 			<cftransaction isolation="serializable" action="begin">
 				<cftry>
 					<cfquery name="InsertContact" result="Result" >
@@ -116,7 +116,7 @@
 		 	<cflocation url="#buildUrl('menu')#" />
 				<cfcatch>
 					<cftransaction action="rollback"/>
-					<cfset Validation.Valid = false/>
+					<cfset Validation.isValid = false/>
 					<cfdump eval=cfcatch />
 				</cfcatch>
 				</cftry>
@@ -138,19 +138,19 @@
 		<cfif NOT IsDefined('FORM.tag') OR Len(Trim(FORM.tag)) EQ 0>
 		<cfset Validation.tag.text = "Please input tag."/>
 		<cfset Validation.tag.class = InvalidClass/>
-		<cfset Validation.Valid = false/>
+		<cfset Validation.isValid = false/>
 	</cfif>
 
 	<cfif NOT IsDefined('FORM.title') OR Len(Trim(FORM.title)) EQ 0>
 		<cfset Validation.title.text = "Please input title."/>
 		<cfset Validation.title.class = InvalidClass/>
-		<cfset Validation.Valid = false/>
+		<cfset Validation.isValid = false/>
 	</cfif>
 
 	<cfif NOT IsDefined('FORM.link') OR Len(Trim(FORM.link)) EQ 0>
 		<cfset Validation.link.text = "Please input link."/>
 		<cfset Validation.link.class = InvalidClass/>
-		<cfset Validation.Valid = false/>
+		<cfset Validation.isValid = false/>
 	</cfif>
 
 	<!--- <cfif NOT IsDefined('FORM.priority') OR Len(Trim(FORM.priority)) EQ 0>
@@ -163,7 +163,7 @@
 		<cfset Validation.parentid.class = InvalidClass/>
 	</cfif> --->
 
-	<cfif Validation.Valid>
+	<cfif Validation.isValid>
 
 		<cftransaction isolation="serializable" action="begin">
 			<cftry>
@@ -185,7 +185,7 @@
 		 	<cflocation url="#buildUrl('menu')#" />
 				<cfcatch>
 					<cftransaction action="rollback"/>
-					<cfset Validation.Valid = false/>
+					<cfset Validation.isValid = false/>
 					<cfdump eval=cfcatch />
 				</cfcatch>
 			</cftry>
@@ -206,11 +206,11 @@
 	<cfparam name="Validation.link.class" 		default=""/>
 	<cfparam name="Validation.priority.class"		default=""/>
 	<cfparam name="Validation.parentid.class" 		default=""/>
-	<cfparam name="Validation.Valid" 	default="false"/>
+	<cfparam name="Validation.isValid" 	default="false"/>
 
 <h3 class="header-title"><a href="#buildUrl('menu')#"><span class="glyphicon glyphicon-circle-arrow-left"></span></a> Menu - Update</h3><hr>
 <div class="row clearfix">
-	<cfif NOT Validation.Valid>
+	<cfif NOT Validation.isValid>
 		<div class="alert alert-dange">
 			<h3>Oops! Could not save new menu</h3>
 		</div>

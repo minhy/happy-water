@@ -44,7 +44,7 @@
 
 <cfset InvalidClass = "label label-warning"/>
 
-<cfparam name="Validation.Valid" default="true"/>
+<cfparam name="Validation.isValid" default="true"/>
             
 <cfswitch expression="#FormAction#">
 	<cfcase value="show">
@@ -97,56 +97,56 @@
 		<cfif NOT IsDefined('FORM.productName') OR Len(Trim(FORM.productName)) GT 255 OR Len(Trim(FORM.productName)) EQ 0>
 			<cfset Validation.productName.text = "Please provide a product name with maximal 255 characters and not null."/>
 			<cfset Validation.productName.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.description') OR Len(Trim(FORM.description)) GT 8000 OR Len(Trim(FORM.description)) EQ 0>
 			<cfset Validation.description.text = "Please provide a description with maximal 255 characters and not null."/>
 			<cfset Validation.description.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.price') OR Len(Trim(FORM.price)) EQ 0>
 			<cfset Validation.price.text = "Please provide a price with not null."/>
 			<cfset Validation.price.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 
 		<cfif NOT IsDefined('FORM.originalprice') OR Len(Trim(FORM.originalprice)) EQ 0>
 			<cfset Validation.originalprice.text = "Please provide a originalprice with not null."/>
 			<cfset Validation.originalprice.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.categoryID') OR FORM.categoryID EQ 0>
 			<cfset Validation.categoryID.text = "Please provide a category ID."/>
 			<cfset Validation.categoryID.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.brandID') OR FORM.brandID EQ 0>
 			<cfset Validation.brandID.text = "Please provide a brand ID."/>
 			<cfset Validation.brandID.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.image') OR FORM.image EQ "">
 			<cfset Validation.image.text = "Please choose an image."/>
 			<cfset Validation.image.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<!--- <cfif Not IsImageFile(getTempDirectory() & Reupload.serverFile)>
 		    <cffile action="delete" file="#getTempDirectory()##Reupload.serverFile#">
 		    <cfset Validation.image.text = "The file must an image."/>
 			<cfset Validation.image.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif> ---><!--- 
 		<cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
 			<cfset Validation.status.text = "Please select one."/>
 			<cfset Validation.status.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.IsActive') OR NOT ListFind('0,1',FORM.IsActive)>
 			<cfset Validation.IsActive.text = "Please select one."/>
 			<cfset Validation.IsActive.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif> --->
-		<cfif Validation.Valid>
+		<cfif Validation.isValid>
 			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
 			<cfset text = ReReplaceNoCase(#FORM.text#, '<[^>]*>', '', "ALL")>
 			<cftransaction isolation="serializable" action="begin">
@@ -217,45 +217,45 @@
 		<cfif NOT IsDefined('FORM.productName') OR Len(Trim(FORM.productName)) GT 255 OR Len(Trim(FORM.productName)) EQ 0>
 			<cfset Validation.productName.text = "Please provide a product name with maximal 255 characters and not null."/>
 			<cfset Validation.productName.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.description') OR Len(Trim(FORM.description)) GT 8000 OR Len(Trim(FORM.description)) EQ 0>
 			<cfset Validation.description.text = "Please provide a description with maximal 255 characters and not null."/>
 			<cfset Validation.description.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.price') OR Len(Trim(FORM.price)) EQ 0>
 			<cfset Validation.price.text = "Please provide a price with not null."/>
 			<cfset Validation.price.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.originalprice') OR Len(Trim(FORM.originalprice)) EQ 0>
 			<cfset Validation.originalprice.text = "Please provide a originalprice with not null."/>
 			<cfset Validation.originalprice.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.categoryID') OR FORM.categoryID EQ 0>
 			<cfset Validation.categoryID.text = "Please provide a category ID."/>
 			<cfset Validation.categoryID.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.brandID') OR FORM.brandID EQ 0>
 			<cfset Validation.brandID.text = "Please provide a brand ID."/>
 			<cfset Validation.brandID.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<!--- <cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
 			<cfset Validation.status.text = "Please select one."/>
 			<cfset Validation.status.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.IsActive') OR NOT ListFind('0,1',FORM.IsActive)>
 			<cfset Validation.IsActive.text = "Please select one."/>
 			<cfset Validation.IsActive.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif> --->
 
-		<cfif Validation.Valid>
+		<cfif Validation.isValid>
 			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
 			<cfset text = ReReplaceNoCase(#FORM.text#, '<[^>]*>', '', "ALL")>
 			<cftransaction isolation="serializable" action="begin">
@@ -328,7 +328,7 @@
 <legend><h1>Product Management - Update</h1></legend>
 <div  style="width:100%; margin:auto;">
 	<div class="row clearfix">
-		<cfif NOT Validation.Valid>
+		<cfif NOT Validation.isValid>
 			<div class="alert alert-dange">
 				<h3>Oops! Could not save new product</h3>
 			</div>
@@ -399,7 +399,7 @@
 								#Validation.status.text#
 							</div>
 							<div class="form-group">
-						        <input type="checkbox" id="status" name="status" value="#FORM.status#" <cfif FORM.status> checked</cfif>> In stock
+						        <input type="checkbox" id="status" name="status" value="1" <cfif FORM.status> checked</cfif>> In stock
 							</div>
 						</div>
 						<div class="col-md-6 column">
@@ -409,7 +409,7 @@
 								#Validation.IsActive.text#
 							</div>
 							<div class="form-group">
-						        <input type="checkbox" id="IsActive" name="IsActive" value="#FORM.IsActive#" <cfif FORM.IsActive> checked</cfif>> Selling
+						        <input type="checkbox" id="IsActive" name="IsActive" value="1" <cfif FORM.IsActive> checked</cfif>> Selling
 							</div>
 						</div>
 					</div>

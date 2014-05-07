@@ -4,7 +4,7 @@
 <cfparam name="URL.id"	type="integer" default="0">
 <cfparam name="userid"	type="integer" default="1">
 <cfparam name="URL.tag"	type="varchar" default="">
-<cfset Validation.Valid = true/>
+<cfset Validation.isValid = true/>
 <cfset InvalidClass = " invalid"/>
 
 
@@ -43,34 +43,34 @@
 	<cfif NOT IsDefined('FORM.title') OR Len(Trim(FORM.title)) EQ 0>
 		<cfset Validation.title.text = "Please input title."/>
 		<cfset Validation.title.class = InvalidClass/>
-		<cfset Validation.Valid = false/>
+		<cfset Validation.isValid = false/>
 	</cfif>
 
 	<cfif NOT IsDefined('FORM.description') OR Len(Trim(FORM.description)) EQ 0>
 		<cfset Validation.description.text = "Please input description."/>
 		<cfset Validation.description.class = InvalidClass/>
-		<cfset Validation.Valid = false/>
+		<cfset Validation.isValid = false/>
 	</cfif>
 
 	<cfif NOT IsDefined('FORM.content') OR Len(Trim(FORM.content)) EQ 0>
 		<cfset Validation.content.text = "Please input content."/>
 		<cfset Validation.content.class = InvalidClass/>
-		<cfset Validation.Valid = false/>
+		<cfset Validation.isValid = false/>
 	</cfif>
 
 	<!---<cfif NOT IsDefined('FORM.photo') OR Len(Trim(FORM.photo)) EQ 0>
 		<cfset Validation.photo.text = "Please input photo."/>
 		<cfset Validation.photo.class = InvalidClass/>
-		<cfset Validation.Valid = false/>
+		<cfset Validation.isValid = false/>
 	</cfif>--->
 
 	<cfif FORM.photo is ""> 
 		<cfset Validation.photo.text = "Please input photo."/>
 		<cfset Validation.photo.class = InvalidClass/>
-		<cfset Validation.Valid = false/>
+		<cfset Validation.isValid = false/>
 	</cfif>
 
-	<cfif Validation.Valid>
+	<cfif Validation.isValid>
 			<cftransaction isolation="serializable" action="begin">
 				<cftry>
 					<cfquery name="InsertContact" result="Result" >
@@ -105,7 +105,7 @@
 			<cflocation url="#buildUrl('article')#" />
 				<cfcatch>
 					<cftransaction action="rollback"/>
-					<cfset Validation.Valid = false/>	
+					<cfset Validation.isValid = false/>	
 				</cfcatch>
 				</cftry>
 			</cftransaction>
@@ -134,22 +134,22 @@
 		<cfif NOT IsDefined('FORM.title') OR Len(Trim(FORM.title)) EQ 0>
 			<cfset Validation.title.text = "Please input title."/>
 			<cfset Validation.title.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 
 		<cfif NOT IsDefined('FORM.description') OR Len(Trim(FORM.description)) EQ 0>
 			<cfset Validation.description.text = "Please input description."/>
 			<cfset Validation.description.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 
 		<cfif NOT IsDefined('FORM.content') OR Len(Trim(FORM.content)) EQ 0>
 			<cfset Validation.content.text = "Please input content."/>
 			<cfset Validation.content.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 
-		<cfif  Validation.Valid>
+		<cfif  Validation.isValid>
 
 			<cftransaction isolation="serializable" action="begin">
 				<cftry>
@@ -174,7 +174,7 @@
 				<cflocation url="#buildUrl('article')#" />
 					<cfcatch>
 						<cftransaction action="rollback"/>
-						<cfset Validation.Valid = false/>
+						<cfset Validation.isValid = false/>
 						<cfdump var="#cfcatch#"/><cfabort>
 					</cfcatch>
 				</cftry>
@@ -197,7 +197,7 @@
 	<cfparam name="Validation.description.class"		default=""/>
 	<cfparam name="Validation.active.class" 		default=""/>
 	<cfparam name="Validation.tag.class" 		default=""/>
-	<cfparam name="Validation.Valid" 	default="false"/>
+	<cfparam name="Validation.isValid" 	default="false"/>
 
 <script type="text/javascript" language="javascript">
 		$("document").ready(function(){
@@ -224,7 +224,7 @@
 		
 <h3 class="header-title"><a href="#buildUrl('article')#"><span class="glyphicon glyphicon-circle-arrow-left"></span></a>Article Update</h3><hr>
 <div class="row clearfix">
-	<cfif NOT Validation.Valid>
+	<cfif NOT Validation.isValid>
 		<div class="alert alert-dange">
 			<h3>Oops! Could not save new artile</h3>
 		</div>

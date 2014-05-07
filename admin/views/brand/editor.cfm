@@ -23,7 +23,7 @@
 
 <cfset InvalidClass = "label label-warning"/>
 
-<cfparam name="Validation.Valid" default="true"/>
+<cfparam name="Validation.isValid" default="true"/>
             
 <cfswitch expression="#FormAction#">
 	<cfcase value="show">
@@ -53,24 +53,24 @@
 		<cfif NOT IsDefined('FORM.brandName') OR Len(Trim(FORM.brandName)) GT 255 OR Len(Trim(FORM.brandName)) EQ 0>
 			<cfset Validation.brandName.text = "Please provide a brand name with maximal 255 characters and not null."/>
 			<cfset Validation.brandName.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.description') OR Len(Trim(FORM.description)) GT 8000 OR Len(Trim(FORM.description)) EQ 0>
 			<cfset Validation.description.text = "Please provide a description with maximal 255 characters and not null."/>
 			<cfset Validation.description.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
 			<cfset Validation.status.text = "Please select one."/>
 			<cfset Validation.status.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.IsActive') OR NOT ListFind('0,1',FORM.IsActive)>
 			<cfset Validation.IsActive.text = "Please select one."/>
 			<cfset Validation.IsActive.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
-		<cfif Validation.Valid>
+		<cfif Validation.isValid>
 			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
 			<cftransaction isolation="serializable" action="begin">
 					<cftry>
@@ -114,25 +114,25 @@
 		<cfif NOT IsDefined('FORM.brandName') OR Len(Trim(FORM.brandName)) GT 255 OR Len(Trim(FORM.brandName)) EQ 0>
 			<cfset Validation.brandName.text = "Please provide a brand name with maximal 255 characters and not null."/>
 			<cfset Validation.brandName.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.description') OR Len(Trim(FORM.description)) GT 8000 OR Len(Trim(FORM.description)) EQ 0>
 			<cfset Validation.description.text = "Please provide a description with maximal 255 characters and not null."/>
 			<cfset Validation.description.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
 			<cfset Validation.status.text = "Please select one."/>
 			<cfset Validation.status.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 		<cfif NOT IsDefined('FORM.IsActive') OR NOT ListFind('0,1',FORM.IsActive)>
 			<cfset Validation.IsActive.text = "Please select one."/>
 			<cfset Validation.IsActive.class = InvalidClass/>
-			<cfset Validation.Valid = false/>
+			<cfset Validation.isValid = false/>
 		</cfif>
 
-		<cfif Validation.Valid>
+		<cfif Validation.isValid>
 			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
 			<cftransaction isolation="serializable" action="begin">
 				<cftry>
@@ -172,7 +172,7 @@
 <legend><h1>Brand Management - Update</h1></legend>
 <div  style="width:100%; margin:auto;">
 	<div class="row clearfix">
-		<cfif NOT Validation.Valid>
+		<cfif NOT Validation.isValid>
 			<div class="alert alert-dange">
 				<h3>Oops! Could not save new brand</h3>
 			</div>
@@ -201,7 +201,7 @@
 									#Validation.status.text#
 								</div>
 								<div class="form-group">
-								        <input type="checkbox" id="status" name="status" value="#FORM.status#" <cfif FORM.status> checked</cfif>> New
+								        <input type="checkbox" id="status" name="status" value="1" <cfif FORM.status> checked</cfif>> New
 								</div>
 							</div>
 							<div class="col-md-6 column">
@@ -211,7 +211,7 @@
 									#Validation.IsActive.text#
 								</div>
 								<div class="form-group">
-								        <input type="checkbox" id="IsActive" name="IsActive" value="#FORM.IsActive#" <cfif FORM.IsActive> checked</cfif>> Selling
+								        <input type="checkbox" id="IsActive" name="IsActive" value="1" <cfif FORM.IsActive> checked</cfif>> Selling
 								</div>
 							</div>
 						</div>
