@@ -56,7 +56,7 @@
       </cfif>
 </cfif>
 <cfoutput>
-
+<link href="#getContextRoot()#/home/css/form.css" rel="stylesheet">
 <div class="header-title">
   <h1>Edit form</h1>
 </div>

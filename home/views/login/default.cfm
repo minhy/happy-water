@@ -1,3 +1,4 @@
+
 <cfparam name="FORM.remember" default=false>
 <cfparam name="FORM.email" default="">
 <cfparam name="FORM.pass"  default="">
@@ -41,6 +42,7 @@
 </cfif>
 </cfif>
 <cfoutput>
+  <link href="#getContextRoot()#/home/css/form.css" rel="stylesheet">
 <div class="header-title">
   <h1>Login</h1>
 </div>

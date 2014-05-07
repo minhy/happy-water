@@ -43,6 +43,7 @@
 
 
 <cfoutput>
+  <link href="#getContextRoot()#/home/css/form.css" rel="stylesheet">
 <div class="header-title">
   <h1>Reset password</h1>
 </div>
