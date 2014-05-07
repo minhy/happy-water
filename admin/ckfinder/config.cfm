@@ -45,7 +45,7 @@ config.licenseKey = '';
  */
 
 //ATTENTION: The trailing slash is required.
-config.baseUrl = "/ckfinder/userfiles/";
+config.baseUrl = "/images/images_user/";
 /*
  * config.baseDir : the path to the local directory (in the server) which points to the
  * above config.baseUrl URL. This is the path used by CKFinder to handle the files in
