@@ -1,11 +1,17 @@
 <cfparam name="FORM.image" type="string" default=""/>
+
+<cfquery name="lstCategory">
+	SELECT * 
+	FROM Category
+	WHERE tag = "product"
+</cfquery>
+<cfquery name="lstBrand">
+	SELECT * 
+	FROM Brand
+</cfquery>
+
 <cfparam name="FORM.productID"	type="integer" default="0"/>
 <cfparam name="URL.productID"	type="integer" default="0">
-<cfparam name="FORM.status" type="boolean" default="0"/>
-<cfparam name="FORM.IsActive" type="boolean" default="0"/>
-<cfset LOCAL.lstCategory = rc.lstCategory/>
-<cfset LOCAL.lstBrand = rc.lstBrand/>
-
 
 <cfif CGI.REQUEST_METHOD EQ 'get' AND URL.productID EQ 0>
 	<cfset FormAction 	= "show"/>
@@ -56,21 +62,25 @@
 	</cfcase>
 	<cfcase value="edit">
 		
-		<cfset LOCAL.editingProduct = rc.editingProduct/>
+		<cfquery name="edit_product">
+			
+			SELECT *
+			FROM Product
+			WHERE productID = <cfqueryparam sqltype="integer" value="#URL.productID#"/>
 
-		<cfset FORM.productID = editingProduct.productID/>
-		<cfset FORM.productName = editingProduct.productName/>
-		<cfset FORM.description = editingProduct.description/>
-		<cfset FORM.price = editingProduct.price/>
-		<cfset FORM.originalprice = editingProduct.originalprice/>
-		<cfset FORM.discount = editingProduct.discount/>
-		<cfset FORM.status = editingProduct.status/>
-		<cfset FORM.IsActive = editingProduct.IsActive/>
-		<cfset FORM.categoryID = editingProduct.categoryID/>
-		<cfset FORM.brandID = editingProduct.brandID/>
-		<cfset FORM.text = editingProduct.text/>
-		<cfset FORM.image =editingProduct.image/>
-		<cfset FORM.hidden = editingProduct.image/>
+		</cfquery>
+		<cfset FORM.productID = edit_product.productID/>
+		<cfset FORM.productName = edit_product.productName/>
+		<cfset FORM.description = edit_product.description/>
+		<cfset FORM.price = edit_product.price/>
+		<cfset FORM.originalprice = edit_product.originalprice/>
+		<cfset FORM.discount = edit_product.discount/>
+		<cfset FORM.status = edit_product.status/>
+		<cfset FORM.IsActive = edit_product.IsActive/>
+		<cfset FORM.categoryID = edit_product.categoryID/>
+		<cfset FORM.brandID = edit_product.brandID/>
+		<cfset FORM.text = edit_product.text/>
+		<cfset FORM.image =edit_product.image/>
 
 	</cfcase>
 
@@ -83,7 +93,6 @@
 				        fileField = "image" 
 				        destination = "#getContextRoot()#/images/product/">
 			</cfif>
-			
 		</cfif>
 		<cfif NOT IsDefined('FORM.productName') OR Len(Trim(FORM.productName)) GT 255 OR Len(Trim(FORM.productName)) EQ 0>
 			<cfset Validation.productName.text = "Please provide a product name with maximal 255 characters and not null."/>
@@ -121,17 +130,78 @@
 			<cfset Validation.image.class = InvalidClass/>
 			<cfset Validation.isValid = false/>
 		</cfif>
-
-		<cfif Validation.isValid>
-
-			<cfif isDefined("rc.binserted")>
-				<cflocation url="#buildUrl('product.default')#"/>
-			<cfelse>
-				<cfset Validation.isValid = false/>
-			</cfif>
-			
+		<!--- <cfif Not IsImageFile(getTempDirectory() & Reupload.serverFile)>
+		    <cffile action="delete" file="#getTempDirectory()##Reupload.serverFile#">
+		    <cfset Validation.image.text = "The file must an image."/>
+			<cfset Validation.image.class = InvalidClass/>
+			<cfset Validation.isValid = false/>
+		</cfif> ---><!--- 
+		<cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
+			<cfset Validation.status.text = "Please select one."/>
+			<cfset Validation.status.class = InvalidClass/>
+			<cfset Validation.isValid = false/>
 		</cfif>
-	
+		<cfif NOT IsDefined('FORM.IsActive') OR NOT ListFind('0,1',FORM.IsActive)>
+			<cfset Validation.IsActive.text = "Please select one."/>
+			<cfset Validation.IsActive.class = InvalidClass/>
+			<cfset Validation.isValid = false/>
+		</cfif> --->
+		<cfif Validation.isValid>
+			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
+			<cfset text = ReReplaceNoCase(#FORM.text#, '<[^>]*>', '', "ALL")>
+			<cftransaction isolation="serializable" action="begin">
+					<cftry>
+						<cfquery name="insert_product">
+
+							INSERT INTO Product
+							(
+								productName,
+								description,
+								price,
+								discount,
+								originalprice,
+								status,
+								IsActive,
+								categoryID,
+								brandID,
+								text,
+								image,
+								productDate
+							)
+							VALUES
+							(
+								<cfqueryparam sqltype="varchar" value="#FORM.productName#"/>,
+								<cfqueryparam sqltype="clob" value="#desc#"/>,
+								<cfqueryparam sqltype="float" value="#FORM.price#"/>,
+								<cfqueryparam sqltype="integer" value="#FORM.discount#"/>,
+								<cfqueryparam sqltype="float" value="#FORM.originalprice#"/>,
+								<cfif  NOT IsDefined('FORM.status')>
+									<cfqueryparam sqltype="tinyint" value="0"/>,
+								<cfelse>
+									<cfqueryparam sqltype="tinyint" value="#FORM.status#"/>,
+								</cfif>
+								<cfif  NOT IsDefined('FORM.IsActive')>
+									<cfqueryparam sqltype="tinyint" value="0"/>,
+								<cfelse>
+									<cfqueryparam sqltype="tinyint" value="#FORM.IsActive#"/>,
+								</cfif>
+								<cfqueryparam sqltype="integer" value="#FORM.categoryID#"/>,
+								<cfqueryparam sqltype="integer" value="#FORM.brandID#"/>,
+								<cfqueryparam sqltype="clob" value="#text#"/>,
+								<cfqueryparam sqltype="varchar" value="#getContextRoot()#/images/product/#Reupload.clientfile#"/>,
+								<cfqueryparam sqltype="date" value="#now()#">
+							)
+							</cfquery>
+						<cftransaction action="commit"/>
+						<cflocation url="#buildUrl('product.default')#"/>
+					<cfcatch>
+						<cftransaction action="rollback"/>
+						<cfdump var="#cfcatch#"/><cfabort>
+					</cfcatch>
+
+					</cftry>
+			</cftransaction>
+		</cfif>
 	</cfcase>
 
 	<cfcase value="update">
@@ -143,7 +213,6 @@
 					        fileField = "image" 
 					        destination = "#getContextRoot()#/images/product/">
 			</cfif>
-			<cfset FORM.hidden = "/images/product/#Reupload.clientfile#">
 		</cfif>
 		<cfif NOT IsDefined('FORM.productName') OR Len(Trim(FORM.productName)) GT 255 OR Len(Trim(FORM.productName)) EQ 0>
 			<cfset Validation.productName.text = "Please provide a product name with maximal 255 characters and not null."/>
@@ -175,13 +244,58 @@
 			<cfset Validation.brandID.class = InvalidClass/>
 			<cfset Validation.isValid = false/>
 		</cfif>
+		<!--- <cfif NOT IsDefined('FORM.status') OR NOT ListFind('0,1',FORM.status)>
+			<cfset Validation.status.text = "Please select one."/>
+			<cfset Validation.status.class = InvalidClass/>
+			<cfset Validation.isValid = false/>
+		</cfif>
+		<cfif NOT IsDefined('FORM.IsActive') OR NOT ListFind('0,1',FORM.IsActive)>
+			<cfset Validation.IsActive.text = "Please select one."/>
+			<cfset Validation.IsActive.class = InvalidClass/>
+			<cfset Validation.isValid = false/>
+		</cfif> --->
 
 		<cfif Validation.isValid>
-			<cfif isDefined("rc.bupdated")>
-				<cflocation url="#buildUrl('product.default')#"/>
-			<cfelse>
-				<cfset Validation.isValid = false/>
-			</cfif>
+			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
+			<cfset text = ReReplaceNoCase(#FORM.text#, '<[^>]*>', '', "ALL")>
+			<cftransaction isolation="serializable" action="begin">
+				<cftry>
+					<cfquery name="update_product">
+						UPDATE Product
+						SET 
+							productName = <cfqueryparam sqltype="varchar" value="#FORM.productName#"/>,
+							description = <cfqueryparam sqltype="clob" value="#desc#"/>,
+							price = <cfqueryparam sqltype="float" value="#FORM.price#"/>,
+							discount = <cfqueryparam sqltype="integer" value="#FORM.discount#"/>,
+							originalprice = <cfqueryparam sqltype="float" value="#FORM.originalprice#"/>,
+							<cfif  NOT IsDefined('FORM.status')>
+								status = 0,
+							<cfelse>
+								status = <cfqueryparam sqltype="tinyint" value="#FORM.status#"/>,
+							</cfif>
+							<cfif  NOT IsDefined('FORM.IsActive')>
+								IsActive = 0,
+							<cfelse>
+								IsActive = <cfqueryparam sqltype="tinyint" value="#FORM.IsActive#"/>,
+							</cfif>
+							categoryID = <cfqueryparam sqltype="integer" value="#FORM.categoryID#"/>,
+							brandID = <cfqueryparam sqltype="integer" value="#FORM.brandID#"/>,
+							text = <cfqueryparam sqltype="clob" value="#text#"/>,
+							productDate = <cfqueryparam sqltype="date" value="#now()#"/>
+							<cfif FORM.image is not "">
+								,image = <cfqueryparam sqltype="varchar" value="#getContextRoot()#/images/product/#Reupload.clientfile#"/>
+							</cfif>
+						WHERE productID = <cfqueryparam sqltype="integer" value="#FORM.productID#"/>
+					</cfquery>
+					<cftransaction action="commit"/>
+					<cflocation url="#buildUrl('product.default')#"/>
+				<cfcatch>
+					<cftransaction action="rollback"/>
+					<cfdump eval=form>
+					<cfdump var="#cfcatch#"/><cfabort>
+				</cfcatch>
+				</cftry>
+			</cftransaction>
 		</cfif>
 	</cfcase>
 </cfswitch>
@@ -243,7 +357,7 @@
 						#Validation.description.text#
 					</div>
 					<div class="form-group">
-						 <textarea type="text" class="form-control" id="description" name="description">#FORM.description#</textarea>
+						 <textarea type="text" required="yes" class="form-control" id="description" name="description">#FORM.description#</textarea>
 					</div>
 
 					<div class="row clearfix">
@@ -345,6 +459,7 @@
 					<div class="form-group">
 						<img id="currentImage" src="#getContextRoot()##FORM.image#" alt="No image" width="144" height="144">
 					</div>
+
 				</div>
 			</div>
 		</div>

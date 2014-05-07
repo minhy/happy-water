@@ -1,6 +1,8 @@
 
 <cfparam name="FORM.brandID" type="integer" default="0"/>
 <cfparam name="URL.brandID"	type="integer" default="0">
+<cfparam name="FORM.status" type="string" default="0"/>
+<cfparam name="FORM.IsActive" type="string" default="0"/>
 
 <cfif CGI.REQUEST_METHOD EQ 'get' AND URL.brandID EQ 0>
 	<cfset FormAction 	= "show"/>
