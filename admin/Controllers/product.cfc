@@ -40,11 +40,11 @@
 	</cffunction>
 
 	<!--- Show all --->
-	<cffunction name="showAll" access="public" output="false" returntype="any">
+	<cffunction name="showAll" access="public" output="false" returnformat="JSon">
 		<cfquery name="qShowAll">
 			SELECT *
 			FROM product
-			ORDER BY productDate DESC
+			ORDER BY productID DESC
 		</cfquery>
 
 		<cfreturn qShowAll> 

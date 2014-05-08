@@ -48,7 +48,9 @@
         $(document).ready( function () {
             $('#table_id').dataTable({
                 "bJQueryUI": true,
-                "sPaginationType": "full_numbers"
+                "sPaginationType": "full_numbers",
+                "bSort": false
+
             });
         } );
 

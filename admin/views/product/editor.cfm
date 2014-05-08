@@ -113,9 +113,8 @@
 		</cfif>
 
 		<cfif Validation.isValid>
-
 			<cfset desc = ReReplaceNoCase(#FORM.description#, '<[^>]*>', '', "ALL")>
-			<cfset text = ReReplaceNoCase(#FORM.text#, '<[^>]*>', '', "ALL")>
+			<cfset text = ReReplaceNoCase(#FORM.text#, '<[^img>]*>', '', "ALL")>
 			<cftransaction isolation="serializable" action="begin">
 					<cftry>
 						<cfquery name="insert_product">

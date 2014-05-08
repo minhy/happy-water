@@ -52,6 +52,7 @@
 	    <cfquery name="qShowAll">
 		    SELECT *
 		    FROM brand
+		    ORDER BY brandID DESC
 	    </cfquery>    
     
 		<cfset rc.listbrand = qShowAll>
