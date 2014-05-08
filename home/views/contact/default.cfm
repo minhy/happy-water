@@ -70,6 +70,10 @@
 					    #form.comment#
 					</cfmail>
 			<cftransaction action="commit"/>
+				<script type="text/javascript">
+				alert("Send sucessful!");
+				window.location.href="../index.cfm";
+				</script>
 				<cfcatch>
 					<cftransaction action="rollback"/>
 						<cfdump eval=cfcatch>
