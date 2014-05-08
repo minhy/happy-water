@@ -215,7 +215,6 @@
 		output="false">
 		
 		<cfargument name="rc" type="struct" required="true">
-		<cfset rc.Method = CGI.REQUEST_METHOD />
 		<cfset rc.lstCategory = getCategory()/>
 		<cfset rc.lstBrand = getBrand()/>
 		
@@ -230,10 +229,8 @@
 		<!--- update --->
 		<cfelseif CGI.REQUEST_METHOD EQ 'post' AND rc.productID GT 0>
 			<cfset rc.FormAction = "update"/>
-			<cfset rc.bupdated = updateProduct(rc)>
 		<cfelse>
 			<cfset rc.FormAction = "insert"/>
-			<cfset rc.binserted = insertProduct(rc)>
 		</cfif>
 		<!--- setview <cflocation url="#buildUrl('product.default')#"/> --->
 	</cffunction>
