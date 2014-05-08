@@ -3,6 +3,7 @@
 <cfparam name="FORM.id"	type="integer" default="0"/>
 <cfparam name="URL.id"	type="integer" default="0">
 <cfparam name="question_id" type="integer" default="1">
+<cfparam name="Form.Answer"		default="0"/>
 	<cfset Validation.isValid = true/>
 	<cfset InvalidClass = " invalid"/>
 
@@ -184,9 +185,11 @@
     <div class="col-md-2">
     	Description:
     </div>
-    <div class="col-md-10 form#Validation.description.class#">
-		<textarea "textarea" rows="5" cols="100" name="Description" id="Description" value="" size="50">#FORM.description#</textarea>
-		<p>#Validation.description.text#</p>
+	<div class="col-md-10">
+		<div class="form#Validation.description.class#">
+			<p>#Validation.description.text#</p>
+		</div>
+		<textarea "textarea" rows="5" style="width:100%" name="Description" id="Description" value="" size="50">#FORM.description#</textarea>
     </div>
 
     <div class="col-md-2">

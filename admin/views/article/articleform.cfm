@@ -4,6 +4,7 @@
 <cfparam name="URL.id"	type="integer" default="0">
 <cfparam name="userid"	type="integer" default="1">
 <cfparam name="URL.tag"	type="varchar" default="">
+<cfparam name="Form.active"		default="0"/>
 <cfset Validation.isValid = true/>
 <cfset InvalidClass = " invalid"/>
 
