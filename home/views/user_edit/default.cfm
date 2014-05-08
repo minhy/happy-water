@@ -12,7 +12,7 @@
 <cfparam name="FORM.email" default="#qGetUser.email#"/>
 <cfparam name="date" default="#qGetUser.dateofbirth#"/>
 <cfparam name="FORM.address" default="#qGetUser.address#"/>
-<cfparam name="nameofphoto" default=""/>
+<cfparam name="nameofphoto" default="#qGetUser.avatar#"/>
 <cfparam name="FORM.month" default="1"/>
 <cfparam name="FORM.day" default="1"/>
 <cfparam name="FORM.year" default="1920"/>
@@ -26,11 +26,39 @@
         <cfset Validation.date.text = "Invalid date" />
     <cfelse>
     <cfif FORM.photo is not "">
+      <cfif #qGetUser.avatar# is not "default.jpg">
+        
+      
        <cffile  action = "upload"
                 destination = "/./home/images/user-avatar/#qGetUser.avatar#" 
                 fileField = "photo" 
                 nameConflict = "Overwrite"/>
+
+      <cfelse>
+          <cffile  action = "upload" 
+          destination = "/./home/images/user-avatar/" 
+          fileField = "photo" 
+          nameConflict = "MakeUnique"/>
+    
+<cfset nameofphoto = "#qGetUser.userID#" &"."& #cffile.clientfileext#/>
+                
+  <cffile 
+  action="rename" 
+  source="/./home/images/user-avatar/#cffile.clientfile#" 
+  destination="/./home/images/user-avatar/#nameofphoto#"
+  />
+        </cfif>
+
     </cfif>
+
+
+
+
+
+
+
+
+
     <cftransaction isolation="serializable" action="begin">
       <cftry>
         <cfquery name="qUpdateUser">
@@ -39,6 +67,7 @@
           firstName   =  <cfqueryparam sqltype="string" value="#FORM.firstname#"/>,
           lastName    =  <cfqueryparam sqltype="string" value="#FORM.lastname#"/>,
           address     =  <cfqueryparam sqltype="string" value="#FORM.address#"/>,
+          avatar      =  <cfqueryparam sqltype="string" value="#nameofphoto#"/>,
           dateofbirth =  <cfqueryparam sqltype="string" value="#dateformat(#createDate("#FORM.year#","#FORM.month#","#FORM.day#")#, "yyyy-mm-dd")#"/>
           WHERE userID = <cfqueryparam sqltype="integer" value="#Session.UserID#"/>
           ;

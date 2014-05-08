@@ -29,7 +29,7 @@ function chkEmailUnique(theEmail){
 
 <cfparam name="FORM.address" default=""/>
 <cfparam name="FORM.confirm_password" default=""/>
-<cfparam name="nameofphoto" default=""/>
+<cfparam name="nameofphoto" default="default.jpg"/>
 <cfparam name="Validation.email.text" default="&nbsp;"/>
 <cfparam name="Validation.date.text" default="&nbsp;"/>
 
@@ -75,7 +75,7 @@ function chkEmailUnique(theEmail){
         <cfset Validation.date.text = "Invalid date" />
     <cfelse>
     <cftransaction isolation="serializable" action="begin">
-      <cftry>
+      <cftry>   
         <cfquery name="qInsertUser">
           INSERT INTO user(firstName,lastName,address,dateofbirth,email,level,avatar,password,RegisterDate)
           Values (
