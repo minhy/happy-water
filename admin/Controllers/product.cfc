@@ -66,6 +66,7 @@
 		<cfquery name="qlstBrand">
 			SELECT * 
 			FROM Brand
+			WHERE IsActive = 1
 		</cfquery>
 
 		<cfreturn qlstBrand> 
